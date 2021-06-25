@@ -1,13 +1,22 @@
 <?php
 require_once 'vendor/autoload.php';
+include 'src/_db.php';
 
 if ($_SERVER['REQUEST_METHOD']=="POST") {
 
     $email = $_POST['email'];
     $password = $_POST['password'];
 
+    // get database connection
+    $database = new Database();
+    $db = $database->getConnection();
 
-    header("location:src/admin.php");
+    $common = (new Login($db, $email));
+
+    $valid =$common->valid_user($email);
+
+    $common->valid_pass($password, $valid);
+
 }
 ?>
 
