@@ -1,0 +1,19 @@
+{
+    "name": "azhar/elms",
+    "description": "employee leave management system",
+    "autoload": {
+        "psr-4": {
+            "Azhar\\Elms\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Azhar Uddin Sheikh",
+            "email": "Azharthegreat123@gmail.com"
+        }
+    ],
+    "require": {
+        "twig/twig": "^3.3",
+        "php": ">=5.3.3"
+    }
+}
