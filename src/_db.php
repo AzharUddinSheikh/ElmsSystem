@@ -32,6 +32,8 @@ class Login{
     public function valid_pass($form_pass, $db_pass) {
         
         if (password_verify($form_pass, $db_pass)) {
+
+            include 'partials/_sessionstart.php';
             
             header("location:src/admin.php");
             
