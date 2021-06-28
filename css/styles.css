@@ -77,3 +77,10 @@ a:hover {
     text-decoration: underline;
     color: #000000;
 }
+
+/* emp page */
+
+.emp-form {
+    width: 50%;
+    height: 50%;
+}
