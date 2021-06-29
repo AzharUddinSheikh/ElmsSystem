@@ -113,7 +113,7 @@ class Email{
     public static function sendEmail($email, $empid){
         $to = $email;
         $subject = "ELMS Employee Email Verification";
-        $message = "<a href=http://localhost/elms/verify.php?empid=".$empid.">Verified Your Account</a>";
+        $message = "<a href=http://localhost/elms/partials/verify.php?empid=$empid>Verified Your Account</a>";
         $headers = 'From: azharsheikh760@gmail.com'       . "\r\n" .
                     'Reply-To: azharsheikh760@gmail.com' . "\r\n" .
                     'X-Mailer: PHP/' . phpversion();
@@ -156,6 +156,7 @@ class Employee{
                 $stmt->execute();
                 
             } elseif ($x == 1) {
+                
                 $query = "INSERT INTO user_details (user_id, user_key, user_value) VALUES(?, ?, ?)";
 
                 $stmt = $this->conn->prepare($query);
