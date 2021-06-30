@@ -60,13 +60,21 @@ class Login{
         $this->conn = $db;
     }
 
-    public function valid_pass($form_pass, $db_pass) {
+    public function valid_pass($form_pass, $row) {
         
-        if (password_verify($form_pass, $db_pass)) {
+        if (password_verify($form_pass, $row["password"])) {
 
             include 'partials/_sessionstart.php';
-            
-            header("location:src/admin.php");
+
+            if ($row["user_type"] == '1') {
+
+                header("location:src/admin.php");
+                
+            } else {
+                
+                header("location:src/welcome.php");
+
+            }
             
         } else {
             
@@ -86,7 +94,7 @@ class Login{
             
             while($row = $result->fetch_assoc()) {
                 
-                return $row["password"];
+                return $row;
               }
               
         } else {
@@ -136,25 +144,21 @@ class Employee{
         
         for ($x=0; $x < 2; $x++) {
             
-            if ($x == 0) {
-                $query = "INSERT INTO user_details (user_id, user_key, user_value) VALUES(?, ?, ?)";
+            $query = "INSERT INTO user_details (user_id, user_key, user_value) VALUES(?, ?, ?)";
 
-                $stmt = $this->conn->prepare($query);
+            $stmt = $this->conn->prepare($query);
+           
+            if ($x == 0) {
                 
                 $stmt->bind_param('iss',$last_id ,$birth_key, $dob);
                 
-                $stmt->execute();
+            } else {
                 
-            } elseif ($x == 1) {
-                
-                $query = "INSERT INTO user_details (user_id, user_key, user_value) VALUES(?, ?, ?)";
-
-                $stmt = $this->conn->prepare($query);
-               
                 $stmt->bind_param('isi', $last_id, $phone_key, $number);
 
-                $stmt->execute();
             }
+
+            $stmt->execute();
         }
 
         $stmt->close();
@@ -164,13 +168,11 @@ class Employee{
 
     public function create_user($empid, $fname, $lname, $department, $usertype){
 
-        $query = "INSERT INTO  users (emp_id, first_name, last_name, email, department_id, user_type, added_on) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        $query = "INSERT INTO  users (emp_id, first_name, last_name, email, department_id, user_type) VALUES (?, ?, ?, ?, ?, ?)";
 
         $stmt = $this->conn->prepare($query);
 
-        $date = date("Y-m-d h:i:s");
-
-        $stmt->bind_param('issssis',$empid, $fname, $lname, $this->email, $department, $usertype, $date);
+        $stmt->bind_param('issssi',$empid, $fname, $lname, $this->email, $department, $usertype);
         
         $stmt->execute();
 

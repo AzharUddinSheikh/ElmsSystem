@@ -2,8 +2,8 @@
 
 session_start();
 
-if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true) {
-    
+if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true || $_SESSION['user'] != '1') {
+
   header("location: ../index.php");
   
   exit;
@@ -23,7 +23,6 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true) {
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
-
     <a href="addEmp.php">Add Employee</a>
     <a href="../partials/logout.php">Logout</a>
     <span id="result"></span>
