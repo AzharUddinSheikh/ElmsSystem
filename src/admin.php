@@ -26,7 +26,7 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true) {
 
     <a href="addEmp.php">Add Employee</a>
     <a href="../partials/logout.php">Logout</a>
-
+    <span id="result"></span>
         <!-- Button trigger modal -->
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
       ADD DEPARTMENT
@@ -42,12 +42,12 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true) {
         </div>
         <div class="modal-body">
            
-            <form id="dept-form" autocomplete="off" method="POST">
+            <form id="myForm" action="department.php" autocomplete="off" method="POST">
                 <div class="mb-2">
                     <input name="dname" id="dname" type="text" class="form-control" placeholder="Enter The Department Name">
                 </div>
                 <div class="mb-1"><span id="available"></span></div>
-                <div class="hide"><button type="button" id="submit" class="btn btn-primary">ADD</button></div>
+                <div class="hide"><button id="submit" class="btn btn-primary">ADD</button></div>
             </form>
 
         </div>
@@ -58,6 +58,7 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true) {
     <!-- Option 1: Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script>
+       
         $(document).ready(function() {
             $('#dname').blur(function() {
                 var dname = $(this).val();
@@ -67,6 +68,7 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true) {
                     method:"POST",
                     data:{dep_name:dname},
                     success:function(data)
+                
                     {   
                         if(data == 0)
                         {
@@ -81,6 +83,23 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true) {
                     }
                 })
             })
+        })
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $("#submit").click(function() {
+                var dname = $("#myForm :input").serializeArray();
+                $.post( $("#myForm").attr("action"), dname, function(info) {
+                    alert(info);
+                });
+            });
+
+            $("#myForm").submit(function () {
+                $("#myForm")[0].reset();
+                return false;
+
+            });
         })
     </script>
 

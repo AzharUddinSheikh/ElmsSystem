@@ -19,7 +19,6 @@ class Database{
 
 class Department{
 
-    private $table_name = "departments";
     private $dept_name; 
     private $conn;
 
@@ -30,7 +29,7 @@ class Department{
 
     public function check_dept() {
         
-        $existsql = "SELECT * FROM $this->table_name WHERE name = '$this->dept_name'";
+        $existsql = "SELECT * FROM departments WHERE name = '$this->dept_name'";
 
         $result = mysqli_query($this->conn, $existsql);
 
@@ -40,20 +39,15 @@ class Department{
 
     public function create(){
 
-        $query = "INSERT INTO  $this->table_name (name, added_on) VALUES (?, ?, ?)";
+        $query = "INSERT INTO  departments (name) VALUES (?)";
 
         $stmt = $this->conn->prepare($query);
 
-        $date = date("Y-m-d h:i:s");
-
-        $stmt->bind_param('ss', $this->dept_name, $date);
+        $stmt->bind_param('s', $this->dept_name);
         
         $stmt->execute();
 
-        $smtp->close();
-        
-        header("location:admin.php");
-        
+        $stmt->close();
     }
 }
 

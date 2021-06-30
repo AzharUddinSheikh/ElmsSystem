@@ -2,8 +2,9 @@
 
 include '_db.php';
 
+
+
 if(isset($_POST["dep_name"])) {
-    
     // get database connection
     $database = new Database();
     $db = $database->getConnection();
@@ -14,16 +15,25 @@ if(isset($_POST["dep_name"])) {
 }
 
 if(isset($_POST["user_email"])) {
-    
     // get database connection
     $database = new Database();
     $db = $database->getConnection();
     
     $emp = new Employee($db, $_POST["user_email"]);
-
+    
     echo $emp->check_user();
 }
 
+if(isset($_POST["dname"])) {
+    
+    // get database connection
+    $database = new Database();
+    $db = $database->getConnection();
+    
+    $dep = new Department($_POST["dname"], $db);
 
+    $dep->create();
 
+    echo "data successfully inserted";
+}
 ?>
