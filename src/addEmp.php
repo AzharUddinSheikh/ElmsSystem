@@ -45,6 +45,7 @@ if ($_SERVER['REQUEST_METHOD']=="POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <title>Document</title>
 </head>
 <body class="bg-secondary">
@@ -61,7 +62,8 @@ if ($_SERVER['REQUEST_METHOD']=="POST") {
         </div>
         <div class="mb-3">
           <label for="email" class="form-label">Email Address</label>
-          <input type="text" class="form-control" name="email" id="email">
+          <input id="uEmail" type="text" class="form-control" name="email" id="email">
+          <span id="available"></span>
         </div>
         <div class="mb-3">
           <label for="dob" class="form-label">Date Of Birth</label>
@@ -89,7 +91,9 @@ if ($_SERVER['REQUEST_METHOD']=="POST") {
         </div>
         
         <div class="col-md-12 text-center">
-          <button type="submit" class="btn btn-primary">Submit</button>
+          <span class="submit">
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </span>
           <a class="btn btn-primary" href="admin.php">Cancel</a>
           <button type="reset" class="btn btn-primary">Clear</button>
         </div>
@@ -99,6 +103,33 @@ if ($_SERVER['REQUEST_METHOD']=="POST") {
 
     <!-- Option 1: Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function() {
+            $('#uEmail').blur(function() {
+                var uemail = $(this).val();
+
+                $.ajax({
+                    url:'department.php',
+                    method:"POST",
+                    data:{user_email:uemail},
+                    success:function(data)
+                    {   
+                        if(data == 0)
+                        {
+                            $('#available').html('<span class="text-warning">Email Not Available You May Proceed</span>');
+                            $('.submit').show();
+                        }
+                        else 
+                        {
+                            $('#available').html('<span class="text-danger">Email Available Unable to Submit</span>');
+                            $('.submit').hide();
+                        }
+                    }
+                })
+            })
+        })
+    </script>
+
 
   </body>
 </html>

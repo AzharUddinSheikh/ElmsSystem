@@ -23,38 +23,34 @@ class Department{
     private $dept_name; 
     private $conn;
 
-    private function __construct($dept_name, $db) {
+    public function __construct($dept_name, $db) {
         $this->dept_name = $dept_name;
         $this->conn = $db;
     }
 
     public function check_dept() {
-        $existsql = "SELECT * FROM $this->table_name Where name = '$this->dept_name'";
+        
+        $existsql = "SELECT * FROM $this->table_name WHERE name = '$this->dept_name'";
 
         $result = mysqli_query($this->conn, $existsql);
 
-        $rows = mysqli_num_rows($result);
+        return mysqli_num_rows($result);
 
-        if ($rows >0) {
-
-          return true;
-
-        } else {
-
-          return false;
-
-        }
     }
 
     public function create(){
 
-        $query = "INSERT INTO  $this->table_name (id, name, added_on) VALUES (?, ?, ?)";
+        $query = "INSERT INTO  $this->table_name (name, added_on) VALUES (?, ?, ?)";
 
         $stmt = $this->conn->prepare($query);
 
-        $stmt->bind_param('iss',3 , $this->dept_name, date("Y-m-d h:i:s"));
+        $date = date("Y-m-d h:i:s");
+
+        $stmt->bind_param('ss', $this->dept_name, $date);
         
         $stmt->execute();
+
+        $smtp->close();
         
         header("location:admin.php");
         
@@ -192,13 +188,7 @@ class Employee{
 
         $result = mysqli_query($this->conn, $existsql);
 
-        $rows = mysqli_num_rows($result);
-
-        if ($rows >0) {
-
-          die("email already exists unable to register");
-
-        } 
+        return mysqli_num_rows($result);
     }
 }
 
