@@ -2,18 +2,16 @@
 
 include '_db.php';
 
-if ($_SERVER['REQUEST_METHOD']=="POST") {
+if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
     $email = $_POST['email'];
    
-    // get database connection
     $database = new Database();
     $db = $database->getConnection();
 
     $common = (new Employee($db, $email));
     
     SetStatus::setToZero($db, $email);
-
     Email::sendEmail($email, GetEmpId::getId($db, $email));
 }
 ?>

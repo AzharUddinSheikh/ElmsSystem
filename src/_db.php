@@ -1,44 +1,44 @@
 <?php 
 
-class Database{
-    //   connecting to our db
+class Database
+{
     private $servername = "127.0.0.1:3306";
     private $username = "root";
     private $password = "admin";
     private $dbname = 'elms';
     public $conn;
    
-       public function getConnection(){
-   
-           $this->conn = mysqli_connect( $this->servername ,$this->username,  $this->password, $this->dbname);
-   
-           return $this->conn;
-    }    
+    public function getConnection()
+    {
+        $this->conn = mysqli_connect($this->servername, $this->username,  $this->password, $this->dbname);
+
+        return $this->conn;
+    }       
    
 }
 
-class Department{
-
+class Department
+{
     private $dept_name; 
     private $conn;
 
-    public function __construct($dept_name, $db) {
+    public function __construct($dept_name, $db)
+    {
         $this->dept_name = $dept_name;
         $this->conn = $db;
     }
 
-    public function check_dept() {
-        
+    public function checkDept()
+    {
         $existsql = "SELECT * FROM departments WHERE name = '$this->dept_name'";
 
         $result = mysqli_query($this->conn, $existsql);
 
         return mysqli_num_rows($result);
-
     }
 
-    public function create(){
-
+    public function create()
+    {
         $query = "INSERT INTO  departments (name) VALUES (?)";
 
         $stmt = $this->conn->prepare($query);
@@ -51,17 +51,18 @@ class Department{
     }
 }
 
-class Login{
-
+class Login
+{
     private $conn;
     private $table_name = "users";
 
-    public function __construct($db){
+    public function __construct($db)
+    {
         $this->conn = $db;
     }
 
-    public function valid_pass($form_pass, $row) {
-        
+    public function validPass($form_pass, $row) 
+    {
         if (password_verify($form_pass, $row["password"])) {
 
             include 'partials/_sessionstart.php';
@@ -73,18 +74,16 @@ class Login{
             } else {
                 
                 header("location:src/welcome.php");
-
             }
             
         } else {
             
             die("password doesnot match");
-                  
         }
-        
     }
 
-    public function valid_user($email) {
+    public function validUser($email) 
+    {
   
         $sql = "SELECT * FROM users u JOIN user_details ud WHERE u.id = ud.user_id AND email='$email'";
   
@@ -104,11 +103,13 @@ class Login{
     }
 }
 
-class Email{
+class Email
+{
     private $email;
     private $empid;
 
-    public static function sendEmail($email, $empid){
+    public static function sendEmail($email, $empid)
+    {
         $to = $email;
         $subject = "ELMS Employee Email Verification";
         $message = "<a href=http://localhost/elms/partials/verify.php?empid=$empid>Verified Your Account</a>";
@@ -123,26 +124,26 @@ class Email{
     }
 }
 
-class Employee{
-    
+class Employee
+{
     private $conn;
     private $email;
 
-    public function __construct($db, $email) {
-
+    public function __construct($db, $email) 
+    {
         $this->conn = $db;
         $this->email = $email;
     
     }
 
-    public function create_detail($number, $dob){
-
+    public function createDetail($number, $dob)
+    {
         $result = $this->conn->query("SELECT id FROM users WHERE `email`= '$this->email'");
         $last_id = (int)$result->fetch_assoc()["id"];
         $birth_key = 'birthday';
         $phone_key = 'number';
         
-        for ($x=0; $x < 2; $x++) {
+        for ($x = 0; $x < 2; $x++) {
             
             $query = "INSERT INTO user_details (user_id, user_key, user_value) VALUES(?, ?, ?)";
 
@@ -150,12 +151,11 @@ class Employee{
            
             if ($x == 0) {
                 
-                $stmt->bind_param('iss',$last_id ,$birth_key, $dob);
+                $stmt->bind_param('iss', $last_id, $birth_key, $dob);
                 
             } else {
                 
                 $stmt->bind_param('isi', $last_id, $phone_key, $number);
-
             }
 
             $stmt->execute();
@@ -166,20 +166,21 @@ class Employee{
         header('location: ../partials/thankyou.php');
     }
 
-    public function create_user($empid, $fname, $lname, $department, $usertype){
-
+    public function createUser($empid, $fname, $lname, $department, $usertype)
+    {
         $query = "INSERT INTO  users (emp_id, first_name, last_name, email, department_id, user_type) VALUES (?, ?, ?, ?, ?, ?)";
 
         $stmt = $this->conn->prepare($query);
 
-        $stmt->bind_param('issssi',$empid, $fname, $lname, $this->email, $department, $usertype);
+        $stmt->bind_param('issssi', $empid, $fname, $lname, $this->email, $department, $usertype);
         
         $stmt->execute();
 
         $stmt->close();
     }
 
-    public function check_user() {
+    public function checkUser() 
+    {
         $existsql = "SELECT * FROM users Where email = '$this->email'";
 
         $result = mysqli_query($this->conn, $existsql);
@@ -188,7 +189,8 @@ class Employee{
     }
 }
 
-class GetEmpId{
+class GetEmpId
+{
     private $conn;
     
     public static function getId($db, $email){
@@ -200,36 +202,37 @@ class GetEmpId{
         while($row = $result->fetch_assoc()) {
                 
             return $row["emp_id"];
-
           }
     }
 }
 
-class SetStatus{
+class SetStatus
+{
     private $conn;
     
-    public static function setToZero($db, $email){
-
+    public static function setToZero($db, $email)
+    {
         $sql = "UPDATE users SET status = 0 WHERE email = '$email'";
         
         $db->query($sql);
     }
 }
 
-class SetPassword{
-
+class SetPassword
+{
     private $resultset;
     private $conn;
     private $id;
 
-    public function __construct($conn, $id){
+    public function __construct($conn, $id)
+    {
         $this->conn = $conn;
         $this->id = $id;
         $this->resultset = $conn->query("SELECT * FROM users WHERE status = 0 AND emp_id = '$id' LIMIT 1");
     }
 
-    public function verified(){
-
+    public function verified()
+    {
         if ($this->resultset->num_rows != 1){
 
             die("user already verified");
@@ -237,8 +240,8 @@ class SetPassword{
         }
     }
 
-    public function updatePass($pass){
-      
+    public function updatePass($pass)
+    {
         if ($this->resultset->num_rows == 1) {
             
             $setPass = password_hash($pass, PASSWORD_DEFAULT);

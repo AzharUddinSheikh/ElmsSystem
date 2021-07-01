@@ -1,15 +1,16 @@
 <?php
 include '_db.php';
+
 session_start();
 
 if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true || $_SESSION['user'] != '1') {
     
-  header("location: ../index.php");
-  
-  exit;
+    header("location: ../index.php");
+
+    exit;
 }
   
-if ($_SERVER['REQUEST_METHOD']=="POST") {
+if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
     $fname = $_POST['fname'];
     $lname = $_POST['lname'];
@@ -20,19 +21,15 @@ if ($_SERVER['REQUEST_METHOD']=="POST") {
     $dname = $_POST['dname'];
     $utype = $_POST['utype'];
 
-    // get database connection
     $database = new Database();
     $db = $database->getConnection();
     
     $common = (new Employee($db, $email));
 
-    $common->check_user();
-
+    $common->checkUser();
     Email::sendEmail($email, $empid);
-
-    $common->create_user($empid, $fname, $lname, $dname, $utype);
-
-    $common->create_detail($number, $dob);
+    $common->createUser($empid, $fname, $lname, $dname, $utype);
+    $common->createDetail($number, $dob);
 
 }
 

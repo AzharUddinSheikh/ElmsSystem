@@ -13,7 +13,7 @@ if(isset($_GET['empid'])) {
 
     $passCreate->verified();
     
-    if ($_SERVER['REQUEST_METHOD']=="POST") {
+    if ($_SERVER['REQUEST_METHOD'] == "POST") {
         
         $pass = $_POST['pass'];
         $pass1 = $_POST['pass1'];

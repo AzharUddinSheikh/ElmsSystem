@@ -10,14 +10,14 @@ if(isset($_POST["dep_name"])) {
    
     $depart = new Department($_POST["dep_name"], $db);
     
-    echo $depart->check_dept();
+    echo $depart->checkDept();
 }
 
 if(isset($_POST["user_email"])) {
 
     $emp = new Employee($db, $_POST["user_email"]);
     
-    echo $emp->check_user();
+    echo $emp->checkUser();
 }
 
 if(isset($_POST["dname"])) {

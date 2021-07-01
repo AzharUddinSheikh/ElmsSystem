@@ -1,5 +1,6 @@
 <?php
 require_once 'vendor/autoload.php';
+
 include 'src/_db.php';
 
 if ($_SERVER['REQUEST_METHOD']=="POST") {
@@ -13,9 +14,9 @@ if ($_SERVER['REQUEST_METHOD']=="POST") {
 
     $common = (new Login($db, $email));
 
-    $valid =$common->valid_user($email);
+    $valid =$common->validUser($email);
 
-    $common->valid_pass($password, $valid);
+    $common->validPass($password, $valid);
 
 }
 ?>

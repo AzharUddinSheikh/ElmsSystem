@@ -4,9 +4,9 @@ session_start();
 
 if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true || $_SESSION['user'] != '1') {
 
-  header("location: ../index.php");
+    header("location: ../index.php");
   
-  exit;
+    exit;
 }
 
 ?>
