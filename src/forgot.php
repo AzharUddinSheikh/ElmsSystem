@@ -2,34 +2,6 @@
 
 include '_db.php';
 
-class GetEmpId{
-    private $conn;
-    
-    public static function getId($db, $email){
-
-        $sql = "SELECT emp_id FROM users WHERE email = '$email'";
-        
-        $result = $db->query($sql);
-       
-        while($row = $result->fetch_assoc()) {
-                
-            return $row["emp_id"];
-
-          }
-    }
-}
-
-class SetStatus{
-    private $conn;
-    
-    public static function setToZero($db, $email){
-
-        $sql = "UPDATE users SET status = 0 WHERE email = '$email'";
-        
-        $db->query($sql);
-    }
-}
-
 if ($_SERVER['REQUEST_METHOD']=="POST") {
 
     $email = $_POST['email'];

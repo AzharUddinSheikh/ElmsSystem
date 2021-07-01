@@ -188,4 +188,76 @@ class Employee{
     }
 }
 
+class GetEmpId{
+    private $conn;
+    
+    public static function getId($db, $email){
+
+        $sql = "SELECT emp_id FROM users WHERE email = '$email'";
+        
+        $result = $db->query($sql);
+       
+        while($row = $result->fetch_assoc()) {
+                
+            return $row["emp_id"];
+
+          }
+    }
+}
+
+class SetStatus{
+    private $conn;
+    
+    public static function setToZero($db, $email){
+
+        $sql = "UPDATE users SET status = 0 WHERE email = '$email'";
+        
+        $db->query($sql);
+    }
+}
+
+class SetPassword{
+
+    private $resultset;
+    private $conn;
+    private $id;
+
+    public function __construct($conn, $id){
+        $this->conn = $conn;
+        $this->id = $id;
+        $this->resultset = $conn->query("SELECT * FROM users WHERE status = 0 AND emp_id = '$id' LIMIT 1");
+    }
+
+    public function verified(){
+
+        if ($this->resultset->num_rows != 1){
+
+            die("user already verified");
+        
+        }
+    }
+
+    public function updatePass($pass){
+      
+        if ($this->resultset->num_rows == 1) {
+            
+            $setPass = password_hash($pass, PASSWORD_DEFAULT);
+
+            $update = $this->conn->query("UPDATE users SET password = '$setPass',status = 1 WHERE emp_id = '$this->id' LIMIT 1");
+
+            if (!$update) {
+               
+                die("Update Failed: Already Verified or Login With Default Password");
+            
+            }
+
+        } else {
+
+            die("setting password result not found");
+
+        }
+    }
+
+}
+
 ?>
