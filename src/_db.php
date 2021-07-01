@@ -99,7 +99,7 @@ class Login{
               
         } else {
 
-              die("user not found");
+              die("user not found valid_user method");
         }   
     }
 }

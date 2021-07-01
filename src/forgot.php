@@ -1,4 +1,50 @@
+<?php 
 
+include '_db.php';
+
+class GetEmpId{
+    private $conn;
+    
+    public static function getId($db, $email){
+
+        $sql = "SELECT emp_id FROM users WHERE email = '$email'";
+        
+        $result = $db->query($sql);
+       
+        while($row = $result->fetch_assoc()) {
+                
+            return $row["emp_id"];
+
+          }
+    }
+}
+
+class SetStatus{
+    private $conn;
+    
+    public static function setToZero($db, $email){
+
+        $sql = "UPDATE users SET status = 0 WHERE email = '$email'";
+        
+        $db->query($sql);
+    }
+}
+
+if ($_SERVER['REQUEST_METHOD']=="POST") {
+
+    $email = $_POST['email'];
+   
+    // get database connection
+    $database = new Database();
+    $db = $database->getConnection();
+
+    $common = (new Employee($db, $email));
+    
+    SetStatus::setToZero($db, $email);
+
+    Email::sendEmail($email, GetEmpId::getId($db, $email));
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,7 +58,7 @@
 <body>
     <div class="w-50 mx-auto text-center">
         <h1 class="mt-5">Forgot Password</h1>
-        <form class="w-30 my-5">
+        <form class="w-30 my-5" method="POST">
             <div class="mb-3">
                 <input name="email" type="email" class="form-control" id="email" placeholder="Email Address">
             </div>
