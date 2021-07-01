@@ -86,7 +86,7 @@ class Login{
 
     public function valid_user($email) {
   
-        $sql = "SELECT * FROM $this->table_name where email = '$email'";
+        $sql = "SELECT * FROM users u JOIN user_details ud WHERE u.id = ud.user_id AND email='$email'";
   
         $result = $this->conn->query($sql);
         

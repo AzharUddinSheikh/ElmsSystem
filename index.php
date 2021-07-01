@@ -40,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD']=="POST") {
                <input name="password" type="password" id="password" placeholder="Enter Your Password">
            </div>
            <div>
-                <a href="#">Forgot Password ? Click Here</a>
+                <a href="src/forgot.php">Forgot Password ? Click Here</a>
            </div>
            <button type="submit">Login</button>
        </form>

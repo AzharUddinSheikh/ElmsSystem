@@ -1,14 +1,5 @@
 <?php 
 
-session_start();
-
-if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true || $_SESSION['user'] != '1') {
-
-  header("location: ../index.php");
-  
-  exit;
-}
-
 include '_db.php';
 
 if(isset($_POST["dep_name"])) {
