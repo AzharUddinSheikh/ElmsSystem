@@ -8,4 +8,5 @@
             $_SESSION["status"] = $row["status"];
             $_SESSION["uservalue"] = $row["user_value"];
             $_SESSION["fullname"] = join(" ", array($row["first_name"], $row["last_name"]));
+            $_SESSION["last_login_timestamp"] = time();
 ?>

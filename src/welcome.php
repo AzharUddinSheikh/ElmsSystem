@@ -9,6 +9,9 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true) {
     exit;
 }
 
+include '_db.php';
+
+InActivity::inActive($_SESSION["last_login_timestamp"]);
 ?>
 
 <!doctype html>
@@ -24,19 +27,17 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true) {
     <title>Welcome ELMS</title>
   </head>
   <body>
-    <div class="container">
-        <h2 class='text-center my-5' >
-        <?php 
+  <div class="container">
+    <h2 class="text-center my-5" >
+    <?php 
           if ($_SESSION["user"] == '1') {
             echo "ADMIN ";
           } else {
             echo "USER ";
           }
-        ?>DETAIL</h2>
+    echo  'DETAIL</h2>
           <table class="table table-striped table-dark">
-              <?php
-        
-            echo '<tr>
+            <tr>
                 <td>Name</td>
                 <td>'.$_SESSION["fullname"].'</td>
             </tr>
@@ -56,17 +57,17 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true) {
                   <td>'.$_SESSION["uservalue"].'</td>
               </tr>
               <tr>
-                  <td>Phone Number</td>
+                  <td>Number</td>
                   <td>'.$_SESSION["uservalue"].'</td>
               </tr>
             </table>
-        </div>';
-?>
+        </div>
 
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.min.js" integrity="sha384-lpyLfhYuitXl2zRZ5Bn2fqnhNAKOAaM/0Kr9laMspuaMiZfGmfwRNFh8HlMy49eQ" crossorigin="anonymous"></script>
   </body>
-</html>
+</html>';
+?>
             

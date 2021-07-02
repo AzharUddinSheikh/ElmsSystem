@@ -9,6 +9,10 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true || $_SESSION['
     exit;
 }
 
+include '_db.php';
+
+InActivity::inActive($_SESSION["last_login_timestamp"]);
+
 ?>
 
 <!DOCTYPE html>
