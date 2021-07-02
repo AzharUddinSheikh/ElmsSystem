@@ -29,6 +29,7 @@ InActivity::inActive($_SESSION["last_login_timestamp"]);
   <body>
   <a class="btn btn-primary" href="../partials/logout.php">Logout</a>
   <a class="btn btn-warning" href="admin.php">Admin</a>  
+  <a class="btn btn-secondary" href="applyleave.php">Apply Leave</a>  
   <div class="container">
     <h2 class="text-center my-5" >
     <?php 
