@@ -28,4 +28,10 @@ if(isset($_POST["dname"])) {
 
     echo "data successfully inserted";
 }
+
+if(isset($_POST["pass"])) {
+    session_start();
+    $pass = password_hash($_POST["pass"], PASSWORD_DEFAULT);
+    ChangePassword::changePass($_SESSION["email"], $pass, $db);
+}
 ?>

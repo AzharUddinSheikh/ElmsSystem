@@ -27,6 +27,7 @@ InActivity::inActive($_SESSION["last_login_timestamp"]);
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
+    <a class="btn btn-warning" href="welcome.php">Home</a>
     <a href="addEmp.php">Add Employee</a>
     <a href="../partials/logout.php">Logout</a>
     <span id="result"></span>
