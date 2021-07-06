@@ -24,17 +24,83 @@ InActivity::inActive($_SESSION["last_login_timestamp"]);
     <title>Document</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="//cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script
+        src="https://code.jquery.com/jquery-3.6.0.js"
+        integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+        crossorigin="anonymous">
+      </script>
+    <script src="//cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+      <script>
+        $(document).ready( function () {
+        $('#myTable').DataTable();
+        } );
+    </script>
 </head>
 <body>
     <a class="btn btn-warning" href="welcome.php">Home</a>
-    <a href="addEmp.php">Add Employee</a>
+   
     <a href="../partials/logout.php">Logout</a>
     <span id="result"></span>
+    
+    <!-- table -->
+    <div class="container mt-5">
+        <h1>EMPLOYEE DETAIL CAN BE EDITED OR BLOCKED </h1>
+    </div>
+    <div class="container mt-5 mb-5">
+        <table class="table table-dark table-striped my-3" id="myTable">
+            <thead>
+                <tr>
+                    <th scope="col">Sno</th>
+                    <th scope="col">Emp-ID</th>
+                    <th scope="col">First-Name</th>
+                    <th scope="col">Last-Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Department-Name</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+      <?php
+        include '../classes/showemp.php';
+
+        $database = new Database();
+        $db = $database->getConnection();
+        
+        $common = new DetailEmp($db);
+            
+        if ($common->showemp()) {
+        
+        $count = 0;
+
+        while($row = $common->result->fetch_assoc()) {
+            
+            $count++;
+        
+            echo "<tr>
+            <th scope='row'>". $count."</th>
+            <td>".$row["emp_id"]."</td>
+            <td>".$row["first_name"]."</td>
+            <td>".$row["last_name"]."</td> 
+            <td>".$row["email"]."</td> 
+            <td>".$row["name"]."</td>
+            <td><button class='btn btn-danger'>BLOCK</button> <button type='button' class='btn btn-warning'>EDIT</button>
+            </tr>";
+        }
+        
+        }
+
+        ?>
+        </tbody>
+        </table>
+    <!-- endtable -->
+    
         <!-- Button trigger modal -->
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
       ADD DEPARTMENT
     </button>
+    <a class="btn btn-primary" href="addEmp.php">Add Employee</a>
 
     <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
