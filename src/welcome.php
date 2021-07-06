@@ -9,7 +9,7 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true) {
     exit;
 }
 
-include '_db.php';
+include '../classes/_common.php';
 
 InActivity::inActive($_SESSION["last_login_timestamp"]);
 ?>

@@ -1,7 +1,7 @@
 <?php
 require_once 'vendor/autoload.php';
 
-include 'src/_db.php';
+include 'classes/_common.php';
 
 if ($_SERVER['REQUEST_METHOD']=="POST") {
 

@@ -1,5 +1,7 @@
 <?php
-include '_db.php';
+
+include '../classes/_common.php';
+include '../classes/_inserting.php';
 
 session_start();
 
@@ -169,12 +171,12 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
               {   
                   if(data == 0)
                   {
-                      $('#available').html('<span class="text-warning">Email Not Available You May Proceed</span>');
+                      $('#available').html('<span class="text-success">Email Not Available You May Proceed</span>');
                       $('.submit').show();
                   }
                   else 
                   {
-                      $('#available').html('<span class="text-danger">Email Available Unable to Submit</span>');
+                      $('#available').html('<span class="text-warning">Email Available Unable to Submit</span>');
                       $('.submit').hide();
                   }
               }

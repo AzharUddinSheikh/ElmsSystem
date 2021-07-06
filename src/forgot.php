@@ -1,6 +1,8 @@
 <?php 
 
-include '_db.php';
+include '../classes/_common.php';
+include '../classes/_updating.php';
+include '../classes/_getting.php';
 
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
@@ -9,8 +11,6 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $database = new Database();
     $db = $database->getConnection();
 
-    $common = (new Employee($db, $email));
-    
     SetStatus::setToZero($db, $email);
     Email::sendEmail($email, GetEmpId::getId($db, $email));
 }

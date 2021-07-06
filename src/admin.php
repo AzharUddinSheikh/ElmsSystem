@@ -9,7 +9,7 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true || $_SESSION['
     exit;
 }
 
-include '_db.php';
+include '../classes/_common.php';
 
 InActivity::inActive($_SESSION["last_login_timestamp"]);
 
@@ -63,7 +63,7 @@ InActivity::inActive($_SESSION["last_login_timestamp"]);
             </thead>
             <tbody>
       <?php
-        include '../classes/showemp.php';
+        include '../classes/_getting.php';
 
         $database = new Database();
         $db = $database->getConnection();

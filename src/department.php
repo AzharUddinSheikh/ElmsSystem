@@ -1,6 +1,8 @@
 <?php 
 
-include '_db.php';
+include '../classes/_common.php';
+include '../classes/_inserting.php';
+include '../classes/_updating.php';
 
 $database = new Database();
 $db = $database->getConnection();

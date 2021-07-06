@@ -1,6 +1,7 @@
 <?php 
 
-include '../src/_db.php';
+include '../classes/_common.php';
+include '../classes/_updating.php';
 
 if(isset($_GET['empid'])) {
 
