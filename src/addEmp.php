@@ -45,12 +45,27 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
+
+    <style>
+      .error {
+        color:red;
+      }
+      .valid {
+        color:green;
+      }
+    </style>
+
+     <title>Document</title>
 </head>
 <body class="bg-secondary">
     <div class="w-50 mx-auto">
       <h2>Fill Out The Detail With Valid Email Address</h2>
-      <form action="" method="POST">
+      <form action="" method="POST" name='addemp' id='addemp'>
         <div class="mb-3">
           <label for="fname" class="form-label">First Name</label>
           <input type="text" class="form-control" name="fname" id="fname">
@@ -66,7 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         </div>
         <div class="mb-3">
           <label for="dob" class="form-label">Date Of Birth</label>
-          <input type="date" class="form-control" name="dob" id="dob">
+          <input type="date" class="form-control" name="dob" id="dob" onkeypress="return false">
         </div>
         <div class="mb-3">
           <label for="number" class="form-label">Phone Number</label>
@@ -101,34 +116,71 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
 
     <!-- Option 1: Bootstrap Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-    <script>
-        $(document).ready(function() {
-            $('#uEmail').blur(function() {
-                var uemail = $(this).val();
+  </body>
+</html>
+    
+<script type="text/javascript">
+    //validation
+    $(document).ready(function() {
+        $("#addemp").validate({
+            rules: {
+                fname: {
+                    required: true,
+                },
+                lname: {
+                    required: true,
+                },
+                dname: {
+                    required: true,
+                },
+                dob: {
+                    required: true,
+                    date: true,
+                },
+                number: {
+                    required: true,
+                    minlength: 10,
+                    maxlength: 10,
+                },
+                empid: {
+                    required: true,
+                    minlength: 6,
+                    maxlength: 6,
+                },
+                utype: {
+                    required: true,
+                },
+                email: {
+                    required: true,
+                    email: true
+                },
+            },
+        });
+      });
+     
+      $('#uEmail').blur(function() {
+          var uemail = $(this).val();
 
-                $.ajax({
-                    url:'department.php',
-                    method:"POST",
-                    data:{user_email:uemail},
-                    success:function(data)
-                    {   
-                        if(data == 0)
-                        {
-                            $('#available').html('<span class="text-warning">Email Not Available You May Proceed</span>');
-                            $('.submit').show();
-                        }
-                        else 
-                        {
-                            $('#available').html('<span class="text-danger">Email Available Unable to Submit</span>');
-                            $('.submit').hide();
-                        }
-                    }
-                })
-            })
-        })
+          $.ajax({
+              url:'department.php',
+              method:"POST",
+              data:{user_email:uemail},
+              success:function(data)
+              {   
+                  if(data == 0)
+                  {
+                      $('#available').html('<span class="text-warning">Email Not Available You May Proceed</span>');
+                      $('.submit').show();
+                  }
+                  else 
+                  {
+                      $('#available').html('<span class="text-danger">Email Available Unable to Submit</span>');
+                      $('.submit').hide();
+                  }
+              }
+          })
+      })
+      
     </script>
 
 
-  </body>
-</html>
