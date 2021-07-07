@@ -45,7 +45,7 @@ $db = $database->getConnection();
 <body>
     <a class="btn btn-warning" href="welcome.php">Home</a>
    
-    <a href="../partials/logout.php">Logout</a>
+    <a class="btn btn-secondary" href="../partials/logout.php">Logout</a>
     <span id="result"></span>
     
     <!-- table leave  -->
@@ -77,7 +77,7 @@ $db = $database->getConnection();
                             <td>'.$row["first_name"]." ".$row["last_name"].'</td>
                             <td>'.$row["start_date"].'</td>
                             <td>'.$row["end_date"].'</td>
-                            <td><button class="btn btn-success">Approve</button></td>
+                            <td><button class="btn btn-success">Approve</button>  <button class="btn btn-danger">Reject</button></td>
                             </tr>';
                         }
                     }
@@ -123,7 +123,7 @@ $db = $database->getConnection();
             <td>".$row["last_name"]."</td> 
             <td>".$row["email"]."</td> 
             <td>".$row["name"]."</td>
-            <td><button class='btn btn-danger'>BLOCK</button> <button type='button' class='btn btn-warning'>EDIT</button>
+            <td><button class='block btn btn-danger'>BLOCK</button> <button type='button' class='btn btn-warning'>EDIT</button>
             </tr>";
         }
         
@@ -208,6 +208,18 @@ $db = $database->getConnection();
                 return false;
 
             });
+
+            document.querySelectorAll('.block').forEach((element)=>{
+                element.addEventListener("click",(e)=>{
+                    if (this.value=="0") {
+                        this.value="1";
+                        element.innerHTML="UNBLOCK";
+                    } else {
+                        this.value="0";
+                        element.innerHTML="BLOCK";
+                    }
+                })
+            })
         })
     </script>
 
