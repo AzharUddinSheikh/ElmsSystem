@@ -10,9 +10,12 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true || $_SESSION['
 }
 
 include '../classes/_common.php';
+include '../classes/_getting.php';
 
 InActivity::inActive($_SESSION["last_login_timestamp"]);
 
+$database = new Database();
+$db = $database->getConnection();
 ?>
 
 <!DOCTYPE html>
@@ -35,6 +38,7 @@ InActivity::inActive($_SESSION["last_login_timestamp"]);
       <script>
         $(document).ready( function () {
         $('#myTable').DataTable();
+        $('#otherTable').DataTable();
         } );
     </script>
 </head>
@@ -44,9 +48,48 @@ InActivity::inActive($_SESSION["last_login_timestamp"]);
     <a href="../partials/logout.php">Logout</a>
     <span id="result"></span>
     
+    <!-- table leave  -->
+    <h1 class="text-center">EMPLOYEE LEAVE PROPOSAL REJECT OR APPROVED</h1>
+    <div class="container mt-5 mb-5">
+        <table class="table table-dark table-striped my-3" id="otherTable">
+            <thead>
+                <tr>
+                    <th scope="col">Sno</th>
+                    <th scope="col">Emp-ID</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">StartDate</th>
+                    <th scope="col">EndDate</th>
+                    <th scope="col">Action</th>
+                </tr>
+                <?php 
+                    $comm = new GetLeave($db);
+                    
+                    if($comm->leaveRequest()) {
+                        $count = 0;
+                        
+                        while($row = $comm->result->fetch_assoc()) {
+                            $count++;
+                            
+                            echo
+                            '<tr>
+                            <td>'.$count.'</td>
+                            <td>'.$row["emp_id"].'</td>
+                            <td>'.$row["first_name"]." ".$row["last_name"].'</td>
+                            <td>'.$row["start_date"].'</td>
+                            <td>'.$row["end_date"].'</td>
+                            <td><button class="btn btn-success">Approve</button></td>
+                            </tr>';
+                        }
+                    }
+                ?>
+            </thead>
+        </table>
+    </div>
+    <!-- end table leave -->
+
     <!-- table -->
     <div class="container mt-5">
-        <h1>EMPLOYEE DETAIL CAN BE EDITED OR BLOCKED </h1>
+        <h1 class="text-center">EMPLOYEE DETAIL CAN BE EDITED OR BLOCKED </h1>
     </div>
     <div class="container mt-5 mb-5">
         <table class="table table-dark table-striped my-3" id="myTable">
@@ -63,11 +106,6 @@ InActivity::inActive($_SESSION["last_login_timestamp"]);
             </thead>
             <tbody>
       <?php
-        include '../classes/_getting.php';
-
-        $database = new Database();
-        $db = $database->getConnection();
-        
         $common = new DetailEmp($db);
             
         if ($common->showemp()) {

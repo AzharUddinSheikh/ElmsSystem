@@ -7,7 +7,7 @@ class DetailEmp
     public function __construct($db)
     {
         $this->conn = $db;
-        $this->sql = "SELECT * FROM users JOIN departments WHERE users.id = departments.id";
+        $this->sql = "SELECT * FROM users JOIN departments WHERE users.id = departments.id AND users.status != 0";
         $this->result = $this->conn->query($this->sql);
     }
         
@@ -44,4 +44,25 @@ class GetEmpId
     }
 }
 
+class GetLeave
+{
+
+    public function __construct($db) 
+    {
+        $this->sql = "SELECT * FROM users JOIN leave_requests WHERE users.id = leave_requests.user_id AND leave_requests.status = 0";
+        $this->result = $db->query($this->sql);
+    }
+    public function leaveRequest()
+    {
+        if($this->result->num_rows > 0) {
+            
+            return true;
+        
+        } else {
+        
+            return false;
+        
+        }
+    }
+}
 ?>
