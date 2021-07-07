@@ -84,6 +84,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         <div class="mb-3">
           <label for="dob" class="form-label">Date Of Birth</label>
           <input type="date" class="form-control" name="dob" id="dob" onkeypress="return false">
+          <span id="dobID"></span>
         </div>
         <div class="mb-3">
           <label for="number" class="form-label">Phone Number</label>
@@ -123,7 +124,6 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     
 <script type="text/javascript">
     //validation
-    $(document).ready(function() {
         $("#addemp").validate({
             rules: {
                 fname: {
@@ -158,8 +158,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
                 },
             },
         });
-      });
-     
+      
       $('#uEmail').blur(function() {
           var uemail = $(this).val();
 
@@ -183,6 +182,19 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
           })
       })
       
+      $('#dob').blur(function() {
+        var date = new Date($(this).val());
+        var duration = ((new Date()) - date)/(1000*60*60*24);
+        if (duration < 6580) {
+            document.getElementById("dobID").innerHTML = "You are not 18";
+            document.getElementById("dobID").style.color = "red";
+            $('.submit').hide();
+        } else if (duration >= 6580) {
+            document.getElementById("dobID").innerHTML = "Above 18 ";
+            document.getElementById("dobID").style.color = "green";
+            $('.submit').show();
+        }
+      })
     </script>
 
 
