@@ -11,11 +11,28 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true || $_SESSION['
 
 include '../classes/_common.php';
 include '../classes/_getting.php';
+include '../classes/_updating.php';
 
 InActivity::inActive($_SESSION["last_login_timestamp"]);
 
 $database = new Database();
 $db = $database->getConnection();
+
+$apply_reject = new ApproveReject($db);
+
+if(isset($_GET['approve'])) {
+  
+    $id = $_GET['approve'];
+  
+    $apply_reject->approve($id);
+}
+
+if(isset($_GET['reject'])) {
+  
+    $id = $_GET['reject'];
+
+    $apply_reject->reject($id);
+}
 ?>
 
 <!DOCTYPE html>
@@ -77,7 +94,7 @@ $db = $database->getConnection();
                             <td>'.$row["first_name"]." ".$row["last_name"].'</td>
                             <td>'.$row["start_date"].'</td>
                             <td>'.$row["end_date"].'</td>
-                            <td><button class="btn btn-success">Approve</button>  <button class="btn btn-danger">Reject</button></td>
+                            <td><button id='.$row["id"].' class="approve btn btn-success">Approve</button>  <button id='.$row["id"].' class="reject btn btn-danger">Reject</button></td>
                             </tr>';
                         }
                     }
@@ -217,6 +234,24 @@ $db = $database->getConnection();
                     } else {
                         this.value="0";
                         element.innerHTML="BLOCK";
+                    }
+                })
+            })
+
+            document.querySelectorAll('.approve').forEach((element)=>{
+                element.addEventListener("click", (e)=>{
+                    id = e.target.id.substr(0,);
+                    if(confirm("Are You Sure To Approved")) {
+                        window.location = `/elms/src/admin.php?approve=${id}`
+                    }
+                })
+            })
+
+            document.querySelectorAll('.reject').forEach((element)=>{
+                element.addEventListener("click", (e)=>{
+                    id = e.target.id.substr(0,);
+                    if(confirm("Are You Sure To Reject")) {
+                        window.location = `/elms/src/admin.php?reject=${id}`
                     }
                 })
             })
