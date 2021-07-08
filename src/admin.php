@@ -19,6 +19,7 @@ $database = new Database();
 $db = $database->getConnection();
 
 $apply_reject = new ApproveReject($db);
+$block_unblock = new BlockUnBlock($db);
 
 if(isset($_GET['approve'])) {
   
@@ -32,6 +33,20 @@ if(isset($_GET['reject'])) {
     $id = $_GET['reject'];
 
     $apply_reject->reject($id);
+}
+
+if(isset($_GET['block'])) {
+  
+    $id = $_GET['block'];
+    
+    $block_unblock->block($id);
+}
+
+if(isset($_GET['unblock'])) {
+    
+    $id = $_GET['unblock'];
+    
+    $block_unblock->unBlock($id);
 }
 ?>
 
@@ -54,9 +69,8 @@ if(isset($_GET['reject'])) {
     <script src="//cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
       <script>
         $(document).ready( function () {
-        $('#myTable').DataTable();
-        $('#otherTable').DataTable();
-        } );
+            $('table').DataTable();
+        });
     </script>
 </head>
 <body>
@@ -68,7 +82,7 @@ if(isset($_GET['reject'])) {
     <!-- table leave  -->
     <h1 class="text-center">EMPLOYEE LEAVE PROPOSAL REJECT OR APPROVED</h1>
     <div class="container mt-5 mb-5">
-        <table class="table table-dark table-striped my-3" id="otherTable">
+        <table class="table table-dark table-striped my-3">
             <thead>
                 <tr>
                     <th scope="col">Sno</th>
@@ -109,7 +123,7 @@ if(isset($_GET['reject'])) {
         <h1 class="text-center">EMPLOYEE DETAIL CAN BE EDITED OR BLOCKED </h1>
     </div>
     <div class="container mt-5 mb-5">
-        <table class="table table-dark table-striped my-3" id="myTable">
+        <table class="table table-dark table-striped my-3">
             <thead>
                 <tr>
                     <th scope="col">Sno</th>
@@ -140,7 +154,13 @@ if(isset($_GET['reject'])) {
             <td>".$row["last_name"]."</td> 
             <td>".$row["email"]."</td> 
             <td>".$row["name"]."</td>
-            <td><button class='block btn btn-danger'>BLOCK</button> <button type='button' class='btn btn-warning'>EDIT</button>
+            <td>";
+            if ($row["status"] == "1") {
+                echo "<button id='$row[id]' class='block btn btn-danger'>BLOCK</button>";
+            } elseif ($row["status"] == "2") {
+                echo "<button id='$row[id]' class='unblock btn btn-warning'>UNBLOCK</button>";
+            }
+             echo " <button type='button' class='btn btn-warning'>EDIT</button>
             </tr>";
         }
         
@@ -228,12 +248,18 @@ if(isset($_GET['reject'])) {
 
             document.querySelectorAll('.block').forEach((element)=>{
                 element.addEventListener("click",(e)=>{
-                    if (this.value=="0") {
-                        this.value="1";
-                        element.innerHTML="UNBLOCK";
-                    } else {
-                        this.value="0";
-                        element.innerHTML="BLOCK";
+                    id = e.target.id.substr(0,);
+                    if(confirm("Are You Sure To Block This User")){
+                        window.location = `/elms/src/admin.php?block=${id}`
+                    }
+                })
+            })
+            
+            document.querySelectorAll('.unblock').forEach((element)=>{
+                element.addEventListener("click",(e)=>{
+                    id = e.target.id.substr(0,);
+                    if(confirm("Are You Sure To UnBlock This User")){
+                        window.location = `/elms/src/admin.php?unblock=${id}`
                     }
                 })
             })

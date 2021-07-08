@@ -83,14 +83,38 @@ class ApproveReject
     {
         $sql =  "UPDATE leave_requests SET status = 1 WHERE id = $id";
     
-        mysqli_query($this->conn,$sql);
+        mysqli_query($this->conn, $sql);
     }
 
     public function reject($id)
     {
         $sql =  "UPDATE leave_requests SET status = 2 WHERE id = $id";
     
-        mysqli_query($this->conn,$sql);
+        mysqli_query($this->conn, $sql);
+    }
+}
+
+class BlockUnBlock
+{
+    private $conn;
+
+    public function __construct($db)
+    {
+        $this->conn = $db;
+    }
+
+    public function block($id)
+    {
+        $sql =  "UPDATE users SET status = 2 WHERE id = $id";
+    
+        mysqli_query($this->conn, $sql);
+    }
+
+    public function unBlock($id)
+    {
+        $sql =  $sql = "UPDATE users SET status = 1 WHERE id = $id";
+    
+        mysqli_query($this->conn, $sql);
     }
 }
 ?>
