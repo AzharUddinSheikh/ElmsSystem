@@ -10,8 +10,12 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true) {
 }
 
 include '../classes/_common.php';
+include '../classes/_getting.php';
 
 InActivity::inActive($_SESSION["last_login_timestamp"]);
+
+$database = new Database();
+$db = $database->getConnection();
 ?>
 
 <!doctype html>
@@ -24,12 +28,22 @@ InActivity::inActive($_SESSION["last_login_timestamp"]);
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="//cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
+    <script src="//cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready( function () {
+            $('#myTable').DataTable();
+        });
+    </script>
     <title>Welcome ELMS</title>
   </head>
   <body>
   <a class="btn btn-primary" href="../partials/logout.php">Logout</a>
   <a class="btn btn-warning" href="admin.php">Admin</a>  
-  <a class="btn btn-secondary" href="applyleave.php">Apply Leave</a>  
+  <a class="btn btn-secondary" href="applyleave.php">Apply Leave</a>
+  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+  Change Password
+  </button>
   <div class="container">
     <h2 class="text-center my-5" >
     <?php 
@@ -64,15 +78,52 @@ InActivity::inActive($_SESSION["last_login_timestamp"]);
                   <td>'.$_SESSION["uservalue"].'</td>
               </tr>
             </table>
-        </div>
-        
         </div>';
-        ?>
+      ?>
+    <h2 class="text-center my-5">LEAVE HISTORY OF THE USER</h2>
+    <div class="container mt-5 mb-5">
+      <table class="table table-dark table-striped my-3" id="myTable">
+            <thead>
+              <tr>
+                <th scope="col">Sno</th>
+                <th scope="col">Applied On</th>
+                <th scope="col">StartDate</th>
+                <th scope="col">EndDate</th>
+                <th scope="col">Status</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+            <?php 
+            $user_leave = new GetLeave($db, $_SESSION["id"]);
+
+            if($user_leave->userLeave()) {
+
+              $count = 0;
+
+              while($row = $user_leave->result1->fetch_assoc()) {
+
+                $count++;
+                
+                echo
+                    '<tr>
+                    <td>'.$count.'</td>
+                    <td>'.$row["added_on"].'</td>
+                    <td>'.$row["start_date"].'</td>
+                    <td>'.$row["end_date"].'</td>
+                    <td>'.$row["status"].'</td>
+                    <td><button class="btn btn-secondary">Cancel</button></td>
+                    </tr>';
+              }
+            }
+            ?>
+            </tbody>
+      </table>
+    </div>
+  </div>
 <!-- modal start  -->
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-  Change Password
-</button>
+
     <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">

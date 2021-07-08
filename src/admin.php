@@ -93,9 +93,10 @@ if(isset($_GET['unblock'])) {
                     <th scope="col">Action</th>
                 </tr>
                 <?php 
-                    $comm = new GetLeave($db);
+                    $comm = new GetLeave($db, $_SESSION["id"]);
                     
                     if($comm->leaveRequest()) {
+                        
                         $count = 0;
                         
                         while($row = $comm->result->fetch_assoc()) {
