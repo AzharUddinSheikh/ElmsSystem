@@ -11,11 +11,19 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true) {
 
 include '../classes/_common.php';
 include '../classes/_getting.php';
+include '../classes/_updating.php';
 
 InActivity::inActive($_SESSION["last_login_timestamp"]);
 
 $database = new Database();
 $db = $database->getConnection();
+
+if(isset($_GET["cancel"])) {
+
+  $id = $_GET['cancel'];
+
+  LeaveDelete::deleteRequest($db, $id);
+}
 ?>
 
 <!doctype html>
@@ -111,8 +119,24 @@ $db = $database->getConnection();
                     <td>'.$row["added_on"].'</td>
                     <td>'.$row["start_date"].'</td>
                     <td>'.$row["end_date"].'</td>
-                    <td>'.$row["status"].'</td>
-                    <td><button class="btn btn-secondary">Cancel</button></td>
+                    <td>';
+                    if($row["status"] == 0){
+                      echo "PENDING";
+                    } elseif ($row["status"] == 1){
+                      echo "APPROVED";
+                    } else {
+                      echo "REJECTED";
+                    }
+                    echo
+                    '</td>
+                    <td>';
+                    if ($row["status"] == 0) {
+                      echo "<button id='$row[id]' class='cancel btn btn-secondary'>Cancel</button>";
+                    } else {
+                      echo '<button class="btn btn-secondary" disabled>Cancel</button>';
+                    }
+                    echo
+                    '</td>
                     </tr>';
               }
             }
@@ -175,6 +199,15 @@ $db = $database->getConnection();
                 return false;
 
         });
+
+        document.querySelectorAll('.cancel').forEach((element)=>{
+                element.addEventListener("click",(e)=>{
+                    id = e.target.id.substr(0,);
+                    if(confirm("Are You Sure To Delete This Request")){
+                        window.location = `/elms/src/welcome.php?cancel=${id}`
+                    }
+                })
+            })
       })
     </script>
   </body>

@@ -112,9 +112,19 @@ class BlockUnBlock
 
     public function unBlock($id)
     {
-        $sql =  $sql = "UPDATE users SET status = 1 WHERE id = $id";
+        $sql =  "UPDATE users SET status = 1 WHERE id = $id";
     
         mysqli_query($this->conn, $sql);
+    }
+}
+
+class LeaveDelete
+{
+    public static function deleteRequest($db, $id)
+    {
+        $sql = "DELETE FROM leave_requests WHERE id = $id";
+
+        mysqli_query($db, $sql);
     }
 }
 ?>
