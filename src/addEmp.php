@@ -5,7 +5,7 @@ include '../classes/_inserting.php';
 
 session_start();
 
-if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true || $_SESSION['user'] != '1') {
+if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true || $_SESSION['user'] != '1' || $_SESSION['status'] != '1') {
     
     header("location: ../index.php");
 

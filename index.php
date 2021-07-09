@@ -1,9 +1,15 @@
 <?php
 require_once 'vendor/autoload.php';
 
+session_start();
 if(isset($_SESSION["loggedin"])){
-    header('location:src/welcome.php');
-}
+
+    if($_SESSION["status"] == "1"){
+        
+        header('location:src/welcome.php');
+    }
+
+} 
 
 include 'classes/_common.php';
 

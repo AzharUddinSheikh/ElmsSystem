@@ -24,18 +24,17 @@ if(isset($_GET['empid'])) {
             $passCreate->updatePass($pass);
     
             header("location:../index.php");
-        
+            
         } else {
-    
-            die("password and confirm password should be equal");
-        
+            
+            echo '<script>alert("Password doesnot Match")</script>';
+            
         }
-    
+        
     }
 } else {
 
-    die("Something went wrong may be you are not authorized");
-
+    header('location: ../index.php');
 }
 
 ?>

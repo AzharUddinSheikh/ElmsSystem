@@ -29,8 +29,9 @@ class SetPassword
     {
         if ($this->resultset->num_rows != 1){
 
-            die("user already verified");
-        
+            echo '<script>alert("User Already Verified")</script>';
+            
+            die();
         }
     }
 

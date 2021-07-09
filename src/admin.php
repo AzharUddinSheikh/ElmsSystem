@@ -2,8 +2,8 @@
 
 session_start();
 
-if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true || $_SESSION['user'] != '1') {
-
+if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true || $_SESSION['status'] != '1' || $_SESSION['user'] != '1') {
+    
     header("location: ../index.php");
   
     exit;
@@ -156,18 +156,22 @@ if(isset($_GET['unblock'])) {
             <td>".$row["email"]."</td> 
             <td>".$row["name"]."</td>
             <td>";
-            if ($row["status"] == "1") {
-                echo "<button id='$row[id]' class='block btn btn-danger'>BLOCK</button>";
-            } elseif ($row["status"] == "2") {
-                echo "<button id='$row[id]' class='unblock btn btn-warning'>UNBLOCK</button>";
+            if($_SESSION["emp_id"] === $row["emp_id"]){
+                echo "<button class='block btn btn-danger' disabled>BLOCK</button>";
+            } else {
+                if ($row["status"] == "1") {
+                    echo "<button id='$row[id]' class='block btn btn-danger'>BLOCK</button>";
+                } elseif ($row["status"] == "2") {
+                    echo "<button id='$row[id]' class='unblock btn btn-warning'>UNBLOCK</button>";
+                }
             }
              echo " <button type='button' class='btn btn-warning'>EDIT</button>
             </tr>";
         }
         
-        }
+    }
 
-        ?>
+?>
         </tbody>
         </table>
     <!-- endtable -->
