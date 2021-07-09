@@ -40,43 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-
-    <script>
-        $(document).ready(function() {
-            $('#email').blur(function() {
-                var email = $(this).val();
-
-                if(email == '') {
-                    $('#available').html('<span class="text-danger">Email Field Should Not Empty</span>');
-               
-                    $('.submit').hide();
-                
-                } else { 
-                    
-                    $('.submit').show();
-                
-                    $.ajax({
-                        url:'department.php',
-                        method:"POST",
-                        data:{user_email:email},
-                        success:function(data)
-                        {   
-                            if(data == 0)
-                            {
-                                $('#available').html('<span class="text-danger">Email Not Exists</span>');
-                                $('.submit').hide();
-                            }
-                            else 
-                            {
-                                $('#available').html('<span class="text-success">Email Found Click For Reset Link</span>');
-                                $('.submit').show();
-                            }
-                        }
-                    })
-                }
-            })
-        })
-    </script>
+    <script src="../public/javascript/forgot.js"></script>
 
 </body>
 </html>

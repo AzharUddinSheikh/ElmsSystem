@@ -1,6 +1,10 @@
 <?php
 require_once 'vendor/autoload.php';
 
+if(isset($_SESSION["loggedin"])){
+    header('location:src/welcome.php');
+}
+
 include 'classes/_common.php';
 
 if ($_SERVER['REQUEST_METHOD']=="POST") {
@@ -14,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD']=="POST") {
 
     $common = (new Login($db, $email));
 
-    $valid =$common->validUser($email);
+    $valid = $common->validUser($email);
 
     $common->validPass($password, $valid);
 
@@ -27,8 +31,8 @@ if ($_SERVER['REQUEST_METHOD']=="POST") {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Page ELMS</title>
-    <link rel="stylesheet" href="css/normalize.css">
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="public/css/normalize.css">
+    <link rel="stylesheet" href="public/css/styles.css">
 </head>
 <body>
    <div class="center">

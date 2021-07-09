@@ -15,13 +15,14 @@ include '../classes/_inserting.php';
 InActivity::inActive($_SESSION["last_login_timestamp"]);
 
 if($_SERVER['REQUEST_METHOD'] == "POST") {
+    
     $reason = $_POST["textarea"];
     $date1 = $_POST["dob"];
     $date2 = $_POST["dob1"];
 
     $database = new Database();
     $db = $database->getConnection();
-
+    echo $_SESSION["id"];
     $leave = new AddLeave($db, $_SESSION["id"]);
     $leave->appLeave($reason, $date1, $date2);
   }
@@ -74,47 +75,13 @@ if($_SERVER['REQUEST_METHOD'] == "POST") {
           <span class="submit">
             <button type="submit" class="btn btn-primary">Apply</button>
           </span>
-          <a class="btn btn-primary" href="admin.php">Cancel</a>
+          <a class="btn btn-primary" href="welcome.php">Cancel</a>
           <button type="reset" class="btn btn-primary">Clear</button>
         </div>
       </form>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-    <script>
-      $(document).ready(function() {
-        // Wait for the DOM to be ready
-        $(function () {
-            $("form[name='applyLeave']").validate({
-                rules: {
-                    textarea: {
-                        required: true,
-                        minlength: 15
-                    },
-                    dob: {
-                        required: true,
-                        date: true
-                    },
-                    dob1: {
-                        required: true,
-                        date: true
-                    }
-                },
-                messages: {
-                    textarea: {
-                        required: "Please Provide Reason",
-                        minlength: "reason should be atleast 15 character"
-                    }
-                },
-                // Make sure the form is submitted to the destination defined
-                // in the "action" attribute of the form when valid
-                submitHandler: function (form) {
-                    form.submit();
-                }
-            });
-        });        
-      });
-    </script>
-
+    <script src="../public/javascript/applyleave.js"></script>
 </body>
 </html>

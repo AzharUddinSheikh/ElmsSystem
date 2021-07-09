@@ -153,7 +153,7 @@ if(isset($_GET["cancel"])) {
         <div class="modal-dialog">
             <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Department Name</h5>
+                <h5 class="modal-title" id="exampleModalLabel">New Password</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -173,42 +173,6 @@ if(isset($_GET["cancel"])) {
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.min.js" integrity="sha384-lpyLfhYuitXl2zRZ5Bn2fqnhNAKOAaM/0Kr9laMspuaMiZfGmfwRNFh8HlMy49eQ" crossorigin="anonymous"></script>
-          
-    <script>
-      $(document).ready(function() {
-          $('#pass').blur(function() {
-              var pass = $(this).val();
-              if(pass == '' || pass.length <= 4) {
-                $('#available').html('<span class="text-danger">Should Not Be Empty and Atleast 5 character</span>');
-                $('.hide').hide();
-              } else { 
-                $('#available').html('<span class="text-success">Password Is Valid</span>');
-                $('.hide').show();
-                }
-          });
-          
-          $("#submit").click(function() {
-                var pass = $("#myForm :input").serializeArray();
-                $.post( $("#myForm").attr("action"), pass, function(info) {
-                    alert(info);
-                });
-            });
-        
-        $("#myForm").submit(function () {
-                $("#myForm")[0].reset();
-                return false;
-
-        });
-
-        document.querySelectorAll('.cancel').forEach((element)=>{
-                element.addEventListener("click",(e)=>{
-                    id = e.target.id.substr(0,);
-                    if(confirm("Are You Sure To Delete This Request")){
-                        window.location = `/elms/src/welcome.php?cancel=${id}`
-                    }
-                })
-            })
-      })
-    </script>
+    <script src="../public/javascript/welcome.js"></script>
   </body>
 </html>
