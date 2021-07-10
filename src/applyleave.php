@@ -12,6 +12,10 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true || $_SESSION['
 include '../classes/_common.php';
 include '../classes/_inserting.php';
 
+use CommonClass\InActivity;
+use CommonClass\Database;
+use AddingDetail\AddLeave;
+
 InActivity::inActive($_SESSION["last_login_timestamp"]);
 
 if($_SERVER['REQUEST_METHOD'] == "POST") {
@@ -22,7 +26,6 @@ if($_SERVER['REQUEST_METHOD'] == "POST") {
 
     $database = new Database();
     $db = $database->getConnection();
-    echo $_SESSION["id"];
     $leave = new AddLeave($db, $_SESSION["id"]);
     $leave->appLeave($reason, $date1, $date2);
   }

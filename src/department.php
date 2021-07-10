@@ -4,6 +4,11 @@ include '../classes/_common.php';
 include '../classes/_inserting.php';
 include '../classes/_updating.php';
 
+use CommonClass\Database;
+use AddingDetail\Department;
+use AddingDetail\Employee;
+use UpdatingDetail\ChangePassword;
+
 $database = new Database();
 $db = $database->getConnection();
 

@@ -4,11 +4,16 @@ include '../classes/_common.php';
 include '../classes/_updating.php';
 include '../classes/_getting.php';
 
+use CommonClass\Database;
+use CommonClass\Email;
+use UpdatingDetail\SetStatus;
+use GettingDetail\GetEmpId;
+
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
     $email = $_POST['email'];
    
-    $database = new Database();
+    $database = new CommonClass\Database();
     $db = $database->getConnection();
 
     SetStatus::setToZero($db, $email);

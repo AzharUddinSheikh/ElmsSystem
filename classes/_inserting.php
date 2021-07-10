@@ -1,5 +1,7 @@
 <?php
 
+namespace AddingDetail;
+
 class Employee
 {
     private $conn;

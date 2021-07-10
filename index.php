@@ -13,6 +13,9 @@ if(isset($_SESSION["loggedin"])){
 
 include 'classes/_common.php';
 
+use CommonClass\Database;
+use CommonClass\Login;
+
 if ($_SERVER['REQUEST_METHOD']=="POST") {
 
     $email = $_POST['email'];
@@ -22,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD']=="POST") {
     $database = new Database();
     $db = $database->getConnection();
 
-    $common = (new Login($db, $email));
+    $common = new Login($db, $email);
 
     $valid = $common->validUser($email);
 

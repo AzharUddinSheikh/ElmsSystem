@@ -13,6 +13,13 @@ include '../classes/_common.php';
 include '../classes/_getting.php';
 include '../classes/_updating.php';
 
+use CommonClass\Database;
+use CommonClass\InActivity;
+use UpdatingDetail\ApproveReject;
+use UpdatingDetail\BlockUnBlock;
+use GettingDetail\DetailEmp;
+use GettingDetail\GetLeave;
+
 InActivity::inActive($_SESSION["last_login_timestamp"]);
 
 $database = new Database();

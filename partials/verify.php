@@ -3,6 +3,9 @@
 include '../classes/_common.php';
 include '../classes/_updating.php';
 
+use CommonClass\Database;
+use UpdatingDetail\SetPassword;
+
 if(isset($_GET['empid'])) {
 
     $id = $_GET['empid'];

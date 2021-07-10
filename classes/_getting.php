@@ -1,5 +1,7 @@
 <?php
 
+namespace GettingDetail;
+
 class DetailEmp
 {
     private $conn;

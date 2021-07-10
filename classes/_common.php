@@ -1,5 +1,7 @@
 <?php
 
+namespace CommonClass;
+
 class Database
 {
     private $servername = "127.0.0.1:3306";

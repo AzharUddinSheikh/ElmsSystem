@@ -1,5 +1,7 @@
 <?php
 
+namespace UpdatingDetail;
+
 class ChangePassword
 {
     public static function changePass($email, $pass, $db)

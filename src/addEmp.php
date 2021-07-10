@@ -3,6 +3,11 @@
 include '../classes/_common.php';
 include '../classes/_inserting.php';
 
+use CommonClass\InActivity;
+use CommonClass\Database;
+use CommonClass\Email;
+use AddingDetail\Employee;
+
 session_start();
 
 if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true || $_SESSION['user'] != '1' || $_SESSION['status'] != '1') {
@@ -12,7 +17,7 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true || $_SESSION['
     exit;
 }
 
-InActivity::inActive($_SESSION["last_login_timestamp"]);
+CommonClass\InActivity::inActive($_SESSION["last_login_timestamp"]);
   
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
