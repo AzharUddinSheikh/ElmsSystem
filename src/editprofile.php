@@ -38,17 +38,19 @@ if(isset($_POST['submit'])){
     $email = $_POST["email"];
     $dob = $_POST["dob"];
     $number = $_POST["number"];
+    
     if((!empty($_FILES['image']))){
-      
         $img = $_FILES["image"]['name'];
-      } else {
+      } 
+
+    if ($_FILES["image"]['name'] == ""){
         $img = "default.jpg";
-        echo $img;
-      }
+    } 
       
     $emp_edit = new EditEmp($db, $_GET["id"]);
     $emp_edit->updateUser($fname, $lname, $email, $img);
     $emp_edit->updateUserDetail($dob, $number);
+    $emp_edit->img_folder($img);
     
     echo '<script>alert("Profile Has been Updated")</script>';
 }

@@ -139,18 +139,16 @@ class EditEmp
         $this->id = $id;
     }
    
-    // // saving image function
-    // public function img_folder($image) 
-    // {
-    //     $target = "public/images/".basename($image);
-    //     move_uploaded_file($_FILES['image']['tmp_name'], $target);
-    // }
+    public function img_folder($img) 
+    {
+        $target = "../public/images/".basename($img);
+        move_uploaded_file($_FILES['image']['tmp_name'], $target);
+    }
     
     public function updateUser($fname, $lname, $email, $image)
     {
         $sql = "UPDATE users SET first_name = '$fname', last_name = '$lname', email = '$email', image = '$image' WHERE id = '$this->id'";
         $result = $this->conn->query($sql);
-        // $this->img_folder($image);
     }
    
     public function updateUserDetail($birthday, $number)
