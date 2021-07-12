@@ -17,7 +17,7 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true || $_SESSION['
     exit;
 }
 
-CommonClass\InActivity::inActive($_SESSION["last_login_timestamp"]);
+InActivity::inActive($_SESSION["last_login_timestamp"]);
   
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
 

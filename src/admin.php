@@ -172,7 +172,7 @@ if(isset($_GET['unblock'])) {
                     echo "<button id='$row[id]' class='unblock btn btn-warning'>UNBLOCK</button>";
                 }
             }
-             echo " <button type='button' class='btn btn-warning'>EDIT</button>
+             echo " <button id='$row[id]' type='button' class='edit btn btn-warning' data-bs-toggle='modal' data-bs-target='#editModal'>EDIT</button>
             </tr>";
         }
         
@@ -190,28 +190,27 @@ if(isset($_GET['unblock'])) {
     <a class="btn btn-primary" href="addEmp.php">Add Employee</a>
 
     <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Department Name</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-           
-            <form id="myForm" action="department.php" autocomplete="off" method="POST">
-                <div class="mb-2">
-                    <input name="dname" id="dname" type="text" class="form-control" placeholder="Enter The Department Name">
-                </div>
-                <div class="mb-1"><span id="available"></span></div>
-                <div class="hide"><button id="submit" class="btn btn-primary">ADD</button></div>
-            </form>
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Department Name</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            
+                <form id="myForm" action="department.php" autocomplete="off" method="POST">
+                    <div class="mb-2">
+                        <input name="dname" id="dname" type="text" class="form-control" placeholder="Enter The Department Name">
+                    </div>
+                    <div class="mb-1"><span id="available"></span></div>
+                    <div class="hide"><button id="submit" class="btn btn-primary">ADD</button></div>
+                </form>
 
+            </div>
         </div>
     </div>
-    </div>
-    
-
+</div>
     <!-- Option 1: Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script src="../public/javascript/admin.js"></script>

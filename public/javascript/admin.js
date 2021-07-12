@@ -73,4 +73,11 @@ $(document).ready(function() {
             }
         })
     })
+    
+    document.querySelectorAll('.edit').forEach((element)=>{
+        element.addEventListener("click",(e)=>{
+            id = e.target.id.substr(0,);
+            location.href = `../src/editprofile.php?id=${id}`;
+        })
+    })
 })

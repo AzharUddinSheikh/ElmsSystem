@@ -6,7 +6,5 @@
             $_SESSION["id"] = $row["user_id"];
             $_SESSION["emp_id"] = $row["emp_id"];
             $_SESSION["email"] = $row["email"];
-            $_SESSION["uservalue"] = $row["user_value"];
-            $_SESSION["fullname"] = join(" ", array($row["first_name"], $row["last_name"]));
             $_SESSION["last_login_timestamp"] = time();
 ?>

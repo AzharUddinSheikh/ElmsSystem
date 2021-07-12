@@ -17,6 +17,7 @@ use CommonClass\InActivity;
 use CommonClass\Database;
 use UpdatingDetail\LeaveDelete;
 use GettingDetail\GetLeave;
+use GettingDetail\EditDetail;
 
 InActivity::inActive($_SESSION["last_login_timestamp"]);
 
@@ -29,6 +30,10 @@ if(isset($_GET["cancel"])) {
 
   LeaveDelete::deleteRequest($db, $id);
 }
+
+
+$detail = EditDetail::detailEdit($db, $_SESSION["id"]);
+
 ?>
 
 <!doctype html>
@@ -52,11 +57,19 @@ if(isset($_GET["cancel"])) {
   </head>
   <body>
   <a class="btn btn-primary" href="../partials/logout.php">Logout</a>
-  <a class="btn btn-warning" href="admin.php">Admin</a>  
+  <?php 
+    if ($_SESSION["user"] == "1") {
+      echo '<a class="btn btn-warning" href="admin.php">Admin</a>';
+    }
+  ?>
+  <a class="btn btn-secondary" href="editprofile.php?id=<?php echo $_SESSION["id"]; ?>">Edit Profile</a>
   <a class="btn btn-secondary" href="applyleave.php">Apply Leave</a>
   <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
   Change Password
   </button>
+  <div class="text-center">
+    <img style="width:150px;height:150px;border-radius: 50%;" src=<?php echo "../public/images/".$detail[6]; ?>>
+  </div>
   <div class="container">
     <h2 class="text-center my-5" >
     <?php 
@@ -69,26 +82,26 @@ if(isset($_GET["cancel"])) {
           <table class="table table-striped table-dark">
             <tr>
                 <td>Name</td>
-                <td>'.$_SESSION["fullname"].'</td>
+                <td>'.$detail[0]." ".$detail[1].'</td>
             </tr>
             <tr>
                 <td>EmpID</td>
-                <td>'.$_SESSION["emp_id"].'</td>
+                <td>'.$detail[5].'</td>
             </tr>
             <tr>
                 <td>Email</td>
-                <td>'.$_SESSION["email"].'</td>
+                <td>'.$detail[2].'</td>
             </tr>
           </table>
           <h2 class="my-5 text-center"> OTHER DETAILS </h2>
           <table class="table table-striped table-dark">
               <tr>
                   <td>Birthday</td>
-                  <td>'.$_SESSION["uservalue"].'</td>
+                  <td>'.$detail[3].'</td>
               </tr>
               <tr>
                   <td>Number</td>
-                  <td>'.$_SESSION["uservalue"].'</td>
+                  <td>'.$detail[4].'</td>
               </tr>
             </table>
         </div>';
