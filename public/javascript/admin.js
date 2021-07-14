@@ -80,4 +80,11 @@ $(document).ready(function() {
             location.href = `../src/editprofile.php?id=${id}`;
         })
     })
+    
+    document.querySelectorAll('.view').forEach((element)=>{
+        element.addEventListener("click",(e)=>{
+            id = e.target.id.substr(0,);
+            location.href = `../src/leaveDetail.php?leave=${id}`;
+        })
+    })
 })

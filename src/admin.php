@@ -172,7 +172,7 @@ if(isset($_GET['unblock'])) {
                     echo "<button id='$row[id]' class='unblock btn btn-warning'>UNBLOCK</button>";
                 }
             }
-             echo " <button id='$row[id]' type='button' class='edit btn btn-warning' data-bs-toggle='modal' data-bs-target='#editModal'>EDIT</button>
+             echo " <button id='$row[id]' type='button' class='edit btn btn-warning'>EDIT</button>  <button id='$row[id]' type='button' class='view btn btn-secondary'>View</button>
             </tr>";
         }
         
@@ -190,11 +190,11 @@ if(isset($_GET['unblock'])) {
     <a class="btn btn-primary" href="addEmp.php">Add Employee</a>
 
     <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModal" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Department Name</h5>
+                <h5 class="modal-title" id="exampleModal">Department Name</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
