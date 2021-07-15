@@ -42,7 +42,7 @@ $(document).ready(function() {
         element.addEventListener("click",(e)=>{
             id = e.target.id.substr(0,);
             if(confirm("Are You Sure To Block This User")){
-                window.location = `/elms/src/admin.php?block=${id}`
+                window.location = `/elms/view/admin.php?block=${id}`
             }
         })
     })
@@ -51,7 +51,7 @@ $(document).ready(function() {
         element.addEventListener("click",(e)=>{
             id = e.target.id.substr(0,);
             if(confirm("Are You Sure To UnBlock This User")){
-                window.location = `/elms/src/admin.php?unblock=${id}`
+                window.location = `/elms/view/admin.php?unblock=${id}`
             }
         })
     })
@@ -60,7 +60,7 @@ $(document).ready(function() {
         element.addEventListener("click", (e)=>{
             id = e.target.id.substr(0,);
             if(confirm("Are You Sure To Approved")) {
-                window.location = `/elms/src/admin.php?approve=${id}`
+                window.location = `/elms/view/admin.php?approve=${id}`
             }
         })
     })
@@ -69,7 +69,7 @@ $(document).ready(function() {
         element.addEventListener("click", (e)=>{
             id = e.target.id.substr(0,);
             if(confirm("Are You Sure To Reject")) {
-                window.location = `/elms/src/admin.php?reject=${id}`
+                window.location = `/elms/view/admin.php?reject=${id}`
             }
         })
     })
@@ -77,14 +77,14 @@ $(document).ready(function() {
     document.querySelectorAll('.edit').forEach((element)=>{
         element.addEventListener("click",(e)=>{
             id = e.target.id.substr(0,);
-            location.href = `../src/editprofile.php?id=${id}`;
+            location.href = `../view/editprofile.php?id=${id}`;
         })
     })
     
     document.querySelectorAll('.view').forEach((element)=>{
         element.addEventListener("click",(e)=>{
             id = e.target.id.substr(0,);
-            location.href = `../src/leaveDetail.php?leave=${id}`;
+            location.href = `../view/leaveDetail.php?leave=${id}`;
         })
     })
 })
