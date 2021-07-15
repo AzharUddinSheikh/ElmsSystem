@@ -10,14 +10,12 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true || $_SESSION['
 }
 
 
-include '../classes/_common.php';
-include '../classes/_updating.php';
-include '../classes/_getting.php';
+require_once '../vendor/autoload.php';
 
-use UpdatingDetail\ApproveReject;
-use GettingDetail\GetLeave;
-use CommonClass\Database;
-use CommonClass\InActivity;
+use Azhar\Elms\Updating\ApproveReject;
+use Azhar\Elms\Getting\GetLeave;
+use Azhar\Elms\Common\Database;
+use Azhar\Elms\Common\Inactivity;
 
 $database = new Database();
 $db = $database->getConnection();
@@ -42,7 +40,7 @@ if(isset($_GET['reject'])) {
     $apply_reject->reject($id);
 }
 
-InActivity::inActive($_SESSION["last_login_timestamp"]);
+Inactivity::inActive($_SESSION["last_login_timestamp"]);
 ?>
 
 <!DOCTYPE html>

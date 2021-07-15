@@ -9,17 +9,15 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true || $_SESSION["
     exit;
 }
 
-include '../classes/_common.php';
-include '../classes/_getting.php';
-include '../classes/_updating.php';
+require_once '../vendor/autoload.php';
 
-use CommonClass\InActivity;
-use CommonClass\Database;
-use UpdatingDetail\LeaveDelete;
-use GettingDetail\GetLeave;
-use GettingDetail\EditDetail;
+use Azhar\Elms\Common\InActivity;
+use Azhar\Elms\Common\Database;
+use Azhar\Elms\Updating\LeaveDelete;
+use Azhar\Elms\Getting\GetLeave;
+use Azhar\Elms\Getting\EditDetail;
 
-InActivity::inActive($_SESSION["last_login_timestamp"]);
+Inactivity::inActive($_SESSION["last_login_timestamp"]);
 
 $database = new Database();
 $db = $database->getConnection();

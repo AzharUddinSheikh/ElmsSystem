@@ -1,10 +1,9 @@
 <?php 
 
-include '../classes/_common.php';
-include '../classes/_updating.php';
+require_once '../vendor/autoload.php';
 
-use CommonClass\Database;
-use UpdatingDetail\SetPassword;
+use Azhar\Elms\Common\Database;
+use Azhar\Elms\Updating\SetPassword;
 
 if(isset($_GET['empid'])) {
 

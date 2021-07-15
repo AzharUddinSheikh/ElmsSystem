@@ -6,15 +6,13 @@ if(isset($_SESSION["loggedin"])){
 
     if($_SESSION["status"] == "1"){
         
-        header('location:src/welcome.php');
+        header('location:view/welcome.php');
     }
 
 } 
 
-include 'classes/_common.php';
-
-use CommonClass\Database;
-use CommonClass\Login;
+use Azhar\Elms\Common\Database;
+use Azhar\Elms\Common\Login;
 
 if ($_SERVER['REQUEST_METHOD']=="POST") {
 
@@ -54,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD']=="POST") {
                <input name="password" type="password" id="password" placeholder="Enter Your Password">
            </div>
            <div>
-                <a href="src/forgot.php">Forgot Password ? Click Here</a>
+                <a href="view/forgot.php">Forgot Password ? Click Here</a>
            </div>
            <button type="submit">Login</button>
        </form>

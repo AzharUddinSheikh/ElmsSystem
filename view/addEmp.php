@@ -1,12 +1,11 @@
 <?php
 
-include '../classes/_common.php';
-include '../classes/_inserting.php';
+require_once '../vendor/autoload.php';
 
-use CommonClass\InActivity;
-use CommonClass\Database;
-use CommonClass\Email;
-use AddingDetail\Employee;
+use Azhar\Elms\Common\Inactivity;
+use Azhar\Elms\Common\Database;
+use Azhar\Elms\Common\Email;
+use Azhar\Elms\Inserting\Employee;
 
 session_start();
 
@@ -17,7 +16,7 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true || $_SESSION['
     exit;
 }
 
-InActivity::inActive($_SESSION["last_login_timestamp"]);
+Inactivity::inActive($_SESSION["last_login_timestamp"]);
   
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
