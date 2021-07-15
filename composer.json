@@ -11,5 +11,7 @@
             "email": "azharsheikh760@gmail.com"
         }
     ],
-    "require": {}
+    "require": {
+        "twig/twig": "^3.0"
+    }
 }

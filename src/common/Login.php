@@ -20,11 +20,11 @@ class Login
 
             if ($row["user_type"] == '1') {
 
-                header("location:src/admin.php");
+                header("location:view/admin.php");
                 
             } else {
                 
-                header("location:src/welcome.php");
+                header("location:view/welcome.php");
             }
             
         } else {

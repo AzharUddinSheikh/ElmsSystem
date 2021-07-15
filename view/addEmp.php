@@ -6,6 +6,7 @@ use Azhar\Elms\Common\Inactivity;
 use Azhar\Elms\Common\Database;
 use Azhar\Elms\Common\Email;
 use Azhar\Elms\Inserting\Employee;
+use Azhar\Elms\Getting\GetDepartment;
 
 session_start();
 
@@ -17,6 +18,9 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true || $_SESSION['
 }
 
 Inactivity::inActive($_SESSION["last_login_timestamp"]);
+
+$database = new Database();
+$db = $database->getConnection();
   
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
@@ -28,9 +32,6 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $empid = $_POST['empid']; 
     $dname = $_POST['dname'];
     $utype = $_POST['utype'];
-
-    $database = new Database();
-    $db = $database->getConnection();
     
     $common = (new Employee($db, $email));
 
@@ -99,11 +100,16 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
           <input type="number" class="form-control" name="empid" id="empid">
         </div>
         <div class="mb-4 mt-4 text-center ">
-          <select class="col px-md-4 py-md-1" name="dname" id="dname">
-            <option value="" disabled selected>Select Department</option>
-            <option value=1>Php</option>
-            <option value=2>Python</option>
-          </select>
+        <?php
+          $result = GetDepartment::getDept($db);
+          echo
+          '<select class="col px-md-4 py-md-1" name="dname" id="dname">
+            <option value="" disabled selected>Select Department</option>';
+            while ($row = $result->fetch_assoc()){
+              echo '<option value='.$row["id"].'>'.$row["name"].'</option>';
+            }
+            echo '</select>';
+          ?>
           <select class="col px-md-4 py-md-1" name="utype" id="utype">
             <option value="" disabled selected>Select User Type</option>
             <option value=0>User</option>
