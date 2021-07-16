@@ -11,11 +11,12 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
     $email = $_POST['email'];
    
-    $database = new CommonClass\Database();
+    $database = new Database();
     $db = $database->getConnection();
 
     SetStatus::setToZero($db, $email);
     Email::sendEmail($email, GetEmpId::getId($db, $email));
+    echo '<script>alert("Email has been send for setting password")</script>';
 }
 ?>
 <!DOCTYPE html>

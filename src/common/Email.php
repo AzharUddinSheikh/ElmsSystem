@@ -18,7 +18,9 @@ class Email
 
         if (!mail($to, $subject, $message, $headers)) {
 
-            die("mail has not been send to registered email, Registration Failed");
+            echo '<script>alert("Failed to Send  a Mail Check Connection"</script>';
+
+            die();
         }   
     }
 }
