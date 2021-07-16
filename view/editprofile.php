@@ -1,14 +1,11 @@
 <?php
 
-include '../classes/_common.php';
-include '../classes/_getting.php';
-include '../classes/_updating.php';
+require_once '../vendor/autoload.php';
 
-
-use CommonClass\InActivity;
-use CommonClass\Database;
-use GettingDetail\EditDetail;
-use UpdatingDetail\EditEmp;
+use Azhar\Elms\Common\Inactivity;
+use Azhar\Elms\Common\Database;
+use Azhar\Elms\Getting\EditDetail;
+use Azhar\Elms\Updating\EditEmp;
 
 session_start();
 
@@ -30,7 +27,7 @@ $database = new Database();
 $db = $database->getConnection();
 
 
-InActivity::inActive($_SESSION["last_login_timestamp"]);
+Inactivity::inActive($_SESSION["last_login_timestamp"]);
 
 if(isset($_POST['submit'])){
     $fname = $_POST["fname"];

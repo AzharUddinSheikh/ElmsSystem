@@ -9,14 +9,13 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true || $_SESSION['
     exit;
 }
 
-include '../classes/_common.php';
-include '../classes/_inserting.php';
+require_once '../vendor/autoload.php';
 
-use CommonClass\InActivity;
-use CommonClass\Database;
-use AddingDetail\AddLeave;
+use Azhar\Elms\Common\Inactivity;
+use Azhar\Elms\Common\Database;
+use Azhar\Elms\Inserting\AddLeave;
 
-InActivity::inActive($_SESSION["last_login_timestamp"]);
+Inactivity::inActive($_SESSION["last_login_timestamp"]);
 
 if($_SERVER['REQUEST_METHOD'] == "POST") {
     

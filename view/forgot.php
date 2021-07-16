@@ -1,23 +1,22 @@
 <?php 
 
-include '../classes/_common.php';
-include '../classes/_updating.php';
-include '../classes/_getting.php';
+require_once '../vendor/autoload.php';
 
-use CommonClass\Database;
-use CommonClass\Email;
-use UpdatingDetail\SetStatus;
-use GettingDetail\GetEmpId;
+use Azhar\Elms\Common\Email;
+use Azhar\Elms\Common\Database;
+use Azhar\Elms\Updating\SetStatus;
+use Azhar\Elms\Getting\GetEmpId;
 
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
     $email = $_POST['email'];
    
-    $database = new CommonClass\Database();
+    $database = new Database();
     $db = $database->getConnection();
 
     SetStatus::setToZero($db, $email);
     Email::sendEmail($email, GetEmpId::getId($db, $email));
+    echo '<script>alert("Email has been send for setting password")</script>';
 }
 ?>
 <!DOCTYPE html>

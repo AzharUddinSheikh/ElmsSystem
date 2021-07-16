@@ -1,13 +1,11 @@
 <?php 
 
-include '../classes/_common.php';
-include '../classes/_inserting.php';
-include '../classes/_updating.php';
+require_once '../vendor/autoload.php';
 
-use CommonClass\Database;
-use AddingDetail\Department;
-use AddingDetail\Employee;
-use UpdatingDetail\ChangePassword;
+use Azhar\Elms\Common\Database;
+use Azhar\Elms\Inserting\Department;
+use Azhar\Elms\Inserting\Employee;
+use Azhar\Elms\Updating\ChangePassword;
 
 $database = new Database();
 $db = $database->getConnection();
@@ -39,6 +37,6 @@ if(isset($_POST["dname"])) {
 if(isset($_POST["pass"])) {
     session_start();
     $pass = password_hash($_POST["pass"], PASSWORD_DEFAULT);
-    ChangePassword::changePass($_SESSION["email"], $pass, $db);
+    ChangePassword::changePass($_SESSION["id"], $pass, $db);
 }
 ?>
