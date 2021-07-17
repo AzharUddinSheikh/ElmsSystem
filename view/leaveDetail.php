@@ -72,7 +72,9 @@ Inactivity::inActive($_SESSION["last_login_timestamp"]);
                 
                 <?php 
             $user_leave = new GetLeave($db, $view_id);
-
+            
+            $today_date = strtotime(date('Y-m-d'));
+            
             if($user_leave->userLeave()) {
 
                 $count = 0;
@@ -99,7 +101,10 @@ Inactivity::inActive($_SESSION["last_login_timestamp"]);
                         echo
                         '</td>
                         <td>';
-                        if ($row["status"] == "1") {
+                        $start_date = strtotime($row["start_date"]);
+                        if (($start_date - $today_date) <= 0){
+                            echo '<button class="btn btn-info" disabled>No Action</button>';
+                        } elseif ($row["status"] == "1") {
                             echo "<button id='$row[id]' name='$row[user_id]' class='reject btn btn-danger'>Reject</button>";
                         } elseif ($row["status"] == "2") {
                             echo "<button id='$row[id]' name='$row[user_id]' class='approve btn btn-success'>Approve</button>";

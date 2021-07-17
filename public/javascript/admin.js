@@ -87,4 +87,13 @@ $(document).ready(function() {
             location.href = `../view/leaveDetail.php?leave=${id}`;
         })
     })
+
+    document.querySelectorAll('.cancel').forEach((element)=>{
+        element.addEventListener("click",(e)=>{
+            id = e.target.id.substr(0,);
+            if(confirm("Are You Sure To Delete This")){
+                window.location = `/elms/view/admin.php?cancel=${id}`
+            }
+        })
+    })
 })
