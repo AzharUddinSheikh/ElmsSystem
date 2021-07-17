@@ -61,6 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 </head>
 
 <body class="bg-secondary">
+    <?php include '../partials/navigation.php'; ?>
     <div class="w-50 mx-auto">
       <h2>Fill Out The Detail With Valid Email Address</h2>
       <form action="" method="POST" name='addemp' id='addemp'>
@@ -112,7 +113,6 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
           <span class="submit">
             <button type="submit" class="btn btn-primary">Submit</button>
           </span>
-          <a class="btn btn-primary" href="admin.php">Cancel</a>
           <button type="reset" class="btn btn-primary">Clear</button>
         </div>
       </form>

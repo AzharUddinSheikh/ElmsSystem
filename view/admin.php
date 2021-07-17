@@ -70,9 +70,7 @@ if(isset($_GET["cancel"])) {
     <title>Document</title>
 </head>
 <body>
-    <a class="btn btn-warning" href="welcome.php">Home</a>
-    
-    <a class="btn btn-secondary" href="../partials/logout.php">Logout</a>
+    <?php include '../partials/navigation.php'; ?>
     <span id="result"></span>
     
     <!-- table leave  -->
@@ -182,14 +180,7 @@ if(isset($_GET["cancel"])) {
 ?>
         </tbody>
         </table>
-    <!-- endtable -->
-    
-        <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-      ADD DEPARTMENT
-    </button>
-    <a class="btn btn-primary" href="addEmp.php">Add Employee</a>
-
+        
     <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModal" aria-hidden="true">
     <div class="modal-dialog">

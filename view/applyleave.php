@@ -47,7 +47,8 @@ if($_SERVER['REQUEST_METHOD'] == "POST") {
     <title>Leave Elms</title>
 </head>
 
-<body class="bg-secondary">    
+<body class="bg-secondary">
+  <?php include '../partials/navigation.php'; ?>
   <div class="w-50 mx-auto my-5 ">
       <h2 class="mb-5">Fill Out The Form For Applying Leave</h2>
       <form action="" method="POST" name="applyLeave">
@@ -67,7 +68,6 @@ if($_SERVER['REQUEST_METHOD'] == "POST") {
           <span class="submit">
             <button type="submit" class="btn btn-primary">Apply</button>
           </span>
-          <a class="btn btn-primary" href="welcome.php">Cancel</a>
           <button type="reset" class="btn btn-primary">Clear</button>
         </div>
       </form>

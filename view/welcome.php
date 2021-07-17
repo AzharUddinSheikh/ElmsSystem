@@ -40,17 +40,8 @@ $detail = EditDetail::detailEdit($db, $_SESSION["id"]);
     <title>Welcome ELMS</title>
   </head>
   <body>
-  <a class="btn btn-primary" href="../partials/logout.php">Logout</a>
-  <?php 
-    if ($_SESSION["user"] == "1") {
-      echo '<a class="btn btn-warning" href="admin.php">Admin</a>';
-    }
-  ?>
-  <a class="btn btn-secondary" href="editprofile.php?id=<?php echo $_SESSION["id"]; ?>">Edit Profile</a>
-  <a class="btn btn-secondary" href="applyleave.php">Apply Leave</a>
-  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-  Change Password
-  </button>
+  <?php include '../partials/navigation.php'; ?>
+  
   <div class="text-center">
     <img style="width:150px;height:150px;border-radius: 50%;" src=<?php echo "../public/images/".$detail[6]; ?>>
   </div>

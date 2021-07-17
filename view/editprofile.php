@@ -71,6 +71,7 @@ if(isset($_POST['submit'])){
 </head>
 
 <body class="bg-secondary">
+  <?php include '../partials/navigation.php'; ?>
   <div class="w-50 mx-auto">
     <h2 class="text-center">EDIT PROFILE</h2>
     <form action="" method="POST" name='edit' id='edit' enctype="multipart/form-data">
@@ -108,7 +109,6 @@ if(isset($_POST['submit'])){
           <span class="submit px-3">
             <button type="submit" name="submit" class="btn btn-primary">Submit</button>
           </span>
-          <a class="btn btn-primary" href="admin.php">Cancel</a>
         </div>
       </form>
     </div>
