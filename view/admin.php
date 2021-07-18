@@ -17,6 +17,7 @@ use Azhar\Elms\Updating\ApproveReject;
 use Azhar\Elms\Updating\BlockUnBlock;
 use Azhar\Elms\Getting\DetailEmp;
 use Azhar\Elms\Getting\GetLeave;
+use Azhar\Elms\Updating\LeaveDelete;
 
 Inactivity::inActive($_SESSION["last_login_timestamp"]);
 
@@ -53,6 +54,13 @@ if(isset($_GET['unblock'])) {
     
     $block_unblock->unBlock($id);
 }
+
+if(isset($_GET["cancel"])) {
+
+    $id = $_GET['cancel'];
+  
+    LeaveDelete::deleteRequest($db, $id);
+  }
 ?>
 
 <!DOCTYPE html>
@@ -62,9 +70,7 @@ if(isset($_GET['unblock'])) {
     <title>Document</title>
 </head>
 <body>
-    <a class="btn btn-warning" href="welcome.php">Home</a>
-    
-    <a class="btn btn-secondary" href="../partials/logout.php">Logout</a>
+    <?php include '../partials/navigation.php'; ?>
     <span id="result"></span>
     
     <!-- table leave  -->
@@ -85,6 +91,8 @@ if(isset($_GET['unblock'])) {
                 <?php 
                     $comm = new GetLeave($db, $_SESSION["id"]);
                     
+                    $today_date = strtotime(date('Y-m-d'));
+                    
                     if($comm->leaveRequest()) {
                         
                         $count = 0;
@@ -98,9 +106,17 @@ if(isset($_GET['unblock'])) {
                             <td>'.$row["emp_id"].'</td>
                             <td>'.$row["first_name"]." ".$row["last_name"].'</td>
                             <td>'.$row["start_date"].'</td>
-                            <td>'.$row["end_date"].'</td>
-                            <td><button id='.$row["id"].' class="approve btn btn-success">Approve</button>  <button id='.$row["id"].' class="reject btn btn-danger">Reject</button></td>
-                            </tr>';
+                            <td>'.$row["end_date"].'</td>';
+
+                            $start_date = strtotime($row["start_date"]);
+
+                            if (($start_date - $today_date) <= 0){
+                                echo '<td><button id='.$row["id"].' class="cancel btn btn-secondary">Cancel</button></td>';
+                            } else {
+                                echo '<td><button id='.$row["id"].' class="approve btn btn-success">Approve</button>  <button id='.$row["id"].' class="reject btn btn-danger">Reject</button></td>';
+                            }
+                            echo 
+                            '</tr>';
                         }
                     }
                 ?>
@@ -164,14 +180,7 @@ if(isset($_GET['unblock'])) {
 ?>
         </tbody>
         </table>
-    <!-- endtable -->
-    
-        <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-      ADD DEPARTMENT
-    </button>
-    <a class="btn btn-primary" href="addEmp.php">Add Employee</a>
-
+        
     <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModal" aria-hidden="true">
     <div class="modal-dialog">

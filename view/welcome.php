@@ -40,17 +40,8 @@ $detail = EditDetail::detailEdit($db, $_SESSION["id"]);
     <title>Welcome ELMS</title>
   </head>
   <body>
-  <a class="btn btn-primary" href="../partials/logout.php">Logout</a>
-  <?php 
-    if ($_SESSION["user"] == "1") {
-      echo '<a class="btn btn-warning" href="admin.php">Admin</a>';
-    }
-  ?>
-  <a class="btn btn-secondary" href="editprofile.php?id=<?php echo $_SESSION["id"]; ?>">Edit Profile</a>
-  <a class="btn btn-secondary" href="applyleave.php">Apply Leave</a>
-  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-  Change Password
-  </button>
+  <?php include '../partials/navigation.php'; ?>
+  
   <div class="text-center">
     <img style="width:150px;height:150px;border-radius: 50%;" src=<?php echo "../public/images/".$detail[6]; ?>>
   </div>
@@ -104,15 +95,17 @@ $detail = EditDetail::detailEdit($db, $_SESSION["id"]);
               </tr>
             </thead>
             <tbody>
-            <?php 
+              <?php 
             $user_leave = new GetLeave($db, $_SESSION["id"]);
 
-            if($user_leave->userLeave()) {
+            $today_date = strtotime(date('Y-m-d'));
 
+            if($user_leave->userLeave()) {
+              
               $count = 0;
 
               while($row = $user_leave->result1->fetch_assoc()) {
-
+                
                 $count++;
                 
                 echo
@@ -132,11 +125,12 @@ $detail = EditDetail::detailEdit($db, $_SESSION["id"]);
                     echo
                     '</td>
                     <td>';
-                    if ($row["status"] == 0) {
-                      echo "<button id='$row[id]' class='cancel btn btn-secondary'>Cancel</button>";
-                    } else {
-                      echo '<button class="btn btn-secondary" disabled>Cancel</button>';
-                    }
+                    $start_date = strtotime($row["start_date"]);
+                    if (($start_date - $today_date) <= 0) {
+                        echo "<button class='btn btn-info' disabled>No Action</button>";
+                      } elseif ($row["status"] == 0) {
+                        echo "<button id='$row[id]' class='cancel btn btn-secondary'>Cancel</button>";
+                      }
                     echo
                     '</td>
                     </tr>';

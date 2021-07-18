@@ -53,7 +53,7 @@ Inactivity::inActive($_SESSION["last_login_timestamp"]);
 </head>
 
 <body>
-    <a class="btn btn-primary" href="admin.php">Cancel</a>
+    <?php include '../partials/navigation.php'; ?>  
     <h1 class="text-center mt-3">Leave History Of A User</h1>
     <div class="container mt-5 mb-5">
         <table class="table table-dark table-striped my-3" id="myTable">
@@ -72,7 +72,9 @@ Inactivity::inActive($_SESSION["last_login_timestamp"]);
                 
                 <?php 
             $user_leave = new GetLeave($db, $view_id);
-
+            
+            $today_date = strtotime(date('Y-m-d'));
+            
             if($user_leave->userLeave()) {
 
                 $count = 0;
@@ -99,7 +101,10 @@ Inactivity::inActive($_SESSION["last_login_timestamp"]);
                         echo
                         '</td>
                         <td>';
-                        if ($row["status"] == "1") {
+                        $start_date = strtotime($row["start_date"]);
+                        if (($start_date - $today_date) <= 0){
+                            echo '<button class="btn btn-info" disabled>N/A</button>';
+                        } elseif ($row["status"] == "1") {
                             echo "<button id='$row[id]' name='$row[user_id]' class='reject btn btn-danger'>Reject</button>";
                         } elseif ($row["status"] == "2") {
                             echo "<button id='$row[id]' name='$row[user_id]' class='approve btn btn-success'>Approve</button>";
