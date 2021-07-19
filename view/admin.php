@@ -89,17 +89,17 @@ if(isset($_GET["cancel"])) {
             </thead>
             <tbody>
                 <?php 
-                    $comm = new GetLeave($db, $_SESSION["id"]);
+                    $comm = new GetLeave($db);
                     
                     $today_date = strtotime(date('Y-m-d'));
                     
-                    if($comm->leaveRequest()) {
+                    $result = $comm->leaveRequest();
                         
                         $count = 0;
                         
-                        while($row = $comm->result->fetch_assoc()) {
-                            $count++;
+                        while($row = $result->fetch_assoc()) {
                             
+                            $count++;
                             echo
                             '<tr>
                             <td>'.$count.'</td>
@@ -118,7 +118,6 @@ if(isset($_GET["cancel"])) {
                             echo 
                             '</tr>';
                         }
-                    }
                 ?>
             </tbody>
         </table>
@@ -146,11 +145,11 @@ if(isset($_GET["cancel"])) {
       <?php
         $common = new DetailEmp($db);
             
-        if ($common->showemp()) {
+        $result = $common->showemp();
         
         $count = 0;
 
-        while($row = $common->result->fetch_assoc()) {
+        while($row = $result->fetch_assoc()) {
             
             $count++;
         
@@ -174,9 +173,6 @@ if(isset($_GET["cancel"])) {
              echo " <button id='$row[id]' type='button' class='edit btn btn-warning'>EDIT</button>  <button id='$row[id]' type='button' class='view btn btn-secondary'>View</button>
             </tr>";
         }
-        
-    }
-
 ?>
         </tbody>
         </table>

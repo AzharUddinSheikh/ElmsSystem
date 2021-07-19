@@ -96,15 +96,15 @@ $detail = EditDetail::detailEdit($db, $_SESSION["id"]);
             </thead>
             <tbody>
               <?php 
-            $user_leave = new GetLeave($db, $_SESSION["id"]);
+            $user_leave = new GetLeave($db);
 
             $today_date = strtotime(date('Y-m-d'));
 
-            if($user_leave->userLeave()) {
+            $result = $user_leave->userLeave($_SESSION["id"]);
               
               $count = 0;
 
-              while($row = $user_leave->result1->fetch_assoc()) {
+              while($row = $result->fetch_assoc()) {
                 
                 $count++;
                 
@@ -127,7 +127,7 @@ $detail = EditDetail::detailEdit($db, $_SESSION["id"]);
                     <td>';
                     $start_date = strtotime($row["start_date"]);
                     if (($start_date - $today_date) <= 0) {
-                        echo "<button class='btn btn-info' disabled>No Action</button>";
+                        echo "<button class='btn btn-info' disabled>N/A</button>";
                       } elseif ($row["status"] == 0) {
                         echo "<button id='$row[id]' class='cancel btn btn-secondary'>Cancel</button>";
                       }
@@ -135,7 +135,6 @@ $detail = EditDetail::detailEdit($db, $_SESSION["id"]);
                     '</td>
                     </tr>';
               }
-            }
             ?>
             </tbody>
       </table>

@@ -71,15 +71,15 @@ Inactivity::inActive($_SESSION["last_login_timestamp"]);
             <tbody>
                 
                 <?php 
-            $user_leave = new GetLeave($db, $view_id);
+            $user_leave = new GetLeave($db);
             
             $today_date = strtotime(date('Y-m-d'));
             
-            if($user_leave->userLeave()) {
+            $result = $user_leave->userLeave($view_id);
 
                 $count = 0;
                 
-                while($row = $user_leave->result1->fetch_assoc()) {
+                while($row = $result->fetch_assoc()) {
                     
                     $count++;
                     
@@ -111,7 +111,6 @@ Inactivity::inActive($_SESSION["last_login_timestamp"]);
                         }
             
                 }
-            }
             ?>
                     </td>
                 </tr>
