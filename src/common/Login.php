@@ -44,6 +44,24 @@ class Login
               }
         } 
     }
+
+    public function checkPassword($id, $oldpass)
+    {
+        $sql = "SELECT * FROM users WHERE users.id = '$id' LIMIT 1"; 
+
+        $result = $this->conn->query($sql);
+
+        $row = $result->fetch_assoc();
+
+        if (!password_verify($oldpass, $row["password"])) {
+        
+            return false;
+        
+        } else {
+
+            return true;
+        }
+    }
 }
 
 ?>

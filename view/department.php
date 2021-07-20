@@ -3,6 +3,7 @@
 require_once '../vendor/autoload.php';
 
 use Azhar\Elms\Common\Database;
+use Azhar\Elms\Common\Login;
 use Azhar\Elms\Inserting\Department;
 use Azhar\Elms\Inserting\Employee;
 use Azhar\Elms\Updating\ChangePassword;
@@ -10,6 +11,7 @@ use Azhar\Elms\Updating\ChangePassword;
 $database = new Database();
 $db = $database->getConnection();
 
+$login = new Login($db);
 
 if(isset($_POST["dep_name"])) {
    
@@ -34,12 +36,19 @@ if(isset($_POST["dname"])) {
     echo "data successfully inserted";
 }
 
-if(isset($_POST["pass"])) {
-
+if(isset($_POST["newpass"]) && isset($_POST["oldpass"])) {
+    
     session_start();
     
-    $pass = password_hash($_POST["pass"], PASSWORD_DEFAULT);
+    if ($login->checkPassword($_SESSION["id"], $_POST["oldpass"])){
+        
+        $pass = password_hash($_POST["newpass"], PASSWORD_DEFAULT);
+        
+        ChangePassword::changePass($_SESSION["id"], $pass, $db);
     
-    ChangePassword::changePass($_SESSION["id"], $pass, $db);
+    } else {
+
+        echo "CURRENT PASSWORD DOESNOT MATCH";
+    }
 }
 ?>

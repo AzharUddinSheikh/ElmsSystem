@@ -37,7 +37,13 @@ $detail = EditDetail::detailEdit($db, $_SESSION["id"]);
 <html lang="en">
   <head>
     <?php include '../partials/header.php'; ?>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
     <title>Welcome ELMS</title>
+  <style>
+    .error {
+      color : red;
+    }
+  </style>
   </head>
   <body>
   <?php include '../partials/navigation.php'; ?>
@@ -152,9 +158,12 @@ $detail = EditDetail::detailEdit($db, $_SESSION["id"]);
             <div class="modal-body">
             
                 <form class="text-center" id="myForm" action="department.php" autocomplete="off" method="POST">
-                    <div class="mb-2">
-                        <input name="pass" id="pass" type="password" class="form-control" placeholder="Enter The Password">
-                    </div>
+                  <div class="mb-2">
+                      <input name="oldpass" id="oldpass" type="password" class="form-control" placeholder="Enter The Old Password">
+                  </div>
+                  <div class="mb-2">
+                      <input name="pass" id="pass" type="password" class="form-control" placeholder="Enter The Password">
+                  </div>
                     <div class="mb-1"><span id="available"></span></div>
                     <div class="hide"><button id="submit" class="btn btn-primary">Change</button></div>
                 </form>
@@ -163,6 +172,6 @@ $detail = EditDetail::detailEdit($db, $_SESSION["id"]);
         </div>
     </div>
   <!-- modal end -->           
-    <script src="../public/javascript/welcome.js"></script>
-  </body>
+</body>
 </html>
+<script src="../public/javascript/welcome.js"></script>
