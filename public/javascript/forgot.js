@@ -5,11 +5,11 @@ $(document).ready(function() {
         if(email == '') {
             $('#available').html('<span class="text-danger">Email Field Should Not Empty</span>');
        
-            $('.submit').hide();
+            $('#search').prop('disabled', true);
         
         } else { 
             
-            $('.submit').show();
+            $('#search').prop('disabled', false);
         
             $.ajax({
                 url:'department.php',
@@ -20,12 +20,12 @@ $(document).ready(function() {
                     if(data == 0)
                     {
                         $('#available').html('<span class="text-danger">Email Not Exists</span>');
-                        $('.submit').hide();
+                        $('#search').prop('disabled', true);
                     }
                     else 
                     {
                         $('#available').html('<span class="text-success">Email Found Click For Reset Link</span>');
-                        $('.submit').show();
+                        $('#search').prop('disabled', false);
                     }
                 }
             })

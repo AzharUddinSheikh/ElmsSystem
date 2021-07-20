@@ -26,10 +26,6 @@ class Login
                 
                 header("location:view/welcome.php");
             }
-            
-        } else {
-            
-            echo '<script>alert("Invalid Password")</script>';
         }
     }
 
@@ -46,11 +42,7 @@ class Login
                 
                 return $row;
               }
-              
-        } else {
-
-              die("user not found valid_user method");
-        }   
+        } 
     }
 }
 

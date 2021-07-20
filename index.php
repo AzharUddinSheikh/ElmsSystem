@@ -27,7 +27,21 @@ if ($_SERVER['REQUEST_METHOD']=="POST") {
 
     $valid = $common->validUser($email);
 
-    $common->validPass($password, $valid);
+    if(!$valid){
+
+        $_SESSION["flash"] = "USER NOT FOUND";
+
+    } else {
+
+        $result = $common->validPass($password, $valid);
+
+        if(!$result){
+
+            $_SESSION["flash"] = "WRONG PASSWORD";
+            
+        }
+    }
+
 
 }
 ?>
@@ -37,21 +51,32 @@ if ($_SERVER['REQUEST_METHOD']=="POST") {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Page ELMS</title>
     <link rel="stylesheet" href="public/css/normalize.css">
     <link rel="stylesheet" href="public/css/styles.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
     <style>
-      .error {
-        color:red;
-      }
-      .valid {
-        color:green;
-      }
-    </style>
+        .error {
+            color:red;
+        }
+        .valid {
+            color:green;
+        }
+        .warning {
+            color: yellow;
+        }
+        </style>
+        <title>Login Page ELMS</title>
 </head>
 <body>
+    <div class="warning">
+        <?php
+        if (isset($_SESSION["flash"])){
+            echo $_SESSION["flash"];
+            unset($_SESSION["flash"]);
+        }
+        ?>
+    </div>
    <div class="center">
        <h1>ELMS LOGIN</h1>
        <form autocomplete="off" novalidate method="POST" id="login">

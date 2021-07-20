@@ -2,6 +2,8 @@
 
 require_once '../vendor/autoload.php';
 
+session_start();
+
 use Azhar\Elms\Common\Email;
 use Azhar\Elms\Common\Database;
 use Azhar\Elms\Updating\SetStatus;
@@ -15,8 +17,14 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $db = $database->getConnection();
 
     SetStatus::setToZero($db, $email);
-    Email::sendEmail($email, GetEmpId::getId($db, $email));
-    echo '<script>alert("Email has been send for setting password")</script>';
+    
+    if (Email::sendEmail($email, GetEmpId::getId($db, $email))) {
+
+        $_SESSION["flash"] = "Reset Link Has Been Sent To Registered Email";
+
+    } 
+
+    header("location: ../index.php");
 }
 ?>
 
@@ -35,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             </div>
             <div class="mb-3" id="available"></div>
             <div class="submit">
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button id="search" type="submit" class="btn btn-primary">Submit</button>
             </div>
         </form>
     </div>

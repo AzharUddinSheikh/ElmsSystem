@@ -16,13 +16,9 @@ class Email
                     'Reply-To: azharsheikh760@gmail.com' . "\r\n" .
                     'X-Mailer: PHP/' . phpversion();
 
-        if (!mail($to, $subject, $message, $headers)) {
+        mail($to, $subject, $message, $headers);
 
-            echo '<script>alert("Failed to Send  a Mail Check Connection"</script>';
-
-            die();
-        }   
+        return true;
+        }
     }
-}
-
 ?>
