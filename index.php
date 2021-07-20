@@ -40,11 +40,21 @@ if ($_SERVER['REQUEST_METHOD']=="POST") {
     <title>Login Page ELMS</title>
     <link rel="stylesheet" href="public/css/normalize.css">
     <link rel="stylesheet" href="public/css/styles.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
+    <style>
+      .error {
+        color:red;
+      }
+      .valid {
+        color:green;
+      }
+    </style>
 </head>
 <body>
    <div class="center">
        <h1>ELMS LOGIN</h1>
-       <form autocomplete="off" novalidate method="POST">
+       <form autocomplete="off" novalidate method="POST" id="login">
            <div class="form-group">
                <input name="email" type="email" id="email" placeholder="Enter Your Email Address" autofocus>
            </div>
@@ -59,3 +69,4 @@ if ($_SERVER['REQUEST_METHOD']=="POST") {
    </div>
 </body>
 </html>
+<script src="public/javascript/index.js"></script>
