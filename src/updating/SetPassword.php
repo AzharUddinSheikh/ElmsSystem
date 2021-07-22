@@ -19,9 +19,7 @@ class SetPassword
     {
         if ($this->resultset->num_rows != 1){
 
-            echo '<script>alert("User Already Verified")</script>';
-            
-            die();
+            return true;
         }
     }
 
@@ -32,20 +30,8 @@ class SetPassword
             $setPass = password_hash($pass, PASSWORD_DEFAULT);
 
             $update = $this->conn->query("UPDATE users SET password = '$setPass',status = 1 WHERE emp_id = '$this->id' LIMIT 1");
-
-            if (!$update) {
-               
-                die("Update Failed: Already Verified or Login With Default Password");
-            
-            }
-
-        } else {
-
-            die("setting password result not found");
-
-        }
+        } 
     }
-
 }
 
 ?>
