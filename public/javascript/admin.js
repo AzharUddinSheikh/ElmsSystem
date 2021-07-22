@@ -1,26 +1,34 @@
 $(document).ready(function() {
+
+    $('#submit').prop("disabled", true);
+
     $('#dname').blur(function() {
         var dname = $(this).val();
 
-        $.ajax({
-            url:'department.php',
-            method:"POST",
-            data:{dep_name:dname},
-            success:function(data)
-        
-            {   
-                if(data == 0)
-                {
-                    $('#available').html('<span class="text-danger">Department Not Available</span>');
-                    $('.hide').show();
+        if( dname.trim().length ==  0) {
+            $('#available').html('<span class="text-warning">Provide The Department Name</span>');
+            $('#submit').prop("disabled", true);
+        } else {
+            $.ajax({
+                url:'department.php',
+                method:"POST",
+                data:{dep_name:dname},
+                success:function(data)
+            
+                {   
+                    if(data == 0)
+                    {
+                        $('#available').html('<span class="text-info">Department Not Available</span>');
+                        $('#submit').prop("disabled", false);
+                    }
+                    else 
+                    {
+                        $('#available').html('<span class="text-danger">Department Available Cant Add</span>');
+                        $('#submit').prop("disabled", true);
+                    }
                 }
-                else 
-                {
-                    $('#available').html('<span class="text-success">Department Available Cant Add</span>');
-                    $('.hide').hide();
-                }
-            }
-        })
+            })
+        }
     })
 })
 
@@ -28,12 +36,13 @@ $(document).ready(function() {
     $("#submit").click(function() {
         var dname = $("#myForm :input").serializeArray();
         $.post( $("#myForm").attr("action"), dname, function(info) {
-            alert(info);
+            $('#available').html(`<span class="text-success">${info}</span>`);
         });
     });
 
     $("#myForm").submit(function () {
         $("#myForm")[0].reset();
+        $('#submit').prop("disabled", true);
         return false;
 
     });

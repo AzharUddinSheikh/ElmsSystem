@@ -71,6 +71,7 @@ if(isset($_GET["cancel"])) {
 </head>
 <body>
     <?php include '../partials/navigation.php'; ?>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
     <span id="result"></span>
     
     <!-- table leave  -->
