@@ -1,10 +1,16 @@
+$.validator.addMethod("noSpace", function (value, element) {
+    return /^[a-zA-Z]+$/.test(value);
+}, "No Space And No Number Begin With");
+
 $("#addemp").validate({
     rules: {
         fname: {
             required: true,
+            noSpace: true,
         },
         lname: {
             required: true,
+            noSpace: true,
         },
         dname: {
             required: true,

@@ -49,7 +49,7 @@ if(isset($_POST['submit'])){
     $emp_edit->updateUserDetail($dob, $number);
     $emp_edit->img_folder($img);
     
-    echo '<script>alert("Profile Has been Updated")</script>';
+    $_SESSION["update"] = "PROFILE HAS BEEN UPDATED";
 }
   
 ?>
@@ -58,7 +58,6 @@ if(isset($_POST['submit'])){
   <head>
     <?php include '../partials/header.php';?>
     <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js" type="text/javascript"></script>
-    <script src="../public/javascript/edit.js" type="text/javascript"></script>
     <style>
       .error {
         color:red;
@@ -68,11 +67,17 @@ if(isset($_POST['submit'])){
       }
     </style>
     <title>Edit Profile</title>
-</head>
-
+  </head>
+  
 <body class="bg-secondary">
   <?php include '../partials/navigation.php'; ?>
   <div class="w-50 mx-auto">
+    <div class="container"><?php
+    if(isset($_SESSION['update'])){
+      echo $_SESSION['update'];
+      unset($_SESSION['update']);
+    }
+    ?></div>
     <h2 class="text-center">EDIT PROFILE</h2>
     <form action="" method="POST" name='edit' id='edit' enctype="multipart/form-data">
     <?php 
@@ -81,7 +86,7 @@ if(isset($_POST['submit'])){
     <div class="mb-3">
       <label for="fname" class="form-label">First Name</label>
       <input type="text" class="form-control" name="fname" id="fname" value=<?php echo $detail_emp[0] ;?>>
-        </div>
+    </div>
         <div class="mb-3">
           <label for="lname" class="form-label">Last Name</label>
           <input type="text" class="form-control" name="lname" id="lname" value=<?php echo $detail_emp[1] ;?>>
@@ -112,5 +117,6 @@ if(isset($_POST['submit'])){
         </div>
       </form>
     </div>
-</body>
+  </body>
 </html>
+<script src="../public/javascript/edit.js" type="text/javascript"></script>
