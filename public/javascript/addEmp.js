@@ -50,13 +50,13 @@ $('#uEmail').blur(function() {
       {   
           if(data == 0)
           {
-              $('#available').html('<span class="text-success">Email Not Available You May Proceed</span>');
-              $('.submit').show();
+              $('#available').html('<span class="text-success"></span>');
+              $('#submit').prop("disabled", false);
           }
           else 
           {
               $('#available').html('<span class="text-warning">Email Available Unable to Submit</span>');
-              $('.submit').hide();
+              $('#submit').prop("disabled", true);
           }
       }
   })
@@ -69,11 +69,15 @@ $(document).ready(function() {
         if (duration < 6580) {
             document.getElementById("dobID").innerHTML = "You are not 18";
             document.getElementById("dobID").style.color = "red";
-            $('.submit').hide();
+            $('#submit').prop("disabled", true);
         } else if (duration >= 6580) {
             document.getElementById("dobID").innerHTML = "Above 18 ";
             document.getElementById("dobID").style.color = "green";
-            $('.submit').show();
+            $('#submit').prop("disabled", false);
         }
     })
 })
+
+$(function(){
+    $("#dob").datepicker();
+});

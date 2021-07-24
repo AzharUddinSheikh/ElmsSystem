@@ -58,11 +58,11 @@ if($_SERVER['REQUEST_METHOD'] == "POST") {
         </div>
         <div class="mb-5">
           <label for="dob" class="form-label">Start Date</label>
-          <input type="date" class="form-control" name="dob" id="dob" onkeypress="return false">
+          <input type="text" class="date form-control" name="dob" id="dob" onkeypress="return false">
         </div>
         <div class="mb-5">
           <label for="dob1" class="form-label">End Date</label>
-          <input type="date" class="form-control" name="dob1" id="dob1" onkeypress="return false">
+          <input type="text" class="date form-control" name="dob1" id="dob1" onkeypress="return false">
         </div>
         <div class="col-md-12 text-center">
           <span class="submit">

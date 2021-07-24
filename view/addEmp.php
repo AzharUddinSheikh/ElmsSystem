@@ -80,7 +80,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         </div>
         <div class="mb-3">
           <label for="dob" class="form-label">Date Of Birth</label>
-          <input type="date" class="form-control" name="dob" id="dob" onkeypress="return false">
+          <input type="text" class="form-control" name="dob" id="dob">
           <span id="dobID"></span>
         </div>
         <div class="mb-3">
@@ -111,7 +111,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         
         <div class="col-md-12 text-center">
           <span class="submit">
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button id="submit" type="submit" class="btn btn-primary">Submit</button>
           </span>
           <button type="reset" class="btn btn-primary">Clear</button>
         </div>
@@ -121,5 +121,3 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 </body>
 </html>
 <script src="../public/javascript/addEmp.js"></script>
-    
-
