@@ -12,30 +12,20 @@ class AddLeave
     
     public function appLeave($reason, $date1, $date2)
     {
+        $new_date1 = date("Y-m-d", strtotime($date1));
+        $new_date2 = date("Y-m-d", strtotime($date2));
         $min = min(strtotime($date2), strtotime($date1));
-
         $today = date('Y-m-d');
 
-        if (($date1 != $date2) && ($date1 != $today) && (strtotime($date2) - strtotime($date1) >= 86400) && ($min > strtotime($today))) {
+        $sql = "INSERT INTO leave_requests (user_id, reason, start_date, end_date) VALUES (?, ?, ?, ?)";
 
-            $sql = "INSERT INTO leave_requests (user_id, reason, start_date, end_date) VALUES (?, ?, ?, ?)";
+        $stmt = $this->conn->prepare($sql);
 
-            $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("isss", $this->id, $reason,  $new_date1, $new_date2);
 
-            $stmt->bind_param("isss", $this->id, $reason,  $date1, $date2);
+        $stmt->execute();
 
-            $stmt->execute();
-
-            $stmt->close();
-
-            echo '<script>alert("Leave Has Been Applied")</script>';
-            
-        } else {
-
-            echo '<script>alert("Invalid Date")</script>';
-
-        }
-        
+        return true;
     }
 }
 

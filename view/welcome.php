@@ -16,6 +16,7 @@ use Azhar\Elms\Common\Database;
 use Azhar\Elms\Updating\LeaveDelete;
 use Azhar\Elms\Getting\GetLeave;
 use Azhar\Elms\Getting\EditDetail;
+use Azhar\Elms\Getting\DetailEmp;
 
 Inactivity::inActive($_SESSION["last_login_timestamp"]);
 
@@ -24,7 +25,7 @@ $db = $database->getConnection();
 
 if(isset($_GET["cancel"])) {
 
-  $id = $_GET['cancel'];
+  $id = DetailEmp::getDecrypt($_GET['cancel']);
 
   LeaveDelete::deleteRequest($db, $id);
 }

@@ -1,6 +1,6 @@
 $.validator.addMethod("noSpace", function (value, element) {
     return /^[a-zA-Z]+$/.test(value);
-}, "No Space And No Number Begin With");
+}, "No Space And No Number");
 
 $("#addemp").validate({
     rules: {
@@ -72,12 +72,12 @@ $(document).ready(function() {
             $('#submit').prop("disabled", true);
         } else if (duration >= 6580) {
             document.getElementById("dobID").innerHTML = "Above 18 ";
-            document.getElementById("dobID").style.color = "green";
+            document.getElementById("dobID").style.warnning = "yellow";
             $('#submit').prop("disabled", false);
         }
     })
 })
 
 $(function(){
-    $("#dob").datepicker();
+    $("#dob").datepicker({ dateFormat: 'yy-mm-dd' });
 });

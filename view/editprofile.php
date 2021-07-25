@@ -6,6 +6,7 @@ use Azhar\Elms\Common\Inactivity;
 use Azhar\Elms\Common\Database;
 use Azhar\Elms\Getting\EditDetail;
 use Azhar\Elms\Updating\EditEmp;
+use Azhar\Elms\Getting\DetailEmp;
 
 session_start();
 
@@ -14,20 +15,23 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true || $_SESSION['
     header("location: ../index.php");
 
     exit;
-}
+  }
+  
+$id = DetailEmp::getDecrypt($_GET["id"]);
 
-if(!isset($_GET["id"]) || (($_GET["id"] != $_SESSION["id"])) && $_SESSION["user"] != "1" ){
+if(!isset($_GET["id"]) || (($id != $_SESSION["id"])) && $_SESSION["user"] != "1" ){
     
-    echo'<script>alert("User Request Rejected")</script>';
-
+    echo "User Request Rejected";
+    
     die();
-}
+  }
 
-$database = new Database();
-$db = $database->getConnection();
+  $database = new Database();
+  $db = $database->getConnection();
 
+  $detail_emp = EditDetail::detailEdit($db, $id);
 
-Inactivity::inActive($_SESSION["last_login_timestamp"]);
+  Inactivity::inActive($_SESSION["last_login_timestamp"]);
 
 if(isset($_POST['submit'])){
     $fname = $_POST["fname"];
@@ -41,10 +45,10 @@ if(isset($_POST['submit'])){
       } 
 
     if ($_FILES["image"]['name'] == ""){
-        $img = "default.jpg";
+        $img = $detail_emp[6];
     } 
       
-    $emp_edit = new EditEmp($db, $_GET["id"]);
+    $emp_edit = new EditEmp($db, $id);
     $emp_edit->updateUser($fname, $lname, $email, $img);
     $emp_edit->updateUserDetail($dob, $number);
     $emp_edit->img_folder($img);
@@ -80,9 +84,6 @@ if(isset($_POST['submit'])){
     ?></div>
     <h2 class="text-center">EDIT PROFILE</h2>
     <form action="" method="POST" name='edit' id='edit' enctype="multipart/form-data">
-    <?php 
-      $detail_emp = EditDetail::detailEdit($db, $_GET["id"]);
-    ?>
     <div class="mb-3">
       <label for="fname" class="form-label">First Name</label>
       <input type="text" class="form-control" name="fname" id="fname" value=<?php echo $detail_emp[0] ;?>>
@@ -103,7 +104,7 @@ if(isset($_POST['submit'])){
         </div>
         <div>
             <label for="dob" class="form-label">Date Of Birth</label>
-            <input type="date" class="form-control" name="dob" id="dob" onkeypress="return false" value=<?php echo $detail_emp[3] ;?>>
+            <input type="text" class="form-control" name="dob" id="dob" value=<?php echo $detail_emp[3] ;?>>
             <span id="dobID"></span>
         </div>
         <div class="custom-file my-5">

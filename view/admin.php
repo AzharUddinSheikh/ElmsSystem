@@ -29,35 +29,36 @@ $block_unblock = new BlockUnBlock($db);
 
 if(isset($_GET['approve'])) {
   
-    $id = $_GET['approve'];
+
+    $id = DetailEmp::getDecrypt($_GET['approve']);
   
     $apply_reject->approve($id);
 }
 
 if(isset($_GET['reject'])) {
   
-    $id = $_GET['reject'];
+    $id = DetailEmp::getDecrypt($_GET['reject']);
     
     $apply_reject->reject($id);
 }
 
 if(isset($_GET['block'])) {
     
-    $id = $_GET['block'];
+    $id = DetailEmp::getDecrypt($_GET['block']);
     
     $block_unblock->block($id);
 }
 
 if(isset($_GET['unblock'])) {
     
-    $id = $_GET['unblock'];
+    $id = DetailEmp::getDecrypt($_GET['unblock']);
     
     $block_unblock->unBlock($id);
 }
 
 if(isset($_GET["cancel"])) {
 
-    $id = $_GET['cancel'];
+    $id = DetailEmp::getDecrypt($_GET['cancel']);
   
     LeaveDelete::deleteRequest($db, $id);
   }

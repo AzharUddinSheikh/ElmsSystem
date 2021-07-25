@@ -26,7 +26,11 @@ if($_SERVER['REQUEST_METHOD'] == "POST") {
     $database = new Database();
     $db = $database->getConnection();
     $leave = new AddLeave($db, $_SESSION["id"]);
-    $leave->appLeave($reason, $date1, $date2);
+    $result = $leave->appLeave($reason, $date1, $date2);
+
+    if ($result) {
+      $_SESSION["message"] = "Leave Has Been Applied";
+    }
   }
 ?>
 
@@ -49,6 +53,14 @@ if($_SERVER['REQUEST_METHOD'] == "POST") {
 
 <body class="bg-secondary">
   <?php include '../partials/navigation.php'; ?>
+  <div class="error">
+    <?php 
+    if (isset($_SESSION["message"])) {
+      echo $_SESSION["message"];
+      unset($_SESSION["message"]);
+    } 
+    ?>
+  </div>
   <div class="w-50 mx-auto my-5 ">
       <h2 class="mb-5">Fill Out The Form For Applying Leave</h2>
       <form action="" method="POST" name="applyLeave">

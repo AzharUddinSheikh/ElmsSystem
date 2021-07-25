@@ -28,7 +28,7 @@ class EditEmp
             
             if ($x == 0) {
                 
-                $sql = "UPDATE user_details SET user_value = '$birthday' WHERE user_id = '$this->id' AND user_key='birthdate'";
+                $sql = "UPDATE user_details SET user_value = '$birthday' WHERE user_id = '$this->id' AND user_key='birthday'";
                 
             } else {
                 

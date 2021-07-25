@@ -16,6 +16,7 @@ use Azhar\Elms\Updating\ApproveReject;
 use Azhar\Elms\Getting\GetLeave;
 use Azhar\Elms\Common\Database;
 use Azhar\Elms\Common\Inactivity;
+use Azhar\Elms\Getting\DetailEmp;
 
 $database = new Database();
 $db = $database->getConnection();
@@ -23,19 +24,20 @@ $db = $database->getConnection();
 $apply_reject = new ApproveReject($db);
 
 if(isset($_GET["leave"])){
-    $view_id  = $_GET["leave"];
+    
+    $view_id  = DetailEmp::getDecrypt($_GET['leave']);;
 }
 
 if(isset($_GET['approve'])) {
   
-    $id = $_GET['approve'];
+    $id = DetailEmp::getDecrypt($_GET['approve']);;
     
     $apply_reject->approve($id);
 }
 
 if(isset($_GET['reject'])) {
     
-    $id = $_GET['reject'];
+    $id = DetailEmp::getDecrypt($_GET['reject']);;
     
     $apply_reject->reject($id);
 }
