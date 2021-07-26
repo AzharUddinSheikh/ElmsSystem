@@ -16,7 +16,6 @@ use Azhar\Elms\Updating\ApproveReject;
 use Azhar\Elms\Getting\GetLeave;
 use Azhar\Elms\Common\Database;
 use Azhar\Elms\Common\Inactivity;
-use Azhar\Elms\Getting\DetailEmp;
 
 $database = new Database();
 $db = $database->getConnection();
@@ -25,19 +24,19 @@ $apply_reject = new ApproveReject($db);
 
 if(isset($_GET["leave"])){
     
-    $view_id  = DetailEmp::getDecrypt($_GET['leave']);;
+    $view_id  = base64_decode($_GET['leave']);
 }
 
 if(isset($_GET['approve'])) {
   
-    $id = DetailEmp::getDecrypt($_GET['approve']);;
+    $id = base64_decode($_GET['approve']);
     
     $apply_reject->approve($id);
 }
 
 if(isset($_GET['reject'])) {
     
-    $id = DetailEmp::getDecrypt($_GET['reject']);;
+    $id = base64_decode($_GET['reject']);
     
     $apply_reject->reject($id);
 }
@@ -107,9 +106,9 @@ Inactivity::inActive($_SESSION["last_login_timestamp"]);
                         if (($start_date - $today_date) <= 0){
                             echo '<button class="btn btn-info" disabled>N/A</button>';
                         } elseif ($row["status"] == "1") {
-                            echo "<button id='$row[id]' name='$row[user_id]' class='reject btn btn-danger'>Reject</button>";
+                            echo "<button id='".base64_encode($row['id'])."' name='".base64_encode($row['user_id'])."' class='reject btn btn-danger'>Reject</button>";
                         } elseif ($row["status"] == "2") {
-                            echo "<button id='$row[id]' name='$row[user_id]' class='approve btn btn-success'>Approve</button>";
+                            echo "<button id='".base64_encode($row['id'])."' name='".base64_encode($row['user_id'])."' class='approve btn btn-success'>Approve</button>";
                         }
             
                 }

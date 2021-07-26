@@ -28,37 +28,36 @@ $apply_reject = new ApproveReject($db);
 $block_unblock = new BlockUnBlock($db);
 
 if(isset($_GET['approve'])) {
-  
 
-    $id = DetailEmp::getDecrypt($_GET['approve']);
+    $id = base64_decode($_GET['approve']);
   
     $apply_reject->approve($id);
 }
 
 if(isset($_GET['reject'])) {
   
-    $id = DetailEmp::getDecrypt($_GET['reject']);
+    $id = base64_decode($_GET['reject']);
     
     $apply_reject->reject($id);
 }
 
 if(isset($_GET['block'])) {
     
-    $id = DetailEmp::getDecrypt($_GET['block']);
+    $id = base64_decode($_GET['block']);
     
     $block_unblock->block($id);
 }
 
 if(isset($_GET['unblock'])) {
     
-    $id = DetailEmp::getDecrypt($_GET['unblock']);
+    $id = base64_decode($_GET['unblock']);
     
     $block_unblock->unBlock($id);
 }
 
 if(isset($_GET["cancel"])) {
 
-    $id = DetailEmp::getDecrypt($_GET['cancel']);
+    $id = base64_decode($_GET['cancel']);
   
     LeaveDelete::deleteRequest($db, $id);
   }
@@ -113,9 +112,9 @@ if(isset($_GET["cancel"])) {
                             $start_date = strtotime($row["start_date"]);
 
                             if (($start_date - $today_date) <= 0){
-                                echo '<td><button id='.$row["id"].' class="cancel btn btn-secondary">Cancel</button></td>';
+                                echo "<td><button id='".base64_encode($row['id'])."' class='cancel btn btn-secondary'>Cancel</button></td>";
                             } else {
-                                echo '<td><button id='.$row["id"].' class="approve btn btn-success">Approve</button>  <button id='.$row["id"].' class="reject btn btn-danger">Reject</button></td>';
+                                echo "<td><button id='".base64_encode($row['id'])."' class='approve btn btn-success'>Approve</button>  <button id='".base64_encode($row['id'])."' class='reject btn btn-danger'>Reject</button></td>";
                             }
                             echo 
                             '</tr>';
@@ -167,12 +166,12 @@ if(isset($_GET["cancel"])) {
                 echo "<button class='block btn btn-danger' disabled>BLOCK</button>";
             } else {
                 if ($row["status"] == "1") {
-                    echo "<button id='$row[id]' class='block btn btn-danger'>BLOCK</button>";
+                    echo "<button id='".base64_encode($row['id'])."' class='block btn btn-danger'>BLOCK</button>";
                 } elseif ($row["status"] == "2") {
-                    echo "<button id='$row[id]' class='unblock btn btn-warning'>UNBLOCK</button>";
+                    echo "<button id='".base64_encode($row['id'])."' class='unblock btn btn-warning'>UNBLOCK</button>";
                 }
             }
-             echo " <button id='$row[id]' type='button' class='edit btn btn-warning'>EDIT</button>  <button id='$row[id]' type='button' class='view btn btn-secondary'>View</button>
+             echo " <button id='".base64_encode($row['emp_id'])."' type='button' class='edit btn btn-warning'>EDIT</button>  <button id='".base64_encode($row['id'])."' type='button' class='view btn btn-secondary'>View</button>
             </tr>";
         }
 ?>

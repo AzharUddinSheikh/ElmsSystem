@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $common = (new Employee($db, $email));
 
     $common->checkUser();
-    Email::sendEmail($email, $empid);
+    Email::sendEmail($email, base64_encode($empid));
     $common->createUser($empid, $fname, $lname, $dname, $utype);
     $common->createDetail($number, $dob);
 

@@ -7,7 +7,7 @@
       <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav">
           <li class="nav-item active">
-            <a class="nav-link" href="editprofile.php?id=<?php echo $_SESSION["id"]; ?>">EDIT PROFILE</a>
+            <a class="nav-link" href="editprofile.php?id=<?php echo base64_encode($_SESSION["emp_id"]); ?>">EDIT PROFILE</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="../partials/logout.php">LOGOUT</a>

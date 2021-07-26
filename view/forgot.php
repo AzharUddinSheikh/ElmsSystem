@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
     SetStatus::setToZero($db, $email);
     
-    if (Email::sendEmail($email, GetEmpId::getId($db, $email))) {
+    if (Email::sendEmail($email, base64_encode(GetEmpId::getId($db, $email)))) {
 
         $_SESSION["flash"] = "Reset Link Has Been Sent To Registered Email";
 

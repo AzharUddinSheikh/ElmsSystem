@@ -6,7 +6,7 @@ class EditDetail
 {
     public static function detailEdit($db, $id)
     {
-        $sql = "SELECT * FROM users JOIN user_details WHERE users.id = user_details.user_id AND users.id = '$id'";
+        $sql = "SELECT * FROM users JOIN user_details WHERE users.id = user_details.user_id AND users.emp_id = '$id'";
         $result = $db->query($sql);
         $count = 0;
         $detail = array();

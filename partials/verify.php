@@ -9,7 +9,7 @@ session_start();
 
 if(isset($_GET['empid'])) {
 
-    $id = $_GET['empid'];
+    $id = base64_decode($_GET['empid']);
 
     $database = new Database();
     $db = $database->getConnection();

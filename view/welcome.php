@@ -16,7 +16,6 @@ use Azhar\Elms\Common\Database;
 use Azhar\Elms\Updating\LeaveDelete;
 use Azhar\Elms\Getting\GetLeave;
 use Azhar\Elms\Getting\EditDetail;
-use Azhar\Elms\Getting\DetailEmp;
 
 Inactivity::inActive($_SESSION["last_login_timestamp"]);
 
@@ -25,12 +24,12 @@ $db = $database->getConnection();
 
 if(isset($_GET["cancel"])) {
 
-  $id = DetailEmp::getDecrypt($_GET['cancel']);
+  $id = base64_decode($_GET['cancel']);
 
   LeaveDelete::deleteRequest($db, $id);
 }
 
-$detail = EditDetail::detailEdit($db, $_SESSION["id"]);
+$detail = EditDetail::detailEdit($db, $_SESSION["emp_id"]);
 
 ?>
 
@@ -136,7 +135,7 @@ $detail = EditDetail::detailEdit($db, $_SESSION["id"]);
                     if (($start_date - $today_date) <= 0) {
                         echo "<button class='btn btn-info' disabled>N/A</button>";
                       } elseif ($row["status"] == 0) {
-                        echo "<button id='$row[id]' class='cancel btn btn-secondary'>Cancel</button>";
+                        echo "<button id='".base64_encode($row['id'])."' class='cancel btn btn-secondary'>Cancel</button>";
                       }
                     echo
                     '</td>

@@ -20,17 +20,6 @@ class DetailEmp
     
         return $result;
     }
-
-    public static function getDecrypt($encoded)
-    {
-        $decoded = "";
-        for( $i = 0; $i < strlen($encoded); $i++ ) {
-            $b = ord($encoded[$i]);
-            $a = $b ^ 123; 
-            $decoded .= chr($a);
-        }
-        return $decoded;
-    }
 }
 
 ?>

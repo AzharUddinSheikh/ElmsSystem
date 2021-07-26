@@ -6,7 +6,6 @@ use Azhar\Elms\Common\Inactivity;
 use Azhar\Elms\Common\Database;
 use Azhar\Elms\Getting\EditDetail;
 use Azhar\Elms\Updating\EditEmp;
-use Azhar\Elms\Getting\DetailEmp;
 
 session_start();
 
@@ -16,10 +15,10 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true || $_SESSION['
 
     exit;
   }
-  
-$id = DetailEmp::getDecrypt($_GET["id"]);
 
-if(!isset($_GET["id"]) || (($id != $_SESSION["id"])) && $_SESSION["user"] != "1" ){
+$id = base64_decode($_GET["id"]);
+
+if(!isset($_GET["id"]) || (($id != $_SESSION["emp_id"])) && $_SESSION["user"] != "1" ){
     
     echo "User Request Rejected";
     
@@ -42,7 +41,7 @@ if(isset($_POST['submit'])){
     
     if((!empty($_FILES['image']))){
         $img = $_FILES["image"]['name'];
-      } 
+    } 
 
     if ($_FILES["image"]['name'] == ""){
         $img = $detail_emp[6];
