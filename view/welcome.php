@@ -174,4 +174,4 @@ $detail = EditDetail::detailEdit($db, $_SESSION["emp_id"]);
   <!-- modal end -->           
 </body>
 </html>
-<script src="../public/javascript/welcome.js"></script>
+<script src="public/javascript/welcome.js"></script>

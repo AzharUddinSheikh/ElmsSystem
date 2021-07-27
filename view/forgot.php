@@ -47,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             </div>
         </form>
     </div>
-    <script src="../public/javascript/forgot.js"></script>
+    <script src="public/javascript/forgot.js"></script>
 </body>
 </html>
                 

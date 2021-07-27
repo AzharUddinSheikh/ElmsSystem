@@ -1,109 +1,45 @@
-<?php
-
-require_once '../vendor/autoload.php';
-
-use Azhar\Elms\Common\Inactivity;
-use Azhar\Elms\Common\Database;
-use Azhar\Elms\Getting\EditDetail;
-use Azhar\Elms\Updating\EditEmp;
-
-session_start();
-
-if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true || $_SESSION['status'] != '1') {
-    
-    header("location: ../index.php");
-
-    exit;
+{% extends 'partials/header.html' %}
+{% block content %}
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js" type="text/javascript"></script>
+<style>
+  .error {
+    color:red;
   }
-
-$id = base64_decode($_GET["id"]);
-
-if(!isset($_GET["id"]) || (($id != $_SESSION["emp_id"])) && $_SESSION["user"] != "1" ){
-    
-    echo "User Request Rejected";
-    
-    die();
+  .valid {
+    color:green;
   }
-
-  $database = new Database();
-  $db = $database->getConnection();
-
-  $detail_emp = EditDetail::detailEdit($db, $id);
-
-  Inactivity::inActive($_SESSION["last_login_timestamp"]);
-
-if(isset($_POST['submit'])){
-    $fname = $_POST["fname"];
-    $lname = $_POST["lname"];
-    $email = $_POST["email"];
-    $dob = $_POST["dob"];
-    $number = $_POST["number"];
-    
-    if((!empty($_FILES['image']))){
-        $img = $_FILES["image"]['name'];
-    } 
-
-    if ($_FILES["image"]['name'] == ""){
-        $img = $detail_emp[6];
-    } 
-      
-    $emp_edit = new EditEmp($db, $id);
-    $emp_edit->updateUser($fname, $lname, $email, $img);
-    $emp_edit->updateUserDetail($dob, $number);
-    $emp_edit->img_folder($img);
-    
-    $_SESSION["update"] = "PROFILE HAS BEEN UPDATED";
-}
-  
-?>
-
-<html lang="en">
-  <head>
-    <?php include '../partials/header.php';?>
-    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js" type="text/javascript"></script>
-    <style>
-      .error {
-        color:red;
-      }
-      .valid {
-        color:green;
-      }
-    </style>
-    <title>Edit Profile</title>
-  </head>
-  
+</style>
+</head>
 <body class="bg-secondary">
-  <?php include '../partials/navigation.php'; ?>
+    {{ include('partials/navigation.php') }}
+  
   <div class="w-50 mx-auto">
-    <div class="container"><?php
-    if(isset($_SESSION['update'])){
-      echo $_SESSION['update'];
-      unset($_SESSION['update']);
-    }
-    ?></div>
+    {% if session.update %}
+      <div class="container">{{session.update}}</div>
+    {% endif %}
     <h2 class="text-center">EDIT PROFILE</h2>
     <form action="" method="POST" name='edit' id='edit' enctype="multipart/form-data">
     <div class="mb-3">
       <label for="fname" class="form-label">First Name</label>
-      <input type="text" class="form-control" name="fname" id="fname" value=<?php echo $detail_emp[0] ;?>>
+      <input type="text" class="form-control" name="fname" id="fname" value="{{ userdetail[0] }}">
     </div>
         <div class="mb-3">
           <label for="lname" class="form-label">Last Name</label>
-          <input type="text" class="form-control" name="lname" id="lname" value=<?php echo $detail_emp[1] ;?>>
+          <input type="text" class="form-control" name="lname" id="lname" value="{{ userdetail[1] }}">
         </div>
         <div class="mb-3">
           <label for="email" class="form-label">Email Address</label>
-          <input id="uEmail" type="email" class="form-control" name="email" id="email" value=<?php echo $detail_emp[2]; ?>>
+          <input id="uEmail" type="email" class="form-control" name="email" id="email" value="{{ userdetail[2] }}">
           <span id="available"></span>
         </div>
         <div class="mb-3">
             <div class="mb-3">
               <label for="number" class="form-label">Phone Number</label>
-              <input type="number" class="form-control" name="number" id="number" value=<?php echo $detail_emp[4] ;?>>
+              <input type="number" class="form-control" name="number" id="number" value="{{ userdetail[4] }}">
         </div>
         <div>
             <label for="dob" class="form-label">Date Of Birth</label>
-            <input type="text" class="form-control" name="dob" id="dob" value=<?php echo $detail_emp[3] ;?>>
+            <input type="text" class="form-control" name="dob" id="dob" value="{{ userdetail[3] }}">
             <span id="dobID"></span>
         </div>
         <div class="custom-file my-5">
@@ -119,4 +55,6 @@ if(isset($_POST['submit'])){
     </div>
   </body>
 </html>
-<script src="../public/javascript/edit.js" type="text/javascript"></script>
+<script src="public/javascript/edit.js" type="text/javascript"></script>
+
+{% endblock %}

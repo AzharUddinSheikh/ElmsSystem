@@ -51,7 +51,7 @@ $(document).ready(function() {
         element.addEventListener("click",(e)=>{
             id = e.target.id.substr(0,);
             if(confirm("Are You Sure To Block This User")){
-                window.location = `/elms/view/admin.php?block=${id}`
+                window.location = `/elms/twigAdmin.php?block=${id}`
             }
         })
     })
@@ -60,7 +60,7 @@ $(document).ready(function() {
         element.addEventListener("click",(e)=>{
             id = e.target.id.substr(0,);
             if(confirm("Are You Sure To UnBlock This User")){
-                window.location = `/elms/view/admin.php?unblock=${id}`
+                window.location = `/elms/twigAdmin.php?unblock=${id}`
             }
         })
     })
@@ -69,7 +69,7 @@ $(document).ready(function() {
         element.addEventListener("click", (e)=>{
             id = e.target.id.substr(0,);
             if(confirm("Are You Sure To Approved")) {
-                window.location = `/elms/view/admin.php?approve=${id}`
+                window.location = `/elms/twigAdmin.php?approve=${id}`
             }
         })
     })
@@ -78,7 +78,7 @@ $(document).ready(function() {
         element.addEventListener("click", (e)=>{
             id = e.target.id.substr(0,);
             if(confirm("Are You Sure To Reject")) {
-                window.location = `/elms/view/admin.php?reject=${id}`
+                window.location = `/elms/twigAdmin.php?reject=${id}`
             }
         })
     })
@@ -86,14 +86,14 @@ $(document).ready(function() {
     document.querySelectorAll('.edit').forEach((element)=>{
         element.addEventListener("click",(e)=>{
             id = e.target.id.substr(0,);
-            location.href = `../view/editprofile.php?id=${id}`;
+            location.href = `twigEdit.php?id=${id}`;
         })
     })
     
     document.querySelectorAll('.view').forEach((element)=>{
         element.addEventListener("click",(e)=>{
             id = e.target.id.substr(0,);
-            location.href = `../view/leaveDetail.php?leave=${id}`;
+            location.href = `twigLeaveDetail.php?leave=${id}`;
         })
     })
     
@@ -101,7 +101,7 @@ $(document).ready(function() {
         element.addEventListener("click",(e)=>{
             id = e.target.id.substr(0,);
             if(confirm("Are You Sure To Delete This")){
-                window.location = `/elms/view/admin.php?cancel=${id}`
+                window.location = `/elms/twigAdmin.php?cancel=${id}`
             }
         })
     })

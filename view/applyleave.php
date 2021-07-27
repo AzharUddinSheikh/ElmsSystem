@@ -84,6 +84,6 @@ if($_SERVER['REQUEST_METHOD'] == "POST") {
         </div>
       </form>
     </div>
-    <script src="../public/javascript/applyleave.js"></script>
+    <script src="public/javascript/applyleave.js"></script>
 </body>
 </html>

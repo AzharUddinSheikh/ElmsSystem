@@ -20,7 +20,7 @@ class Login
 
             if ($row["user_type"] == '1') {
 
-                header("location:view/admin.php");
+                header("location:twigAdmin.php");
                 
             } else {
                 
