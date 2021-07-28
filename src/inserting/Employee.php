@@ -56,11 +56,24 @@ class Employee
     public function checkUser() 
     {
         $existsql = "SELECT * FROM users Where email = '$this->email'";
-
+        
         $result = mysqli_query($this->conn, $existsql);
 
         return mysqli_num_rows($result);
     }
+    
+    public function userStatus()
+    {
+        $sql = "SELECT * FROM users Where email = '$this->email'";
+
+        $result = $this->conn->query($sql);
+
+        while ($row = $result->fetch_assoc()){
+            
+            return $row["status"];
+        }
+    }
+
 }
 
 ?>

@@ -24,6 +24,7 @@
                 </tr>
             </thead>
             <tbody>
+            {% if count > 0 %}
                 {% for leave in range(0, count-1) %}                        
                     <tr>
                         <td>{{leave+1}}.</td>
@@ -31,15 +32,15 @@
                         <td>{{leaves[leave].first_name | title}} {{leaves[leave].last_name}}</td>
                         <td>{{leaves[leave].start_date}}</td>
                         <td>{{leaves[leave].end_date}}</td>
-                        {% set startdate = leaves[leave].start_date %}
-                        {% set difference = date(startdate).diff(date()) %}
-                        {% if difference.days <= 0 %} 
+                        {% set start_date = diffTime(leaves[leave].start_date) %}
+                        {% if start_date <= 0 %} 
                             <td><button id='{{ leaves[leave].id | base64_encode }}' class="cancel btn btn-secondary">Cancel</button></td>
                         {% else %} 
                             <td><button id='{{ leaves[leave].id | base64_encode }}' class="approve btn btn-success">Approve</button>  <button id='{{ leaves[leave].id | base64_encode }}' class="reject btn btn-danger">Reject</button></td>
                         {% endif %}
                     </tr>
                 {% endfor %}
+            {% endif %}
             </tbody>
         </table>
     </div>

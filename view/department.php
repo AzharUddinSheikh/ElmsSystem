@@ -32,7 +32,7 @@ if(isset($_POST["dname"])) {
     $dep = new Department($_POST["dname"], $db);
 
     $dep->create();
-
+    
     echo "data successfully inserted";
 }
 
@@ -45,10 +45,26 @@ if(isset($_POST["newpass"]) && isset($_POST["oldpass"])) {
         $pass = password_hash($_POST["newpass"], PASSWORD_DEFAULT);
         
         ChangePassword::changePass($_SESSION["id"], $pass, $db);
-    
+        
     } else {
-
+        
         echo "CURRENT PASSWORD DOESNOT MATCH";
+    }
+}
+
+if (isset($_POST["email"])){
+    
+    $emp = new Employee($db, $_POST["email"]);
+    
+    $result = $emp->userStatus();
+    
+    if ($result == "0") {
+
+        echo "Unable To Logged In Please Check The Email For Logged In";
+        
+    } elseif ($result == "2") {
+        
+        echo "User Is Blocked Contact Admin";
     }
 }
 ?>

@@ -10,7 +10,7 @@
             <a class="nav-link" href="twigEdit.php?id={{ session.emp_id | base64_encode }}">EDIT PROFILE</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="partials/logout.php">LOGOUT</a>
+            <a class="nav-link" href="../partials/logout.php">LOGOUT</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="twigApplyLeave.php">APPLY LEAVE</a>

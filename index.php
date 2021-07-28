@@ -74,6 +74,7 @@ if ($_SERVER['REQUEST_METHOD']=="POST") {
         }
         ?>
     </div>
+    <span class="error" id="available"></span>
    <div class="center">
        <h1>ELMS LOGIN</h1>
        <form autocomplete="off" novalidate method="POST" id="login">
@@ -83,10 +84,11 @@ if ($_SERVER['REQUEST_METHOD']=="POST") {
            <div class="form-group">
                <input name="password" type="password" id="password" placeholder="Enter Your Password">
            </div>
+           
            <div>
-                <a href="twigForgot.php">Forgot Password ? Click Here</a>
+                <a href="twig/twigForgot.php">Forgot Password ? Click Here</a>
            </div>
-           <button type="submit">Login</button>
+           <button id='submit' type="submit">Login</button>
        </form>
    </div>
 </body>

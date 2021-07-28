@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
     } 
 
-    header("location: index.php");
+    header("location: ../index.php");
 }
 
 $filter  = new \Twig\TwigFilter('base64_encode', function($string) {

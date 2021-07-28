@@ -80,6 +80,8 @@
                     <td><button class='btn btn-info' disabled>N/A</button></td>
                   {% elseif status == "0" %} 
                     <td><button id='{{ userleave[leave].id | base64_encode }}' class='cancel btn btn-secondary'>Cancel</button></td>
+                  {% else %}
+                    <td></td>
                   {% endif %}
               </tr>
             {% endfor %}

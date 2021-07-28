@@ -84,6 +84,13 @@ while($row = $result->fetch_assoc()) {
     array_push($leaves, $row);
 }
 
+$function1 = new \Twig\TwigFunction('diffTime', function($date) {
+    $today_date = strtotime(date('Y-m-d'));
+    $start_date = strtotime($date);
+    return ($start_date - $today_date);
+});
+
+
 $filter  = new \Twig\TwigFilter('base64_encode', function($string) {
     return base64_encode($string);
 });
@@ -98,6 +105,7 @@ $twig = new \Twig\Environment($loader);
 
 $twig->addFilter($filter);
 $twig->addFunction($function);
+$twig->addFunction($function1);
 
 $twig->addGlobal('session', $_SESSION);
 
