@@ -43,7 +43,7 @@ $('#uEmail').blur(function() {
   var uemail = $(this).val();
 
   $.ajax({
-      url:'view/department.php',
+      url:'../view/department.php',
       method:"POST",
       data:{user_email:uemail},
       success:function(data)

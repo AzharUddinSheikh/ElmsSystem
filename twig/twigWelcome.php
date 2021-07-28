@@ -9,7 +9,7 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true || $_SESSION["
     exit;
 }
 
-require_once 'vendor/autoload.php';
+require_once '../vendor/autoload.php';
 
 use Azhar\Elms\Common\InActivity;
 use Azhar\Elms\Common\Database;
@@ -54,7 +54,7 @@ $function1 = new \Twig\TwigFunction('diffTime', function($date) {
     return ($start_date - $today_date);
 });
 
-$loader = new \Twig\Loader\FilesystemLoader('view');
+$loader = new \Twig\Loader\FilesystemLoader('../view');
 
 $twig = new \Twig\Environment($loader);
 

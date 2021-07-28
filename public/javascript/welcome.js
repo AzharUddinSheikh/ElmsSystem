@@ -12,7 +12,7 @@ $("#myForm").validate({
         var old = $("#oldpass").val();
         var pass = $("#pass").val();
         $.ajax({
-            url:'view/department.php',
+            url:'../view/department.php',
             method:"POST",
             data:{oldpass:old, newpass:pass},
             success:function(data)

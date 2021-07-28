@@ -38,11 +38,8 @@ if ($_SERVER['REQUEST_METHOD']=="POST") {
         if(!$result){
 
             $_SESSION["flash"] = "WRONG PASSWORD";
-            
         }
     }
-
-
 }
 ?>
 

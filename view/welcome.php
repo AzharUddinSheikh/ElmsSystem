@@ -10,7 +10,7 @@
 </style>
   {{ include('partials/navigation.php') }}
   <div class="text-center">
-    <img style="width:150px;height:150px;border-radius: 50%;" src="public/images/{{details[6]}}">
+    <img style="width:150px;height:150px;border-radius: 50%;" src="../public/images/{{details[6]}}">
   </div>
   <div class="container">
     <h2 class="text-center my-5" >
@@ -114,5 +114,5 @@
     </div>
   <!-- modal end -->           
 </body>
-<script src="public/javascript/welcome.js"></script>
+<script src="../public/javascript/welcome.js"></script>
 {% endblock %}

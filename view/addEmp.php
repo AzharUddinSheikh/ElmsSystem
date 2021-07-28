@@ -67,5 +67,5 @@
         </div>
       </form>
     </div>
-<script src="public/javascript/addEmp.js"></script>
+<script src="../public/javascript/addEmp.js"></script>
 {% endblock %}

@@ -1,6 +1,6 @@
 <?php 
 
-require_once 'vendor/autoload.php';
+require_once '../vendor/autoload.php';
 
 session_start();
 
@@ -31,7 +31,7 @@ $filter  = new \Twig\TwigFilter('base64_encode', function($string) {
     return base64_encode($string);
 });
 
-$loader = new \Twig\Loader\FilesystemLoader('view');
+$loader = new \Twig\Loader\FilesystemLoader('../view');
 
 $twig = new \Twig\Environment($loader);
 

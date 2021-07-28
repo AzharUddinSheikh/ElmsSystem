@@ -39,5 +39,5 @@
       </div>
     </form>
   </div>
-<script src="public/javascript/applyleave.js"></script>
+<script src="../public/javascript/applyleave.js"></script>
 {% endblock %}

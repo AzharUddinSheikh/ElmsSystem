@@ -110,5 +110,5 @@
         </div>
     </div>
 </div>
-    <script src="public/javascript/admin.js"></script>
+    <script src="../public/javascript/admin.js"></script>
 {% endblock %}

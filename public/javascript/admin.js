@@ -10,7 +10,7 @@ $(document).ready(function() {
             $('#submit').prop("disabled", true);
         } else {
             $.ajax({
-                url:'view/department.php',
+                url:'../view/department.php',
                 method:"POST",
                 data:{dep_name:dname},
                 success:function(data)

@@ -46,5 +46,5 @@
             </tbody>
         </table>
     </div>
-    <script src="public/javascript/leaveDetail.js"></script>
+    <script src="../public/javascript/leaveDetail.js"></script>
 {% endblock %}

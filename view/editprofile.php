@@ -55,6 +55,6 @@
     </div>
   </body>
 </html>
-<script src="public/javascript/edit.js" type="text/javascript"></script>
+<script src="../public/javascript/edit.js" type="text/javascript"></script>
 
 {% endblock %}
