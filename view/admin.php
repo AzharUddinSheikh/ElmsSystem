@@ -34,9 +34,9 @@
                         {% set startdate = leaves[leave].start_date %}
                         {% set difference = date(startdate).diff(date()) %}
                         {% if difference.days <= 0 %} 
-                            <td><button id='{{ employees[employee].id | base64_encode }}' class="cancel btn btn-secondary">Cancel</button></td>
+                            <td><button id='{{ leaves[leave].id | base64_encode }}' class="cancel btn btn-secondary">Cancel</button></td>
                         {% else %} 
-                            <td><button id='{{ employees[employee].id | base64_encode }}' class="approve btn btn-success">Approve</button>  <button id='{{ employees[employee].id | base64_encode }}' class="reject btn btn-danger">Reject</button></td>
+                            <td><button id='{{ leaves[leave].id | base64_encode }}' class="approve btn btn-success">Approve</button>  <button id='{{ leaves[leave].id | base64_encode }}' class="reject btn btn-danger">Reject</button></td>
                         {% endif %}
                     </tr>
                 {% endfor %}
@@ -106,7 +106,6 @@
                     <div class="mb-1"><span id="available"></span></div>
                     <div class="hide"><button id="submit" class="btn btn-primary">ADD</button></div>
                 </form>
-
             </div>
         </div>
     </div>

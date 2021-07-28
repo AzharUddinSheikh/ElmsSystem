@@ -24,7 +24,7 @@ class Login
                 
             } else {
                 
-                header("location:view/welcome.php");
+                header("location:twigWelcome.php");
             }
         }
     }

@@ -25,7 +25,7 @@
                     <td>{{userleaves[leave].added_on}}</td>
                     <td>{{userleaves[leave].start_date}}</td>
                     <td>{{userleaves[leave].end_date}}</td>
-                    {% set status = userleave[leave].status %}
+                    {% set status = userleaves[leave].status %}
                     {% if status == "1" %} 
                         <td>APPROVED</td>
                     {% elseif status == "2" %} 

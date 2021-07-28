@@ -12,7 +12,7 @@ $(document).ready(function() {
             $('#search').prop('disabled', false);
         
             $.ajax({
-                url:'department.php',
+                url:'view/department.php',
                 method:"POST",
                 data:{user_email:email},
                 success:function(data)

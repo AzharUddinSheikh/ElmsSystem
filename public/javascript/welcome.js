@@ -12,7 +12,7 @@ $("#myForm").validate({
         var old = $("#oldpass").val();
         var pass = $("#pass").val();
         $.ajax({
-            url:'department.php',
+            url:'view/department.php',
             method:"POST",
             data:{oldpass:old, newpass:pass},
             success:function(data)
@@ -33,7 +33,7 @@ document.querySelectorAll('.cancel').forEach((element)=>{
         element.addEventListener("click",(e)=>{
             id = e.target.id.substr(0,);
             if(confirm("Are You Sure To Delete This Request")){
-                window.location = `/elms/view/welcome.php?cancel=${id}`
+                window.location = `twigWelcome.php?cancel=${id}`
             }
         })
     })

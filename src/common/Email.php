@@ -11,7 +11,7 @@ class Email
     {
         $to = $email;
         $subject = "ELMS Employee Email Verification";
-        $message = "<a href=http://localhost/elms/partials/verify.php?empid=$empid>Verified Your Account</a>";
+        $message = "<a href=http://localhost/elms/twigVerify.php?empid=$empid>Verified Your Account</a>";
         $headers = 'From: azharsheikh760@gmail.com'       . "\r\n" .
                     'Reply-To: azharsheikh760@gmail.com' . "\r\n" .
                     'X-Mailer: PHP/' . phpversion();

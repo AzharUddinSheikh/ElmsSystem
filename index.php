@@ -6,7 +6,7 @@ if(isset($_SESSION["loggedin"])){
 
     if($_SESSION["status"] == "1"){
         
-        header('location:view/welcome.php');
+        header('location:twigWelcome.php');
     }
 
 } 
@@ -87,7 +87,7 @@ if ($_SERVER['REQUEST_METHOD']=="POST") {
                <input name="password" type="password" id="password" placeholder="Enter Your Password">
            </div>
            <div>
-                <a href="view/forgot.php">Forgot Password ? Click Here</a>
+                <a href="twigForgot.php">Forgot Password ? Click Here</a>
            </div>
            <button type="submit">Login</button>
        </form>

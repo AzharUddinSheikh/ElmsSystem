@@ -1,6 +1,6 @@
 <div>
     <nav class="navbar navbar-expand-lg navbar-light bg-primary mb-5">
-      <a class="navbar-brand" href="view/welcome.php">HOME</a>
+      <a class="navbar-brand" href="twigWelcome.php">HOME</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -13,10 +13,10 @@
             <a class="nav-link" href="partials/logout.php">LOGOUT</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="view/applyleave.php">APPLY LEAVE</a>
+            <a class="nav-link" href="twigApplyLeave.php">APPLY LEAVE</a>
           </li>
           {% set currenturl = getUrl() %}
-          {% if currenturl == "welcome.php" %}
+          {% if currenturl == "twigWelcome.php" %}
               <li class="nav-item">
                 <a type="button" class="nav-link" data-bs-toggle="modal" data-bs-target="#exampleModal">CHANGE PASSWORD</a>
               </li>
@@ -33,7 +33,7 @@
                   </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="view/addEmp.php">ADD EMPLOYEE</a>
+                <a class="nav-link" href="twigAddEmp.php">ADD EMPLOYEE</a>
               </li>
           {% endif %}
         </ul>

@@ -38,10 +38,6 @@ class Employee
 
             $stmt->execute();
         }
-
-        $stmt->close();
-
-        header('location: ../partials/thankyou.php');
     }
 
     public function createUser($empid, $fname, $lname, $department, $usertype)
