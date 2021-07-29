@@ -17,6 +17,10 @@ use Azhar\Elms\Inserting\AddLeave;
 
 Inactivity::inActive($_SESSION["last_login_timestamp"]);
 
+if(isset($_SESSION["message"])){
+  unset($_SESSION["message"]);
+}
+
 if($_SERVER['REQUEST_METHOD'] == "POST") {
     
     $reason = $_POST["textarea"];

@@ -7,7 +7,7 @@
   {{ include('partials/navigation.php') }}
   <div class="w-50 mx-auto my-5 ">
     {% if session.message %}
-    <div class="error">{{session.message}}</div>
+    <div class="error alert alert-danger" role="alert">{{session.message}}</div>
     {% endif %}
     <h2 class="mb-5">Fill Out The Form For Applying Leave</h2>
     <form action="" method="POST" name="applyLeave">

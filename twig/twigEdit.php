@@ -32,6 +32,10 @@ $detail_emp = EditDetail::detailEdit($db, $id);
 
 Inactivity::inActive($_SESSION["last_login_timestamp"]);
 
+if(isset($_SESSION["update"])){
+    unset($_SESSION["update"]);
+}
+
 if(isset($_POST['submit'])){
     $fname = $_POST["fname"];
     $lname = $_POST["lname"];

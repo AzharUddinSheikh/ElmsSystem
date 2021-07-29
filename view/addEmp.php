@@ -7,7 +7,7 @@
   {{ include('partials/navigation.php') }}
     <div class="w-50 mx-auto">
       {% if session.added %} 
-        <div class="container valid">{{session.added}}</div>
+        <div class="container valid alert alert-warning" role="alert">{{session.added}}</div>
       {% endif %}
       <h2>Fill Out The Detail With Valid Email Address</h2>
       <form action="" method="POST" name='addemp' id='addemp'>

@@ -19,13 +19,12 @@ $('#email').blur(function() {
         data:{email:uemail},
         success:function(data)
         {   
-            if(data == 0)
+            if(data != 0)
             {
-                $('#available').html('<span class="text-success"></span>');
-            }
-            else 
-            {
-                $('#available').html('<span>'+data+'</span>');
+                $('#available').html('<span class="alert alert-danger" role="alert">'+data+'</span>');
+                $('#submit').prop("disabled", true);
+            } else {
+                $('#submit').prop("disabled", false);
             }
         }
     })

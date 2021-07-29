@@ -21,7 +21,12 @@ Inactivity::inActive($_SESSION["last_login_timestamp"]);
 
 $database = new Database();
 $db = $database->getConnection();
-  
+
+if(isset($_SESSION["added"])){
+    unset($_SESSION["added"]);
+}
+
+
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
     $fname = $_POST['fname'];

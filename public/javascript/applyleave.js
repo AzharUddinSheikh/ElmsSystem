@@ -46,5 +46,9 @@ $(document).ready(function() {
     $(function(){
         $(".date").datepicker();
     });
-    
-  });
+
+    if ( window.history.replaceState ) {
+        window.history.replaceState( null, null, window.location.href )
+    }
+
+});

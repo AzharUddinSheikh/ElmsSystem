@@ -7,7 +7,7 @@
   
   <div class="w-50 mx-auto">
     {% if session.update %}
-      <div class="container">{{session.update}}</div>
+      <div class="alert alert-info" role="alert">{{session.update}}</div>
     {% endif %}
     <h2 class="text-center">EDIT PROFILE</h2>
     <form action="" method="POST" name='edit' id='edit' enctype="multipart/form-data">

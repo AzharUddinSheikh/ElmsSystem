@@ -60,15 +60,15 @@ if ($_SERVER['REQUEST_METHOD']=="POST") {
     <link href="https://getbootstrap.com/docs/4.0/examples/sign-in/signin.css" rel="stylesheet">
   </head>
   <body class="text-center">
-    <div class="h3 mb-3 font-weight-normal warning">
-        <?php
-        if (isset($_SESSION["flash"])){
+      <span class="alert alert-danger" id="available" role="alert"></span>
+      <?php
+      if (isset($_SESSION["flash"])){
+          echo '<div class="alert alert-danger" role="alert">';
             echo $_SESSION["flash"];
-            unset($_SESSION["flash"]);
+            '</div>';
+          unset($_SESSION["flash"]);
         }
-        ?>
-    </div>
-    <span class="h3 mb-3 font-weight-normal error" id="available"></span>
+      ?>
     <form class="form-signin" autocomplete="off" novalidate method="POST" id="login">
       <img class="mb-4" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
       <h1 class="h3 mb-3 font-weight-normal">ELMS LOGIN </h1>

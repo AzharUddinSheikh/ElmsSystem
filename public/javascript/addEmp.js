@@ -81,3 +81,7 @@ $(document).ready(function() {
 $(function(){
     $("#dob").datepicker({ dateFormat: 'yy-mm-dd' });
 });
+
+if ( window.history.replaceState ) {
+    window.history.replaceState( null, null, window.location.href )
+}
