@@ -3,14 +3,6 @@
 {% block body %}Add Emp Panel{% endblock %}
 {% block content %}
 <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
-<style>
-  .error {
-    color:red;
-  }
-  .valid {
-    color:green;
-  }
-</style>
 <body class="bg-secondary">
   {{ include('partials/navigation.php') }}
     <div class="w-50 mx-auto">

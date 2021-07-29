@@ -43,30 +43,24 @@ if ($_SERVER['REQUEST_METHOD']=="POST") {
 }
 ?>
 
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="public/css/normalize.css">
-    <link rel="stylesheet" href="public/css/styles.css">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
-    <style>
-        .error {
-            color:red;
-        }
-        .valid {
-            color:green;
-        }
-        .warning {
-            color: yellow;
-        }
-        </style>
-        <title>Login Page ELMS</title>
-</head>
-<body>
-    <div class="warning">
+    <title>Login Page ELMS</title>
+    <link rel="stylesheet" href="public/css/styles.css">
+    <link rel="icon" href="https://getbootstrap.com/docs/4.0/assets/img/favicons/favicon.ico">
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/sign-in/">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://getbootstrap.com/docs/4.0/examples/sign-in/signin.css" rel="stylesheet">
+  </head>
+  <body class="text-center">
+    <div class="h3 mb-3 font-weight-normal warning">
         <?php
         if (isset($_SESSION["flash"])){
             echo $_SESSION["flash"];
@@ -74,23 +68,19 @@ if ($_SERVER['REQUEST_METHOD']=="POST") {
         }
         ?>
     </div>
-    <span class="error" id="available"></span>
-   <div class="center">
-       <h1>ELMS LOGIN</h1>
-       <form autocomplete="off" novalidate method="POST" id="login">
-           <div class="form-group">
-               <input name="email" type="email" id="email" placeholder="Enter Your Email Address" autofocus>
-           </div>
-           <div class="form-group">
-               <input name="password" type="password" id="password" placeholder="Enter Your Password">
-           </div>
-           
-           <div>
-                <a href="twig/twigForgot.php">Forgot Password ? Click Here</a>
-           </div>
-           <button id='submit' type="submit">Login</button>
-       </form>
-   </div>
-</body>
+    <span class="h3 mb-3 font-weight-normal error" id="available"></span>
+    <form class="form-signin" autocomplete="off" novalidate method="POST" id="login">
+      <img class="mb-4" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
+      <h1 class="h3 mb-3 font-weight-normal">ELMS LOGIN </h1>
+      <div class="mb-3">
+        <input class="form-control" name="email" type="email" id="email" placeholder="Enter Your Email Address" autofocus>
+      </div>
+      <input class="form-control" name="password" type="password" id="password" placeholder="Enter Your Password">
+      <div class="mb-3">
+        <a href="twig/twigForgot.php">Forgot Password ? Click Here</a>
+      </div>
+      <button class="btn btn-lg btn-primary btn-block" id='submit' type="submit">Log In</button>
+    </form>
+  </body>
 </html>
 <script src="public/javascript/index.js"></script>

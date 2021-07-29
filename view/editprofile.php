@@ -1,14 +1,6 @@
 {% extends 'partials/header.html' %}
 {% block content %}
 <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js" type="text/javascript"></script>
-<style>
-  .error {
-    color:red;
-  }
-  .valid {
-    color:green;
-  }
-</style>
 </head>
 <body class="bg-secondary">
     {{ include('partials/navigation.php') }}

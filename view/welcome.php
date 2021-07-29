@@ -3,11 +3,6 @@
 {% block body %}Home Panel{% endblock %}
 {% block content %}
 <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
-<style>
-  .error {
-    color : red;
-  }
-</style>
   {{ include('partials/navigation.php') }}
   <div class="text-center">
     <img style="width:150px;height:150px;border-radius: 50%;" src="../public/images/{{details[6]}}">
