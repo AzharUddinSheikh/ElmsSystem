@@ -20,16 +20,12 @@ class Login
 
             if ($row["user_type"] == '1') {
 
-                header("location:view/admin.php");
+                header("location:twig/twigAdmin.php");
                 
             } else {
                 
-                header("location:view/welcome.php");
+                header("location:twig/twigWelcome.php");
             }
-            
-        } else {
-            
-            echo '<script>alert("Invalid Password")</script>';
         }
     }
 
@@ -46,11 +42,25 @@ class Login
                 
                 return $row;
               }
-              
+        } 
+    }
+
+    public function checkPassword($id, $oldpass)
+    {
+        $sql = "SELECT * FROM users WHERE users.id = '$id' LIMIT 1"; 
+
+        $result = $this->conn->query($sql);
+
+        $row = $result->fetch_assoc();
+
+        if (!password_verify($oldpass, $row["password"])) {
+        
+            return false;
+        
         } else {
 
-              die("user not found valid_user method");
-        }   
+            return true;
+        }
     }
 }
 

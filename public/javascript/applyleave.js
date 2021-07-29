@@ -1,5 +1,15 @@
 $(document).ready(function() {
-    // Wait for the DOM to be ready
+
+    $.validator.addMethod("greaterThan", function (value, element) {
+        var today = new Date();
+        return Date.parse(value) >= Date.parse(today);
+    }, "Date Should be greater than Today");
+    
+    $.validator.addMethod("greater", function (value, element) {
+        var startdate = $('#dob').val();
+        return Date.parse(value) >= Date.parse(startdate);
+    }, "End Date Should Be Greater than Start Date");
+   
     $(function () {
         $("form[name='applyLeave']").validate({
             rules: {
@@ -9,11 +19,14 @@ $(document).ready(function() {
                 },
                 dob: {
                     required: true,
-                    date: true
+                    date: true,
+                    greaterThan: true
                 },
                 dob1: {
                     required: true,
-                    date: true
+                    date: true,
+                    greaterThan: true,
+                    greater: true,
                 }
             },
             messages: {
@@ -28,5 +41,14 @@ $(document).ready(function() {
                 form.submit();
             }
         });
-    });        
-  });
+    }); 
+
+    $(function(){
+        $(".date").datepicker();
+    });
+
+    if ( window.history.replaceState ) {
+        window.history.replaceState( null, null, window.location.href )
+    }
+
+});

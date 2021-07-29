@@ -1,59 +1,8 @@
-<?php
+{% extends 'partials/header.html' %}
+{% block body %}Leave Panel{% endblock %}
+{% block content %}
 
-session_start();
-
-if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true || $_SESSION['status'] != '1' || $_SESSION['user'] != '1') {
-    
-    header("location: ../index.php");
-  
-    exit;
-}
-
-
-require_once '../vendor/autoload.php';
-
-use Azhar\Elms\Updating\ApproveReject;
-use Azhar\Elms\Getting\GetLeave;
-use Azhar\Elms\Common\Database;
-use Azhar\Elms\Common\Inactivity;
-
-$database = new Database();
-$db = $database->getConnection();
-
-$apply_reject = new ApproveReject($db);
-
-if(isset($_GET["leave"])){
-    $view_id  = $_GET["leave"];
-}
-
-if(isset($_GET['approve'])) {
-  
-    $id = $_GET['approve'];
-    
-    $apply_reject->approve($id);
-}
-
-if(isset($_GET['reject'])) {
-    
-    $id = $_GET['reject'];
-    
-    $apply_reject->reject($id);
-}
-
-Inactivity::inActive($_SESSION["last_login_timestamp"]);
-?>
-
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <title>User Leave</title>
-        <!-- Bootstrap CSS -->
-    <?php include '../partials/header.php'; ?>       
-</head>
-
-<body>
-    <?php include '../partials/navigation.php'; ?>  
+    {{ include('partials/navigation.php') }}
     <h1 class="text-center mt-3">Leave History Of A User</h1>
     <div class="container mt-5 mb-5">
         <table class="table table-dark table-striped my-3" id="myTable">
@@ -69,54 +18,37 @@ Inactivity::inActive($_SESSION["last_login_timestamp"]);
                 </tr>
             </thead>
             <tbody>
-                
-                <?php 
-            $user_leave = new GetLeave($db);
-            
-            $today_date = strtotime(date('Y-m-d'));
-            
-            $result = $user_leave->userLeave($view_id);
-
-                $count = 0;
-                
-                while($row = $result->fetch_assoc()) {
-                    
-                    $count++;
-                    
-                    echo
-                    '<tr>
-                        <td>'.$count.'</td>
-                        <td>'.$row["reason"].'</td>
-                        <td>'.$row["added_on"].'</td>
-                        <td>'.$row["start_date"].'</td>
-                        <td>'.$row["end_date"].'</td>
-                        <td>';
-                        if($row["status"] == 0){
-                            echo "PENDING";
-                        } elseif ($row["status"] == 1){
-                            echo "APPROVED";
-                        } else {
-                            echo "REJECTED";
-                        }
-                        echo
-                        '</td>
-                        <td>';
-                        $start_date = strtotime($row["start_date"]);
-                        if (($start_date - $today_date) <= 0){
-                            echo '<button class="btn btn-info" disabled>N/A</button>';
-                        } elseif ($row["status"] == "1") {
-                            echo "<button id='$row[id]' name='$row[user_id]' class='reject btn btn-danger'>Reject</button>";
-                        } elseif ($row["status"] == "2") {
-                            echo "<button id='$row[id]' name='$row[user_id]' class='approve btn btn-success'>Approve</button>";
-                        }
-            
-                }
-            ?>
-                    </td>
-                </tr>
+            {% if size > 0 %}
+                {% for leave in range(0, size-1) %}                        
+                    <tr>
+                        <td>{{leave}}</td>
+                        <td>{{userleaves[leave].reason}}</td>
+                        <td>{{userleaves[leave].added_on}}</td>
+                        <td>{{userleaves[leave].start_date}}</td>
+                        <td>{{userleaves[leave].end_date}}</td>
+                        {% set status = userleaves[leave].status %}
+                        {% if status == "1" %} 
+                            <td>APPROVED</td>
+                        {% elseif status == "2" %} 
+                            <td>REJECTED</td>
+                        {% else %} 
+                            <td>PENDING</td>
+                        {% endif %}
+                        {% set start_date = diffTime(userleaves[leave].start_date) %}
+                        {% if start_date <= 0 %}
+                            <td><button class="btn btn-info" disabled>N/A</button></td>
+                        {% elseif status == "1" %} 
+                            <td><button id='{{ userleaves[leave].id | base64_encode }}' name='{{ userleaves[leave].user_id | base64_encode }}' class='reject btn btn-danger'>Reject</button></td>
+                        {% elseif status == "2" %}
+                            <td><button id='{{ userleaves[leave].id | base64_encode }}' name='{{ userleaves[leave].user_id | base64_encode }}' class='approve btn btn-success'>Approve</button></td>
+                        {% else %}
+                            <td></td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            {% endif %}
             </tbody>
         </table>
     </div>
     <script src="../public/javascript/leaveDetail.js"></script>
-</body>
-</html>
+{% endblock %}

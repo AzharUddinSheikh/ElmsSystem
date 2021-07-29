@@ -19,7 +19,7 @@ class DetailEmp
         $result = $this->conn->query($sql);
     
         return $result;
-        }
+    }
 }
 
 ?>

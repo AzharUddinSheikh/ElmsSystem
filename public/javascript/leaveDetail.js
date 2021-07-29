@@ -5,7 +5,7 @@ $(document).ready(function() {
             id = e.target.id.substr(0,);
             id2 = e.target.name.substr(0,);
             if(confirm("Are You Sure To Approved")) {
-                window.location = `/elms/view/leaveDetail.php?approve=${id}&leave=${id2}`
+                window.location = `/elms/twig/twigLeaveDetail.php?approve=${id}&leave=${id2}`
             }
         })
     })
@@ -16,7 +16,7 @@ $(document).ready(function() {
             id2 = e.target.name.substr(0,);
             console.log(id,id2);
             if(confirm("Are You Sure To Reject")) {
-                window.location = `/elms/view/leaveDetail.php?reject=${id}&leave=${id2}`
+                window.location = `/elms/twig/twigLeaveDetail.php?reject=${id}&leave=${id2}`
             }
         })
     })

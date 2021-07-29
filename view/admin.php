@@ -1,76 +1,12 @@
-<?php
+{% extends 'partials/header.html' %}
 
-session_start();
+{% block body %}Admin Panel{% endblock %}
 
-if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true || $_SESSION['status'] != '1' || $_SESSION['user'] != '1') {
-    
-    header("location: ../index.php");
-    
-    exit;
-}
-
-require_once '../vendor/autoload.php';
-
-use Azhar\Elms\Common\Inactivity;
-use Azhar\Elms\Common\Database;
-use Azhar\Elms\Updating\ApproveReject;
-use Azhar\Elms\Updating\BlockUnBlock;
-use Azhar\Elms\Getting\DetailEmp;
-use Azhar\Elms\Getting\GetLeave;
-use Azhar\Elms\Updating\LeaveDelete;
-
-Inactivity::inActive($_SESSION["last_login_timestamp"]);
-
-$database = new Database();
-$db = $database->getConnection();
-
-$apply_reject = new ApproveReject($db);
-$block_unblock = new BlockUnBlock($db);
-
-if(isset($_GET['approve'])) {
-  
-    $id = $_GET['approve'];
-  
-    $apply_reject->approve($id);
-}
-
-if(isset($_GET['reject'])) {
-  
-    $id = $_GET['reject'];
-    
-    $apply_reject->reject($id);
-}
-
-if(isset($_GET['block'])) {
-    
-    $id = $_GET['block'];
-    
-    $block_unblock->block($id);
-}
-
-if(isset($_GET['unblock'])) {
-    
-    $id = $_GET['unblock'];
-    
-    $block_unblock->unBlock($id);
-}
-
-if(isset($_GET["cancel"])) {
-
-    $id = $_GET['cancel'];
-  
-    LeaveDelete::deleteRequest($db, $id);
-  }
-?>
-
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <?php include '../partials/header.php'; ?>
-    <title>Document</title>
-</head>
+{% block content %}
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
 <body>
-    <?php include '../partials/navigation.php'; ?>
+    {{ include('partials/navigation.php') }}
+
     <span id="result"></span>
     
     <!-- table leave  -->
@@ -88,43 +24,27 @@ if(isset($_GET["cancel"])) {
                 </tr>
             </thead>
             <tbody>
-                <?php 
-                    $comm = new GetLeave($db);
-                    
-                    $today_date = strtotime(date('Y-m-d'));
-                    
-                    $result = $comm->leaveRequest();
-                        
-                        $count = 0;
-                        
-                        while($row = $result->fetch_assoc()) {
-                            
-                            $count++;
-                            echo
-                            '<tr>
-                            <td>'.$count.'</td>
-                            <td>'.$row["emp_id"].'</td>
-                            <td>'.$row["first_name"]." ".$row["last_name"].'</td>
-                            <td>'.$row["start_date"].'</td>
-                            <td>'.$row["end_date"].'</td>';
-
-                            $start_date = strtotime($row["start_date"]);
-
-                            if (($start_date - $today_date) <= 0){
-                                echo '<td><button id='.$row["id"].' class="cancel btn btn-secondary">Cancel</button></td>';
-                            } else {
-                                echo '<td><button id='.$row["id"].' class="approve btn btn-success">Approve</button>  <button id='.$row["id"].' class="reject btn btn-danger">Reject</button></td>';
-                            }
-                            echo 
-                            '</tr>';
-                        }
-                ?>
+            {% if count > 0 %}
+                {% for leave in range(0, count-1) %}                        
+                    <tr>
+                        <td>{{leave+1}}.</td>
+                        <td>{{leaves[leave].emp_id}}</td>
+                        <td>{{leaves[leave].first_name | title}} {{leaves[leave].last_name}}</td>
+                        <td>{{leaves[leave].start_date}}</td>
+                        <td>{{leaves[leave].end_date}}</td>
+                        {% set start_date = diffTime(leaves[leave].start_date) %}
+                        {% if start_date <= 0 %} 
+                            <td><button id='{{ leaves[leave].id | base64_encode }}' class="cancel btn btn-secondary">Cancel</button></td>
+                        {% else %} 
+                            <td><button id='{{ leaves[leave].id | base64_encode }}' class="approve btn btn-success">Approve</button>  <button id='{{ leaves[leave].id | base64_encode }}' class="reject btn btn-danger">Reject</button></td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            {% endif %}
             </tbody>
         </table>
     </div>
-    <!-- end table leave -->
 
-    <!-- table -->
     <div class="container mt-5">
         <h1 class="text-center">EMPLOYEE DETAIL CAN BE EDITED OR BLOCKED </h1>
     </div>
@@ -142,38 +62,31 @@ if(isset($_GET["cancel"])) {
                 </tr>
             </thead>
             <tbody>
-      <?php
-        $common = new DetailEmp($db);
-            
-        $result = $common->showemp();
         
-        $count = 0;
-
-        while($row = $result->fetch_assoc()) {
-            
-            $count++;
-        
-            echo "<tr>
-            <th scope='row'>". $count."</th>
-            <td>".$row["emp_id"]."</td>
-            <td>".$row["first_name"]."</td>
-            <td>".$row["last_name"]."</td> 
-            <td>".$row["email"]."</td> 
-            <td>".$row["name"]."</td>
-            <td>";
-            if($_SESSION["emp_id"] === $row["emp_id"]){
-                echo "<button class='block btn btn-danger' disabled>BLOCK</button>";
-            } else {
-                if ($row["status"] == "1") {
-                    echo "<button id='$row[id]' class='block btn btn-danger'>BLOCK</button>";
-                } elseif ($row["status"] == "2") {
-                    echo "<button id='$row[id]' class='unblock btn btn-warning'>UNBLOCK</button>";
-                }
-            }
-             echo " <button id='$row[id]' type='button' class='edit btn btn-warning'>EDIT</button>  <button id='$row[id]' type='button' class='view btn btn-secondary'>View</button>
-            </tr>";
-        }
-?>
+            {% for employee in range(0, size-1) %}                        
+                <tr>
+                    <td>{{employee+1}}</td>
+                    <td>{{employees[employee].emp_id}}</td>
+                    <td>{{employees[employee].first_name}}</td>
+                    <td>{{employees[employee].last_name}}</td> 
+                    <td>{{employees[employee].email}}</td> 
+                    <td>{{employees[employee].name}}</td>
+                    {% set empid = employees[employee].emp_id %}
+                    {% set status = employees[employee].status %}
+                    <td>
+                    {% if empid == session.emp_id %}
+                        <button class='block btn btn-danger' disabled>BLOCK</button>
+                    {% else %}
+                        {% if status == "1" %}
+                            <button id='{{ employees[employee].id | base64_encode }}' class='block btn btn-danger'>BLOCK</button>
+                        {% elseif status == "2" %}
+                            <button id='{{ employees[employee].id | base64_encode }}' class='unblock btn btn-warning'>UNBLOCK</button>
+                        {% endif %}
+                    {% endif %}
+                    <button id='{{ employees[employee].emp_id | base64_encode }}' type='button' class='edit btn btn-warning'>EDIT</button>  <button id='{{ employees[employee].id | base64_encode }}' type='button' class='view btn btn-secondary'>View</button>
+                    </td>
+                </tr>
+            {% endfor %}
         </tbody>
         </table>
         
@@ -194,12 +107,9 @@ if(isset($_GET["cancel"])) {
                     <div class="mb-1"><span id="available"></span></div>
                     <div class="hide"><button id="submit" class="btn btn-primary">ADD</button></div>
                 </form>
-
             </div>
         </div>
     </div>
 </div>
-    <!-- Option 1: Bootstrap Bundle with Popper -->
     <script src="../public/javascript/admin.js"></script>
-</body>
-</html>
+{% endblock %}
