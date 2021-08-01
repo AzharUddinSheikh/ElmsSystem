@@ -6,9 +6,14 @@
 <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
 <body>
     {{ include('partials/navigation.php') }}
-
     <span id="result"></span>
-    
+    <div class="container">
+        {% if session.leave %}
+            <div class="alert alert-primary" role="alert">
+                {{session.leave}}        
+            </div>
+        {% endif %}
+    </div>
     <!-- table leave  -->
     <h1 class="text-center">EMPLOYEE LEAVE PROPOSAL REJECT OR APPROVED</h1>
     <div class="container mt-5 mb-5">
@@ -36,7 +41,7 @@
                         {% if start_date <= 0 %} 
                             <td><button id='{{ leaves[leave].id | base64_encode }}' class="cancel btn btn-secondary">Cancel</button></td>
                         {% else %} 
-                            <td><button id='{{ leaves[leave].id | base64_encode }}' class="approve btn btn-success">Approve</button>  <button id='{{ leaves[leave].id | base64_encode }}' class="reject btn btn-danger">Reject</button></td>
+                            <td><button id='{{ leaves[leave].id | base64_encode }}' class="approve btn btn-success">Approve</button>  <button id='{{ leaves[leave].id | base64_encode }}' class="reject btn btn-danger mx-1">Reject</button>  <button type="button" id='{{ leaves[leave].id | base64_encode }}' class="userLeave btn btn-primary"  data-toggle="modal" data-target="#editLeave">Edit Leave</button></td>
                         {% endif %}
                     </tr>
                 {% endfor %}
@@ -111,5 +116,34 @@
         </div>
     </div>
 </div>
+
+<!-- Modal -->
+    <div class="modal fade" id="editLeave" tabindex="-1" role="dialog" aria-labelledby="editLeaveLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editLeaveLabel">Edit User Leave</h5>
+            </div>
+            <div class="modal-body">
+                <form action="http://localhost/elms/twig/twigAdmin.php" autocomplete="off" method="POST" name="editleave">
+                    <input type="hidden" name="userleaveid" id='userleaveid'>
+                    <div class="mb-5">
+                        <label for="dob" class="form-label">Start Date</label>
+                        <input type="text" class="date form-control" name="dob" id="dob" onkeypress="return false">
+                    </div>
+                    <div class="mb-5">
+                        <label for="dob1" class="form-label">End Date</label>
+                        <input type="text" class="date form-control" name="dob1" id="dob1" onkeypress="return false">
+                    </div>
+                    <div class="col-md-12 text-center">
+                        <span class="submit">
+                        <button type="submit" class="btn btn-primary">Approved On Update</button>
+                        </span>
+                    </div>
+                </form>
+            </div>  
+        </div>
+    </div>
+    </div>
     <script src="../public/javascript/admin.js"></script>
 {% endblock %}

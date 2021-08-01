@@ -6,9 +6,8 @@ if(isset($_SESSION["loggedin"])){
 
     if($_SESSION["status"] == "1"){
         
-        header('location:twigWelcome.php');
+        header('location:twig/twigWelcome.php');
     }
-
 } 
 
 use Azhar\Elms\Common\Database;

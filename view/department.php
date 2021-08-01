@@ -67,4 +67,15 @@ if (isset($_POST["email"])){
         echo "User Is Blocked Contact Admin";
     }
 }
+
+if (isset($_POST["leave_id"])){
+    $id = base64_decode($_POST["leave_id"]);
+    $sql = "SELECT * FROM leave_requests WHERE id = '$id'";
+    $result = $db->query($sql);
+    $dataarray = array();
+    while ($row = $result->fetch_assoc()){
+        array_push($dataarray, $row["start_date"], $row["end_date"]);
+    }
+    print json_encode($dataarray);
+}
 ?>

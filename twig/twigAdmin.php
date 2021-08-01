@@ -27,11 +27,29 @@ $db = $database->getConnection();
 $apply_reject = new ApproveReject($db);
 $block_unblock = new BlockUnBlock($db);
 
+if(isset($_SESSION["leave"])){
+    unset($_SESSION["leave"]);
+}
+
+if($_SERVER['REQUEST_METHOD'] == "POST") {
+    
+    $dob = $_POST["dob"];
+    $dob1 = $_POST["dob1"];
+    $id = base64_decode($_POST["userleaveid"]);
+    
+    LeaveDelete::updateLeave($db, $id, $dob, $dob1);
+
+    $_SESSION["leave"] = "USER LEAVE UPDATED";
+}
+
 if(isset($_GET['approve'])) {
 
     $id = base64_decode($_GET['approve']);
   
     $apply_reject->approve($id);
+
+    $_SESSION["leave"] = "USER LEAVE APPROVED";
+    
 }
 
 if(isset($_GET['reject'])) {
@@ -39,6 +57,8 @@ if(isset($_GET['reject'])) {
     $id = base64_decode($_GET['reject']);
     
     $apply_reject->reject($id);
+
+    $_SESSION["leave"] = "USER LEAVE REJECTED";
 }
 
 if(isset($_GET['block'])) {
@@ -46,6 +66,8 @@ if(isset($_GET['block'])) {
     $id = base64_decode($_GET['block']);
     
     $block_unblock->block($id);
+
+    $_SESSION["leave"] = "USER IS BLOCKED";
 }
 
 if(isset($_GET['unblock'])) {
@@ -53,6 +75,8 @@ if(isset($_GET['unblock'])) {
     $id = base64_decode($_GET['unblock']);
     
     $block_unblock->unBlock($id);
+
+    $_SESSION["leave"] = "USER IS UNBLOCKED";
 }
 
 if(isset($_GET["cancel"])) {
@@ -60,6 +84,8 @@ if(isset($_GET["cancel"])) {
     $id = base64_decode($_GET['cancel']);
   
     LeaveDelete::deleteRequest($db, $id);
+
+    $_SESSION["leave"] = "USER LEAVE DELETED";
 }
 
 $common = new DetailEmp($db);
