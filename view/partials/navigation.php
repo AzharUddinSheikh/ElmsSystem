@@ -1,5 +1,8 @@
 <div>
-    <nav class="navbar navbar-expand-lg navbar-light bg-primary mb-5">
+    <nav class="navbar navbar-expand-lg navbar-light bg-primary mb-5 bg-dark">
+		<a href="twigWelcome.php" class="nav-link active" aria-current="page">
+			HOME
+		</a>
 		<div class="btn-group dropend">
 			<a class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
 				<span class="navbar-toggler-icon"></span>
@@ -18,7 +21,7 @@
 			</ul>
 		</div>
 	{% if session.user == "1" %}
-      <div class="btn-group dropend">
+      <div class="btn-group dropend mx-2">
 		<a class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu" data-bs-toggle="dropdown" aria-expanded="false">
 			<span class="fa fa-fw fa-user"></span>
 		</a>

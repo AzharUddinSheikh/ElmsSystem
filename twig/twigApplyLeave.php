@@ -30,12 +30,11 @@ if($_SERVER['REQUEST_METHOD'] == "POST") {
     $database = new Database();
     $db = $database->getConnection();
     $leave = new AddLeave($db, $_SESSION["id"]);
-    $result = $leave->appLeave($reason, $date1, $date2);
+    // $leave->appLeave($reason, $date1, $date2);
+    $leave->eachDay($date1, $date2);
 
-    if ($result) {
-      $_SESSION["message"] = "Leave Has Been Applied";
-    }
-  }
+    $_SESSION["message"] = "Leave Has Been Applied";
+}
 
 $filter  = new \Twig\TwigFilter('base64_encode', function($string) {
     return base64_encode($string);
