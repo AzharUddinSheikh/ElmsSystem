@@ -18,22 +18,32 @@ $("#myForm").validate({
             success:function(data)
             {   
                 $('#available').html('<span class="text-warning">'+data+'</span>');
+                document.getElementById("myForm").reset(); 
             }
         })
     }
 })
 
-$("#myForm").submit(function () {
-        $("#myForm")[0].reset();
-        return false;
-
-});
-
 document.querySelectorAll('.cancel').forEach((element)=>{
-        element.addEventListener("click",(e)=>{
-            id = e.target.id.substr(0,);
-            if(confirm("Are You Sure To Delete This Request")){
-                window.location = `twigWelcome.php?cancel=${id}`
+    element.addEventListener("click",(e)=>{
+        id = e.target.id.substr(0,);
+        if(confirm("Are You Sure To Delete This Request")){
+            window.location = `twigUserLeave.php?cancel=${id}`
+        }
+    })
+})
+
+document.querySelectorAll('.view').forEach((element)=>{
+    element.addEventListener("click",(e)=>{
+        id = e.target.id.substr(0,);
+        $.ajax({
+            url: '../view/department.php',
+            method: 'POST',
+            data:{id : id},
+            success: function(data){
+                $('.modal-body').html(data);
+                $('#exampleModal').modal('toggle');
             }
         })
     })
+})
