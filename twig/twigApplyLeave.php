@@ -30,7 +30,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST") {
     $database = new Database();
     $db = $database->getConnection();
     $leave = new AddLeave($db, $_SESSION["id"]);
-    // $leave->appLeave($reason, $date1, $date2);
+    $leave->appLeave($reason, $date1, $date2);
     $leave->eachDay($date1, $date2);
 
     $_SESSION["message"] = "Leave Has Been Applied";

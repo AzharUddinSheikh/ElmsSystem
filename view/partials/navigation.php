@@ -12,7 +12,7 @@
 				<li><a class="nav-link" href="twigEdit.php?id={{ session.emp_id | base64_encode }}">EDIT PROFILE</a></li>
 				<li><a class="nav-link" href="twigApplyLeave.php">APPLY LEAVE</a></li>
 				{% set currenturl = getUrl() %}
-				{% if currenturl == "twigWelcome.php" %}
+				{% if currenturl == "twigUserLeave.php" %}
 					<li>
 					  <a type="button" class="nav-link" data-bs-toggle="modal" data-bs-target="#exampleModal">CHANGE PASSWORD</a>
 					</li>
@@ -29,7 +29,7 @@
               <li><a class="nav-link" href="twigAdmin.php">ADMIN</a></li>
           {% endif %}
           {% if currenturl == "twigAdmin.php" %}
-              <li><a type="button" class="nav-link" data-bs-toggle="modal" data-bs-target="#exampleModal">ADD DEPARTMENT</a></li>
+              <li><a type="button" class="nav-link" data-bs-toggle="modal" data-bs-target="#departModal">ADD DEPARTMENT</a></li>
               <li><a class="nav-link" href="twigAddEmp.php">ADD EMPLOYEE</a></li>
           {% endif %}
         </ul>
