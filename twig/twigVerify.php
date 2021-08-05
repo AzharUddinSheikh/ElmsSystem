@@ -22,7 +22,7 @@ if(isset($_GET['empid'])) {
        
         $_SESSION["flash"] = "You Are not Authorized";
        
-        header("location: index.php");
+        header("location: ../index.php");
     }
 
     if ($_SERVER['REQUEST_METHOD'] == "POST") {
@@ -36,13 +36,13 @@ if(isset($_GET['empid'])) {
 
             $_SESSION["flash"] = "Password is Set You May Logged In";
     
-            header("location: index.php");
+            header("location: ../index.php");
         } 
     }
 
 } else {
 
-    header('location: index.php');
+    header('location: ../index.php');
 }
 
 $filter  = new \Twig\TwigFilter('base64_encode', function($string) {

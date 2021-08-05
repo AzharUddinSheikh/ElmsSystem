@@ -69,17 +69,6 @@ if (isset($_POST["email"])){
     }
 }
 
-if (isset($_POST["leave_id"])){
-    $id = base64_decode($_POST["leave_id"]);
-    $sql = "SELECT * FROM leave_requests WHERE id = '$id'";
-    $result = $db->query($sql);
-    $dataarray = array();
-    while ($row = $result->fetch_assoc()){
-        array_push($dataarray, $row["start_date"], $row["end_date"]);
-    }
-    print json_encode($dataarray);
-}
-
 if(isset($_POST["id"])){
 
     $id = base64_decode($_POST["id"]);
@@ -100,5 +89,16 @@ if(isset($_POST["user_leave_id"])){
     $response = $result->userLeaveModal($id);
 
     echo $response;
+}
+
+if(isset($_POST["approve"])){
+
+    $id = base64_decode($_POST["approve"]);
+
+    $leave_num = new GetLeave($db);
+    
+    $result = $leave_num->isMaxLeave($id);
+
+    echo $result;    
 }
 ?>

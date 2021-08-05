@@ -40,7 +40,7 @@
                         <td>{{leaves[leave].start_date}}</td>
                         <td>{{leaves[leave].end_date}}</td>
                         <td>
-                            <button id='{{ leaves[leave].id | base64_encode }}' class="approve btn btn-success">Approve</button>  <button id='{{ leaves[leave].id | base64_encode }}' class="reject btn btn-danger mx-1">Reject</button> <button class="userdetails btn btn-info" id='{{ leaves[leave].id | base64_encode }}'>Check Status</button>
+                            <button id='{{ leaves[leave].id | base64_encode }}' name='{{ leaves[leave].emp_id | base64_encode }}' class="approve btn btn-success">Approve</button>  <button id='{{ leaves[leave].id | base64_encode }}' class="reject btn btn-danger mx-1">Reject</button> <button class="userdetails btn btn-info" id='{{ leaves[leave].id | base64_encode }}'>Check Status</button>
                         </td>
                     </tr>
                 {% endfor %}
@@ -140,6 +140,7 @@
             </table>
         </div>                
         {% endif %}
+        
 <!-- Modal View -->
         <div class="modal fade" id="leaveModal" tabindex="-1" aria-labelledby="leaveModal" aria-hidden="true" data-backdrop="false">
             <div class="modal-dialog modal-xl">
@@ -165,7 +166,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form id="myForm" action="department.php" autocomplete="off" method="POST">
+                        <form id="myForm" action="../view/department.php" autocomplete="off" method="POST">
                             <div class="mb-2">
                                 <input name="dname" id="dname" type="text" class="form-control" placeholder="Enter The Department Name">
                             </div>

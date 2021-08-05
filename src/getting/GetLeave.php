@@ -11,6 +11,17 @@ class GetLeave
     {
         $this->conn = $db;
     }
+
+    public function isMaxLeave($id)
+    {
+        $sql = "SELECT ld.status FROM users u JOIN leave_requests lr on  u.id = lr.user_id join leave_details ld on lr.id = ld.leave_id where ld.status = 1 and YEAR(ld.leave_applied) = YEAR(CURDATE()) AND emp_id = '$id'";
+
+        $result = mysqli_query($this->conn, $sql);
+
+        $row = mysqli_num_rows($result);
+
+        return $row;
+    }
     
     public function leaveRequest()
     {

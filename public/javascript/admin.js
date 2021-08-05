@@ -71,9 +71,21 @@ $(document).ready(function() {
     document.querySelectorAll('.approve').forEach((element)=>{
         element.addEventListener("click", (e)=>{
             id = e.target.id.substr(0,);
-            if(confirm("Are You Sure To Approved")) {
-                window.location = `/elms/twig/twigAdmin.php?approve=${id}`
-            }
+            id1 = e.target.name.substr(0,);
+            $.ajax({
+                url:'../view/department.php',
+                method:"POST",
+                data:{approve:id1},
+                success:function(data){
+                    console.log(data);
+                    if (data >= 3) {
+                        alert("User Have Exceeded Leave For This Year");
+                    } 
+                    if(confirm("Are You Sure To Approved")) {
+                        window.location = `/elms/twig/twigAdmin.php?approve=${id}`
+                    }
+                }
+            })
         })
     })
     

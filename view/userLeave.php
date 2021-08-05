@@ -27,11 +27,10 @@
                   <td>{{userleave[leave].added_on}}</td>
                   <td>{{userleave[leave].start_date}}</td>
                   <td>{{userleave[leave].end_date}}</td>
-                  {% set status = userleave[leave].status %}
                   {% set startdate = userleave[leave].start_date %}
                   {% set difference = diffTime(startdate) %}
                   <td>
-                  {% if difference > 0 and status == "0" %} 
+                  {% if difference > 0 %} 
                     <button id='{{ userleave[leave].id | base64_encode }}' class='cancel btn btn-secondary'>Cancel</button>
                   {% else %}
                     <button class='btn btn-info' disabled>N/A</button>
