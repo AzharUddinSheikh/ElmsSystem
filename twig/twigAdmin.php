@@ -48,7 +48,7 @@ if(isset($_GET['approve'])) {
   
     $apply_reject->approve($id);
 
-    $_SESSION["leave"] = "USER LEAVE APPROVED";
+    $_SESSION["leave"] = "USER LEAVES APPROVED";
     
 }
 
@@ -58,7 +58,29 @@ if(isset($_GET['reject'])) {
     
     $apply_reject->reject($id);
 
-    $_SESSION["leave"] = "USER LEAVE REJECTED";
+    $_SESSION["leave"] = "USER LEAVES REJECTED";
+}
+
+if(isset($_GET['Sreject'])) {
+  
+    $id = base64_decode($_GET['Sreject']);
+
+    $id1 = base64_decode($_GET['userdetails']);
+    
+    $apply_reject->rejectEachLeave($id, $id1);
+
+    $_SESSION["leave"] = "SELECTED DATE REJECTED";
+}
+
+if(isset($_GET['Sapprove'])) {
+  
+    $id = base64_decode($_GET['Sapprove']);
+
+    $id1 = base64_decode($_GET['userdetails']);
+    
+    $apply_reject->approveEachLeave($id, $id1);
+
+    $_SESSION["leave"] = "SELECTED DATE APPROVED";
 }
 
 if(isset($_GET['block'])) {
@@ -79,13 +101,18 @@ if(isset($_GET['unblock'])) {
     $_SESSION["leave"] = "USER IS UNBLOCKED";
 }
 
-if(isset($_GET["cancel"])) {
+if(isset($_GET["userdetails"])){
 
-    $id = base64_decode($_GET['cancel']);
-  
-    LeaveDelete::deleteRequest($db, $id);
+    $id = base64_decode($_GET["userdetails"]);
 
-    $_SESSION["leave"] = "USER LEAVE DELETED";
+    $sql = "SELECT * FROM leave_details WHERE leave_id = '$id'";
+
+    $result = $db->query($sql);
+
+    $leave_detailed = array();
+    while ($row = $result->fetch_assoc()){
+        array_push($leave_detailed, $row);
+    }
 }
 
 $common = new DetailEmp($db);
@@ -100,8 +127,6 @@ while($row = $result->fetch_assoc()) {
 
 $comm = new GetLeave($db);
                     
-$today_date = strtotime(date('Y-m-d'));
-
 $result = $comm->leaveRequest();
 
 $leaves = array();
@@ -137,6 +162,11 @@ $twig->addGlobal('session', $_SESSION);
 
 $template = $twig->load('admin.php');
 
-echo $template->render(['employees' => $details, 'size' => sizeof($details), 'leaves' => $leaves, 'count' => sizeof($leaves)]);
+
+if(isset($_GET["userdetails"])){
+    echo $template->render(['employees' => $details, 'size' => sizeof($details), 'leaves' => $leaves, 'count' => sizeof($leaves), 'leavedetail' => $leave_detailed, 'num' => sizeof($leave_detailed)]);
+} else {
+    echo $template->render(['employees' => $details, 'size' => sizeof($details), 'leaves' => $leaves, 'count' => sizeof($leaves)]);
+}
 
 ?>

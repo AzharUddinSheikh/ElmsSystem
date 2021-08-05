@@ -9,7 +9,16 @@
     {% if session.update %}
       <div class="alert alert-info" role="alert">{{session.update}}</div>
     {% endif %}
-    <h2 class="text-center">EDIT PROFILE</h2>
+    <div class="text-center">
+      <img style="width:150px;height:150px;border-radius: 50%;" src="../public/images/{{userdetail[6]}}">
+     </div>
+     <h2 class="text-center my-5" >
+      {% if session.user == "1" %}
+        ADMIN DETAIL EDIT
+      {% else %} 
+        USER DETAIL EDIT
+      {% endif %}
+    </h2>
     <form action="" method="POST" name='edit' id='edit' enctype="multipart/form-data">
     <div class="mb-3">
       <label for="fname" class="form-label">First Name</label>

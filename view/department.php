@@ -7,6 +7,7 @@ use Azhar\Elms\Common\Login;
 use Azhar\Elms\Inserting\Department;
 use Azhar\Elms\Inserting\Employee;
 use Azhar\Elms\Updating\ChangePassword;
+use Azhar\Elms\Getting\GetLeave;
 
 $database = new Database();
 $db = $database->getConnection();
@@ -68,14 +69,36 @@ if (isset($_POST["email"])){
     }
 }
 
-if (isset($_POST["leave_id"])){
-    $id = base64_decode($_POST["leave_id"]);
-    $sql = "SELECT * FROM leave_requests WHERE id = '$id'";
-    $result = $db->query($sql);
-    $dataarray = array();
-    while ($row = $result->fetch_assoc()){
-        array_push($dataarray, $row["start_date"], $row["end_date"]);
-    }
-    print json_encode($dataarray);
+if(isset($_POST["id"])){
+
+    $id = base64_decode($_POST["id"]);
+    
+    $result = new GetLeave($db);
+    
+    $response = $result->getEachLeave($id);
+    
+    echo $response;
+}
+
+if(isset($_POST["user_leave_id"])){
+    
+    $id = base64_decode($_POST["user_leave_id"]);
+    
+    $result = new GetLeave($db);
+    
+    $response = $result->userLeaveModal($id);
+
+    echo $response;
+}
+
+if(isset($_POST["approve"])){
+
+    $id = base64_decode($_POST["approve"]);
+
+    $leave_num = new GetLeave($db);
+    
+    $result = $leave_num->isMaxLeave($id);
+
+    echo $result;    
 }
 ?>

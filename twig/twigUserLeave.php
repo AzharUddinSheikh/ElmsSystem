@@ -5,7 +5,7 @@ session_start();
 if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true || $_SESSION["status"] != "1") {
 
     header("location: index.php");
-    
+  
     exit;
 }
 
@@ -18,6 +18,25 @@ use Azhar\Elms\Getting\GetLeave;
 
 Inactivity::inActive($_SESSION["last_login_timestamp"]);
 
+$database = new Database();
+$db = $database->getConnection();
+
+if(isset($_GET["cancel"])) {
+
+  $id = base64_decode($_GET['cancel']);
+
+  LeaveDelete::deleteRequest($db, $id);
+}
+
+$user_leave = new GetLeave($db);
+
+$result = $user_leave->userLeave($_SESSION["id"]);
+
+$history = array();
+while($row = $result->fetch_assoc()) {
+    array_push($history, $row);
+}
+
 $filter  = new \Twig\TwigFilter('base64_encode', function($string) {
     return base64_encode($string);
 });
@@ -26,16 +45,24 @@ $function = new \Twig\TwigFunction('getUrl', function() {
     return basename($_SERVER['PHP_SELF']);
 });
 
+$function1 = new \Twig\TwigFunction('diffTime', function($date) {
+    $today_date = strtotime(date('Y-m-d'));
+    $start_date = strtotime($date);
+    return ($start_date - $today_date);
+});
+
 $loader = new \Twig\Loader\FilesystemLoader('../view');
 
 $twig = new \Twig\Environment($loader);
 
 $twig->addFilter($filter);
 $twig->addFunction($function);
+$twig->addFunction($function1);
+
 $twig->addGlobal('session', $_SESSION);
 
-$template = $twig->load('welcome.php');
+$template = $twig->load('userLeave.php');
 
-echo $template->render();
+echo $template->render(['userleave' => $history, 'size' => sizeof($history)]);
 
 ?>
