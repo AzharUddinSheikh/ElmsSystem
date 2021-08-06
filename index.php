@@ -2,12 +2,21 @@
 require_once 'vendor/autoload.php';
 
 session_start();
+
 if(isset($_SESSION["loggedin"])){
 
-    if($_SESSION["status"] == "1"){
+    if($_SESSION["user"] == "0"  && ($_SESSION["status"] == "1")){
         
         header('location:twig/twigWelcome.php');
-    }
+        
+      } elseif ($_SESSION["user"] == "1"  && ($_SESSION["status"] == "1")) { 
+        
+        header('location: twig/twigAdmin.php');
+      
+      } else {
+
+        header('location: index.php');
+      }
 } 
 
 use Azhar\Elms\Common\Database;
@@ -59,7 +68,6 @@ if ($_SERVER['REQUEST_METHOD']=="POST") {
     <link href="https://getbootstrap.com/docs/4.0/examples/sign-in/signin.css" rel="stylesheet">
   </head>
   <body class="text-center">
-      <span class="alert alert-danger" id="available" role="alert"></span>
       <?php
       if (isset($_SESSION["flash"])){
           echo '<div class="alert alert-danger" role="alert">';

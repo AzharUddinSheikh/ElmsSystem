@@ -2,28 +2,34 @@
 
 session_start();
 
-if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true || $_SESSION["status"] != "1" || $_SESSION["user"] != "0") {
+if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true || $_SESSION['status'] != '1') {
 
     header("location: ../index.php");
-    
+
     exit;
 }
 
 require_once '../vendor/autoload.php';
 
-use Azhar\Elms\Common\InActivity;
+use Azhar\Elms\Common\Inactivity;
 use Azhar\Elms\Common\Database;
-use Azhar\Elms\Updating\LeaveDelete;
-use Azhar\Elms\Getting\GetLeave;
+use Azhar\Elms\Inserting\AddLeave;
 
 Inactivity::inActive($_SESSION["last_login_timestamp"]);
 
+if(isset($_SESSION["message"])){
+    unset($_SESSION["message"]);
+}
+
+if($_SERVER['REQUEST_METHOD'] == "POST") {
+    
+    $pass = $_POST["pass1"];
+
+    $_SESSION["message"] = "Password Changed Successfully";
+}
+
 $filter  = new \Twig\TwigFilter('base64_encode', function($string) {
     return base64_encode($string);
-});
-
-$function = new \Twig\TwigFunction('getUrl', function() {
-    return basename($_SERVER['PHP_SELF']);
 });
 
 $loader = new \Twig\Loader\FilesystemLoader('../view');
@@ -31,10 +37,10 @@ $loader = new \Twig\Loader\FilesystemLoader('../view');
 $twig = new \Twig\Environment($loader);
 
 $twig->addFilter($filter);
-$twig->addFunction($function);
+
 $twig->addGlobal('session', $_SESSION);
 
-$template = $twig->load('welcome.php');
+$template = $twig->load('changePassword.php');
 
 echo $template->render();
 

@@ -1,38 +1,22 @@
-<div>
-    <nav class="navbar navbar-expand-lg navbar-light bg-primary mb-5 bg-dark">
-		<a href="twigWelcome.php" class="nav-link active" aria-current="page">
-			HOME
-		</a>
-		<div class="btn-group dropend">
-			<a class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-				<span class="navbar-toggler-icon"></span>
-			</a>
-			<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-				<li><a class="nav-link" href="twigUserLeave.php">USER LEAVE</a></li>
-				<li><a class="nav-link" href="twigEdit.php?id={{ session.emp_id | base64_encode }}">EDIT PROFILE</a></li>
-				<li><a class="nav-link" href="twigApplyLeave.php">APPLY LEAVE</a></li>
-				{% set currenturl = getUrl() %}
-				{% if currenturl == "twigUserLeave.php" %}
-					<li>
-					  <a type="button" class="nav-link" data-bs-toggle="modal" data-bs-target="#exampleModal">CHANGE PASSWORD</a>
-					</li>
-				{% endif %}
-				<li><a class="nav-link" href="../partials/logout.php">LOGOUT</a></li>
-			</ul>
-		</div>
-	{% if session.user == "1" %}
-      <div class="btn-group dropend mx-2">
-		<a class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu" data-bs-toggle="dropdown" aria-expanded="false">
-			<span class="fa fa-fw fa-user"></span>
-		</a>
-        <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
-              <li><a class="nav-link" href="twigAdmin.php">ADMIN</a></li>
-          {% endif %}
-          {% if currenturl == "twigAdmin.php" %}
-              <li><a type="button" class="nav-link" data-bs-toggle="modal" data-bs-target="#departModal">ADD DEPARTMENT</a></li>
-              <li><a class="nav-link" href="twigAddEmp.php">ADD EMPLOYEE</a></li>
-          {% endif %}
-        </ul>
-      </div>
-    </nav>
-</div>
+<!-- navigation -->
+            <div class="border-end bg-white" id="sidebar-wrapper">
+                <div class="list-group list-group-flush">
+                    {% if session.user == "0" %}  
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="twigWelcome.php">DASHBOARD</a>
+                    {% elseif session.user == "1" %}
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3 dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">ADMIN</a>
+                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#!">ADMIN DASHBOARD</a>
+                        <a class="dropdown-item" href="#!">DEPARTMENT MANAGEMENT</a>
+                        <a class="dropdown-item" href="#!">EMPLOYEE MANAGEMENT</a>
+                        <a class="dropdown-item" href="#!">USER LEAVE MANAGEMENT</a>
+                    </div>
+                    {% endif %}
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="twigEdit.php?id={{ session.emp_id | base64_encode }}">EDIT PROFILE</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="twigApplyLeave.php">APPLY LEAVE</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="twigUserLeave.php">VIEW LEAVE HISTORY</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="twigChangePassword.php">CHANGE PASSWORD</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="../partials/logout.php">LOGOUT</a>
+                </div>
+            </div>
+<!-- navigation end -->

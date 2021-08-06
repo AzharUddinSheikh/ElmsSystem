@@ -17,7 +17,7 @@ $("#myForm").validate({
             data:{oldpass:old, newpass:pass},
             success:function(data)
             {   
-                $('#available').html('<span class="text-warning">'+data+'</span>');
+                $('#available').html('<span class="text-danger">'+data+'</span>');
                 document.getElementById("myForm").reset(); 
             }
         })
