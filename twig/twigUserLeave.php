@@ -21,11 +21,17 @@ Inactivity::inActive($_SESSION["last_login_timestamp"]);
 $database = new Database();
 $db = $database->getConnection();
 
+if(isset($_SESSION["message"])){
+    unset($_SESSION["message"]);
+}
+
 if(isset($_GET["cancel"])) {
 
   $id = base64_decode($_GET['cancel']);
 
   LeaveDelete::deleteRequest($db, $id);
+
+  $_SESSION["message"] = "DELETED LEAVE APPLIED";
 }
 
 $user_leave = new GetLeave($db);

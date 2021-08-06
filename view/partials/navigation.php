@@ -1,26 +1,22 @@
 <!-- navigation -->
-<div class="d-flex" id="wrapper">
-            <!-- Sidebar-->
             <div class="border-end bg-white" id="sidebar-wrapper">
                 <div class="list-group list-group-flush">
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="twigWelcome.php">Home</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="twigEdit.php?id={{ session.emp_id | base64_encode }}">Edit Profile</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="twigChangePassword.php">Change Password</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="twigApplyLeave.php">Apply Leave</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="twigUserLeave.php">View Leave History</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="../partials/logout.php">Logout</a>
+                    {% if session.user == "0" %}  
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="twigWelcome.php">DASHBOARD</a>
+                    {% elseif session.user == "1" %}
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3 dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">ADMIN</a>
+                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#!">ADMIN DASHBOARD</a>
+                        <a class="dropdown-item" href="#!">DEPARTMENT MANAGEMENT</a>
+                        <a class="dropdown-item" href="#!">EMPLOYEE MANAGEMENT</a>
+                        <a class="dropdown-item" href="#!">USER LEAVE MANAGEMENT</a>
+                    </div>
+                    {% endif %}
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="twigEdit.php?id={{ session.emp_id | base64_encode }}">EDIT PROFILE</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="twigApplyLeave.php">APPLY LEAVE</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="twigUserLeave.php">VIEW LEAVE HISTORY</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="twigChangePassword.php">CHANGE PASSWORD</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="../partials/logout.php">LOGOUT</a>
                 </div>
             </div>
-            <!-- Page content wrapper-->
-            <div id="page-content-wrapper">
-                <!-- Top navigation-->
-                <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
-                    <div class="container-fluid">
-                        <button class="btn btn-primary" id="sidebarToggle">Menu</button>
-                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-                    </div>
-                </nav>
-                <!-- Page content-->
-            </div>
-        </div>
 <!-- navigation end -->

@@ -1,10 +1,15 @@
 {% extends 'partials/header.html' %}
 
 {% block body %}Home Panel{% endblock %}
-{% block content %}
-<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
+{% block head %}
   {{ include('partials/navigation.php') }}
+{% endblock %}
+
+{% block content %}
   <div class="container">
+    {% if session.message %} 
+      <div class="valid alert alert-warning" role="alert">{{session.message}}</div>
+    {% endif %}
     <h2 class="text-center my-5">LEAVE HISTORY OF THE USER</h2>
     <div class="container mt-5 mb-5">
       <table class="table table-dark table-striped my-3" id="myTable">
@@ -58,7 +63,6 @@
       </div>
 
   </div>
-  {{ include('partials/modal.php') }}
 </body>
 <script src="../public/javascript/welcome.js"></script>
 {% endblock %}

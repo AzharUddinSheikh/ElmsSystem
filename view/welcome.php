@@ -1,8 +1,9 @@
 {% extends 'partials/header.html' %}
 {% block body %}Apply Leave Panel{% endblock %}
-{% block content %}
-<body>
-<main role="main">
+
+{% block head %}
       {{ include('partials/navigation.php') }}
-</body>
+{% endblock %}
+{% block content %}
+      
 {% endblock %}

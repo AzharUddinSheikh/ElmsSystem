@@ -1,8 +1,11 @@
 {% extends 'partials/header.html' %}
 
 {% block body %}Change Password Panel{% endblock %}
+{% block head %}
+    {{ include('partials/navigation.php') }}
+{% endblock %}
+
 {% block content %}
-{{ include('partials/navigation.php') }}
 <div class="container">
     <h1 class="text-center my-5">User Change Password</h1>
     <form class="text-center px-5" id="myForm" action="department.php" autocomplete="off" method="POST">
@@ -16,6 +19,5 @@
     <div class="hide"><button id="submit" class="btn btn-primary">Change</button></div>
 </form>
 </div>
-<!-- <script src="../public/javascript/changePassword.js"></script> -->
-
+<script src="../public/javascript/welcome.js"></script>
 {% endblock %}
