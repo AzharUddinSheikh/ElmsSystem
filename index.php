@@ -13,10 +13,7 @@ if(isset($_SESSION["loggedin"])){
         
         header('location: twig/twigAdmin.php');
       
-      } else {
-
-        header('location: index.php');
-      }
+      } 
 } 
 
 use Azhar\Elms\Common\Database;
@@ -68,6 +65,7 @@ if ($_SERVER['REQUEST_METHOD']=="POST") {
     <link href="https://getbootstrap.com/docs/4.0/examples/sign-in/signin.css" rel="stylesheet">
   </head>
   <body class="text-center">
+    <span id="available"></span>
       <?php
       if (isset($_SESSION["flash"])){
           echo '<div class="alert alert-danger" role="alert">';

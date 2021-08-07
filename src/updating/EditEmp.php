@@ -41,6 +41,13 @@ class EditEmp
         }
 
     }
+
+    public static function deleteUser($db, $id)
+    {
+        $sql = "DELETE FROM users WHERE emp_id = '$id'";
+
+        $db->query($sql);
+    }
 }
 
 ?>

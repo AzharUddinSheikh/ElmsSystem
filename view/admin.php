@@ -2,10 +2,11 @@
 
 {% block body %}Admin Panel{% endblock %}
 
-{% block content %}
-<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
-<body>
+{% block head %}
     {{ include('partials/navigation.php') }}
+{% endblock %}
+
+{% block content %}
     <span id="result"></span>
     <div class="container">
         {% if session.leave %}
@@ -48,52 +49,6 @@
             </tbody>
         </table>
     </div>
-
-    <div class="container mt-5">
-        <h1 class="text-center">EMPLOYEE DETAIL CAN BE EDITED OR BLOCKED </h1>
-    </div>
-    <div class="container mt-5 mb-5">
-        <table class="table table-dark table-striped my-3" id="myTable">
-            <thead>
-                <tr>
-                    <th scope="col">Sno</th>
-                    <th scope="col">Emp-ID</th>
-                    <th scope="col">First-Name</th>
-                    <th scope="col">Last-Name</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Department-Name</th>
-                    <th scope="col">Action</th>
-                </tr>
-            </thead>
-            <tbody>
-            {% if size > 0 %}
-            {% for employee in range(0, size-1) %}                        
-                <tr>
-                    <td>{{employee+1}}</td>
-                    <td>{{employees[employee].emp_id}}</td>
-                    <td>{{employees[employee].first_name}}</td>
-                    <td>{{employees[employee].last_name}}</td> 
-                    <td>{{employees[employee].email}}</td> 
-                    <td>{{employees[employee].name}}</td>
-                    {% set empid = employees[employee].emp_id %}
-                    {% set status = employees[employee].status %}
-                    <td>
-                    {% if empid == session.emp_id %}
-                        <button class='block btn btn-danger' disabled>BLOCK</button>
-                    {% else %}
-                        {% if status == "1" %}
-                            <button id='{{ employees[employee].id | base64_encode }}' class='block btn btn-danger'>BLOCK</button>
-                        {% elseif status == "2" %}
-                            <button id='{{ employees[employee].id | base64_encode }}' class='unblock btn btn-warning'>UNBLOCK</button>
-                        {% endif %}
-                    {% endif %}
-                    <button id='{{ employees[employee].emp_id | base64_encode }}' type='button' class='edit btn btn-warning'>EDIT</button>  <button id='{{ employees[employee].id | base64_encode }}' type='button' class='view btn btn-secondary' data-toggle="modal" data-target="#leaveModal">View</button>
-                    </td>
-                </tr>
-            {% endfor %}
-            {% endif %}
-        </tbody>
-        </table>
 
         {% if num > 0 %}
         <h1 class="text-center">User Detail For Specific Leave</h1>
@@ -157,27 +112,6 @@
         </div>
 <!-- End Modal -->
 
-<!-- Modal Department-->
-        <div class="modal fade" id="departModal" tabindex="-1" aria-labelledby="departModal" aria-hidden="true">
-            <div class="modal-dialog modal-xl">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="departModal">Department Name</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form id="myForm" action="../view/department.php" autocomplete="off" method="POST">
-                            <div class="mb-2">
-                                <input name="dname" id="dname" type="text" class="form-control" placeholder="Enter The Department Name">
-                            </div>
-                            <div class="mb-1"><span id="available"></span></div>
-                            <div class="hide"><button id="submit" class="btn btn-primary">ADD</button></div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-<!-- end Modal -->
 </div>
 <script src="../public/javascript/admin.js"></script>
 {% endblock %}

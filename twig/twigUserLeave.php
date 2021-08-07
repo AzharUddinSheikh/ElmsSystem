@@ -4,9 +4,25 @@ session_start();
 
 if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true || $_SESSION["status"] != "1") {
 
-    header("location: index.php");
+    header("location: ../index.php");
   
     exit;
+}
+
+if(isset($_SESSION["message"])){
+    unset($_SESSION["message"]);
+}
+
+if(isset($_GET["id"])){
+
+    $id = base64_decode($_GET["id"]);
+
+    if($id != $_SESSION["id"] && $_SESSION["user"] != "1"){
+
+        echo "User Request Rejected";
+
+        die();
+    }
 }
 
 require_once '../vendor/autoload.php';
@@ -21,10 +37,6 @@ Inactivity::inActive($_SESSION["last_login_timestamp"]);
 $database = new Database();
 $db = $database->getConnection();
 
-if(isset($_SESSION["message"])){
-    unset($_SESSION["message"]);
-}
-
 if(isset($_GET["cancel"])) {
 
   $id = base64_decode($_GET['cancel']);
@@ -36,7 +48,7 @@ if(isset($_GET["cancel"])) {
 
 $user_leave = new GetLeave($db);
 
-$result = $user_leave->userLeave($_SESSION["id"]);
+$result = $user_leave->userLeave($id);
 
 $history = array();
 while($row = $result->fetch_assoc()) {

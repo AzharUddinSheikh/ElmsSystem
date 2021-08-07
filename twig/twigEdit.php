@@ -23,7 +23,7 @@ if(!isset($_GET["id"]) || (($id != $_SESSION["emp_id"])) && $_SESSION["user"] !=
     echo "User Request Rejected";
     
     die();
-  }
+}
 
 $database = new Database();
 $db = $database->getConnection();
@@ -59,6 +59,8 @@ if(isset($_POST['submit'])){
     $_SESSION["update"] = "PROFILE HAS BEEN UPDATED";
 }
 
+$emp_detail = EditDetail::detailEdit($db, $id);
+
 $filter  = new \Twig\TwigFilter('base64_encode', function($string) {
     return base64_encode($string);
 });
@@ -77,6 +79,6 @@ $twig->addGlobal('session', $_SESSION);
 
 $template = $twig->load('editprofile.php');
 
-echo $template->render(['userdetail' => $detail_emp]);
+echo $template->render(['userdetail' => $emp_detail]);
 
 ?>
