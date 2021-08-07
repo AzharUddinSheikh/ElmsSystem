@@ -35,7 +35,7 @@
                   {% set startdate = userleave[leave].start_date %}
                   {% set difference = diffTime(startdate) %}
                   <td>
-                  {% if difference > 0 %} 
+                  {% if difference > 86400 %} 
                     <button id='{{ userleave[leave].id | base64_encode }}' class='cancel btn btn-secondary'>Cancel</button>
                   {% else %}
                     <button class='btn btn-info' disabled>N/A</button>

@@ -25,6 +25,13 @@ $(document).ready(function() {
         })
     })
     
+    document.querySelectorAll('.view').forEach((element)=>{
+        element.addEventListener("click",(e)=>{
+            id = e.target.id.substr(0,);
+            window.location = `/elms/twig/twigUserLeave.php?id=${id}`
+        })
+    })
+    
     document.querySelectorAll('.delete').forEach((element)=>{
         element.addEventListener("click",(e)=>{
             id = e.target.id.substr(0,);

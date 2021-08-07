@@ -9,7 +9,7 @@
                         <a class="dropdown-item" href="#!">ADMIN DASHBOARD</a>
                         <a class="dropdown-item" href="twigDepartment.php">DEPARTMENT MANAGEMENT</a>
                         <a class="dropdown-item" href="twigEmpManage.php">EMPLOYEE MANAGEMENT</a>
-                        <a class="dropdown-item" href="#!">USER LEAVE MANAGEMENT</a>
+                        <a class="dropdown-item" href="twigUserLeaveDetails.php">USER LEAVE MANAGEMENT</a>
                     </div>
                     {% endif %}
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="twigEdit.php?id={{ session.emp_id | base64_encode }}">EDIT PROFILE</a>

@@ -64,5 +64,4 @@
     </table>
 </div>
     <script src="../public/javascript/empManage.js"></script>
-    <!--  <button id='{{ employees[employee].id | base64_encode }}' type='button' class='view btn btn-secondary'>VIEW LEAVE</button> -->
 {% endblock %}

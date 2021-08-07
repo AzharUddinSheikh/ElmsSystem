@@ -1,5 +1,5 @@
-
 {% extends 'partials/header.html' %}
+
 {% block head %}
   {{ include('partials/navigation.php') }}
 {% endblock %}
