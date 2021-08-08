@@ -71,8 +71,7 @@ $(document).ready(function() {
             document.getElementById("dobID").style.color = "red";
             $('#submit').prop("disabled", true);
         } else if (duration >= 6580) {
-            document.getElementById("dobID").innerHTML = "Above 18 ";
-            document.getElementById("dobID").style.warnning = "yellow";
+            document.getElementById("dobID").innerHTML = "";
             $('#submit').prop("disabled", false);
         }
     })

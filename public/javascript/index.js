@@ -12,7 +12,6 @@ $("#login").validate({
 
 $('#email').blur(function() {
     var uemail = $(this).val();
-    
     $.ajax({
         url:'view/department.php',
         method:"POST",
@@ -28,4 +27,23 @@ $('#email').blur(function() {
             }
         }
     })
-  })
+})
+
+$("#setpass").validate({
+    rules: {
+        pass: {
+            required: true,
+            minlength: 5,
+        },
+        pass1: {
+            required: true,
+            minlength: 5,
+            equalTo : "#pass"
+        }
+    },
+    messages: {
+        pass1: {
+            equalTo: "Password Doesnot Match",
+        }
+    }
+});
