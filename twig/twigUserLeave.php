@@ -79,7 +79,7 @@ $twig->addFunction($function1);
 
 $twig->addGlobal('session', $_SESSION);
 
-$template = $twig->load('userLeave.php');
+$template = $twig->load('userLeave.html.twig');
 
 echo $template->render(['userleave' => $history, 'size' => sizeof($history)]);
 

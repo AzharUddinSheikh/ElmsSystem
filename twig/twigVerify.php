@@ -57,7 +57,7 @@ $twig->addFilter($filter);
 
 $twig->addGlobal('session', $_SESSION);
 
-$template = $twig->load('partials/verify.php');
+$template = $twig->load('partials/verify.html.twig');
 
 echo $template->render();
 ?>

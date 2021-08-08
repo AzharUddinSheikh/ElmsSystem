@@ -77,7 +77,7 @@ $twig->addFunction($function);
 $twig->addFilter($filter);
 $twig->addGlobal('session', $_SESSION);
 
-$template = $twig->load('editprofile.php');
+$template = $twig->load('editprofile.html.twig');
 
 echo $template->render(['userdetail' => $emp_detail]);
 

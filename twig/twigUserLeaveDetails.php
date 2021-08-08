@@ -53,6 +53,6 @@ $twig->addFunction($function);
 
 $twig->addGlobal('session', $_SESSION);
 
-$template = $twig->load('userLeaveDetails.php');
+$template = $twig->load('userLeaveDetails.html.twig');
 
 echo $template->render(['employees' => $details, 'size' => sizeof($details)]);

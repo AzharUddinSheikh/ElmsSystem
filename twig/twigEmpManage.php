@@ -82,6 +82,6 @@ $twig->addFunction($function);
 
 $twig->addGlobal('session', $_SESSION);
 
-$template = $twig->load('empManage.php');
+$template = $twig->load('empManage.html.twig');
 
 echo $template->render(['employees' => $details, 'size' => sizeof($details)]);

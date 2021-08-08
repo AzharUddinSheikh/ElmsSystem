@@ -40,7 +40,7 @@ $twig->addFilter($filter);
 
 $twig->addGlobal('session', $_SESSION);
 
-$template = $twig->load('changePassword.php');
+$template = $twig->load('changePassword.html.twig');
 
 echo $template->render();
 

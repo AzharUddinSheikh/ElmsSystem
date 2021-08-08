@@ -27,7 +27,7 @@ $twig->addFilter($filter);
 
 $twig->addGlobal('session', $_SESSION);
 
-$template = $twig->load('admin.php');
+$template = $twig->load('admin.html.twig');
 
 echo $template->render();
 

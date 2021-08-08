@@ -64,6 +64,6 @@ $twig->addFunction($function);
 
 $twig->addGlobal('session', $_SESSION);
 
-$template = $twig->load('departmentDetail.php');
+$template = $twig->load('departmentDetail.html.twig');
 
 echo $template->render(['departments' => $department, 'count' => sizeof($department)]);

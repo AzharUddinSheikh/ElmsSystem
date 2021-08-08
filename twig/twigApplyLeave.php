@@ -53,7 +53,7 @@ $twig->addFunction($function);
 
 $twig->addGlobal('session', $_SESSION);
 
-$template = $twig->load('applyleave.php');
+$template = $twig->load('applyleave.html.twig');
 
 echo $template->render();
 
