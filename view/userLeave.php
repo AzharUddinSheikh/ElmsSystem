@@ -13,18 +13,18 @@
     <h2 class="text-center my-5">LEAVE HISTORY OF THE USER</h2>
     <div class="container mt-5 mb-5">
       <table class="table table-dark table-striped my-3" id="myTable">
-            <thead>
-              <tr>
-                <th scope="col">Sno</th>
-                <th scope="col">Reason</th>
-                <th scope="col">Applied On</th>
-                <th scope="col">StartDate</th>
-                <th scope="col">EndDate</th>
-                <th scope="col">Action</th>
-              </tr>
-            </thead>
-            <tbody>
-            {% if size > 0 %}
+          <thead>
+            <tr>
+              <th scope="col">Sno</th>
+              <th scope="col">Reason</th>
+              <th scope="col">Applied On</th>
+              <th scope="col">StartDate</th>
+              <th scope="col">EndDate</th>
+              <th scope="col">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+          {% if size > 0 %}
             {% for leave in range(0, size-1) %}    
               <tr>
                   <td>{{leave+1}}</td>
@@ -32,20 +32,25 @@
                   <td>{{userleave[leave].added_on}}</td>
                   <td>{{userleave[leave].start_date}}</td>
                   <td>{{userleave[leave].end_date}}</td>
-                  {% set startdate = userleave[leave].start_date %}
-                  {% set difference = diffTime(startdate) %}
+                  {% set userid = userleave[leave].user_id %}
+                  {% set difference = diffTime(userleave[leave].start_date) %}
                   <td>
-                  {% if difference > 86400 %} 
-                    <button id='{{ userleave[leave].id | base64_encode }}' class='cancel btn btn-secondary'>Cancel</button>
-                  {% else %}
-                    <button class='btn btn-info' disabled>N/A</button>
+                  {% if (session.user == "1" or session.user == "0") and session.id == userid %}
+                      {% if difference > 0 %} 
+                        <button id='{{ userleave[leave].id | base64_encode }}' class='cancel btn btn-secondary btn-sm'>CANCEL</button>
+                      {% else %}
+                        <button class='btn btn-info btn-sm' disabled>N/A</button>
+                      {% endif %}
                   {% endif %}
-                    <button id='{{ userleave[leave].id | base64_encode }}' class="view btn btn-info mx-1" data-toggle="modal" data-target="#exampleModal">VIEW</button>
+                  {% if session.user == "1" %}
+                      <button id='{{ userleave[leave].id | base64_encode }}' class="userdetails btn btn-info btn-sm">CHECK STATUS</button>
+                  {% endif %}
+                  <button id='{{ userleave[leave].id | base64_encode }}' class="view btn btn-info mx-1 btn-sm" data-toggle="modal" data-target="#exampleModal">VIEW</button>
                   </td>
               </tr>
             {% endfor %}
-            {% endif %}
-            </tbody>
+          {% endif %}
+          </tbody>
       </table>
     </div>
 

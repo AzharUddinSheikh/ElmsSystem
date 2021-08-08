@@ -6,7 +6,7 @@
                     {% elseif session.user == "1" %}
                     <a class="list-group-item list-group-item-action list-group-item-light p-3 dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">ADMIN</a>
                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#!">ADMIN DASHBOARD</a>
+                        <a class="dropdown-item" href="twigAdmin.php">ADMIN DASHBOARD</a>
                         <a class="dropdown-item" href="twigDepartment.php">DEPARTMENT MANAGEMENT</a>
                         <a class="dropdown-item" href="twigEmpManage.php">EMPLOYEE MANAGEMENT</a>
                         <a class="dropdown-item" href="twigUserLeaveDetails.php">USER LEAVE MANAGEMENT</a>

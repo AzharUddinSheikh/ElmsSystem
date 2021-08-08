@@ -47,3 +47,10 @@ document.querySelectorAll('.view').forEach((element)=>{
         })
     })
 })
+
+document.querySelectorAll('.userdetails').forEach((element)=>{
+    element.addEventListener("click",(e)=>{
+        id = e.target.id.substr(0,);
+        window.location = `/elms/twig/twigCheckStatus.php?userdetails=${id}`
+    })
+})
