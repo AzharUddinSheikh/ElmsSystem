@@ -37,7 +37,7 @@
                   <td>
                   {% if (session.user == "1" or session.user == "0") and session.id == userid %}
                       {% if difference > 0 %} 
-                        <button id='{{ userleave[leave].id | base64_encode }}' class='cancel btn btn-secondary btn-sm'>CANCEL</button>
+                        <button id='{{ userleave[leave].id | base64_encode }}' name='{{ userleave[leave].user_id | base64_encode }}' class='cancel btn btn-secondary btn-sm'>CANCEL</button>
                       {% else %}
                         <button class='btn btn-info btn-sm' disabled>N/A</button>
                       {% endif %}

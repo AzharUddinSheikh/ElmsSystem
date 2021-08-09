@@ -23,21 +23,38 @@ class GetLeave
         return $row;
     }
     
+    public function maxLeave($id)
+    {
+        $extract = "SELECT * FROM leave_requests lr JOIN leave_details ld ON lr.id = ld.leave_id WHERE lr.id = '$id'";
+
+        $rows = $this->conn->query($extract);
+
+        $user_id = $rows->fetch_assoc()["user_id"];
+
+        $sql = "SELECT * FROM leave_details ld JOIN leave_requests lr ON ld.leave_id = lr.id WHERE lr.user_id = '$user_id' and ld.status = 1 and year(curdate()) = year(ld.leave_applied)";
+
+        $result = mysqli_query($this->conn, $sql);
+
+        $row = mysqli_num_rows($result);
+
+        return $row;
+    }
+
     public function leaveRequest()
     {
         $sql = "SELECT * FROM users JOIN leave_requests WHERE users.id = leave_requests.user_id AND leave_requests.start_date > CURDATE() AND leave_requests.status = 0 ORDER BY leave_requests.id DESC";
-        
+
         $result = $this->conn->query($sql);
-        
+
         return $result;
     }
-    
+
     public function userLeave($id)
     {
         $sql = "SELECT * FROM leave_requests WHERE user_id = '$id' ORDER BY ID DESC";
-    
+
         $result = $this->conn->query($sql);
-        
+
         return $result;
     }
 

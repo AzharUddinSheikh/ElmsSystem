@@ -15,9 +15,7 @@ if(isset($_SESSION["message"])){
 
 if(isset($_GET["id"])){
 
-    $id = base64_decode($_GET["id"]);
-
-    if($id != $_SESSION["id"] && $_SESSION["user"] != "1"){
+    if($_GET["id"] != $_SESSION["id"] && $_SESSION["user"] != "1"){
 
         echo "User Request Rejected";
 
@@ -43,10 +41,12 @@ if(isset($_GET["cancel"])) {
 
   LeaveDelete::deleteRequest($db, $id);
 
-  $_SESSION["message"] = "DELETED LEAVE APPLIED";
+  $_SESSION["message"] = "DELETED SELECTED LEAVE PROPOSAL";
 }
 
 $user_leave = new GetLeave($db);
+
+$id = base64_decode($_GET["id"]);
 
 $result = $user_leave->userLeave($id);
 

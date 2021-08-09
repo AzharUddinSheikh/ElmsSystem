@@ -7,6 +7,19 @@ use Azhar\Elms\Updating\SetPassword;
 
 session_start();
 
+if(isset($_SESSION["loggedin"])  && ($_SESSION["status"] == "1")){
+
+    if($_SESSION["user"] == "0"){
+
+        header('location:twigWelcome.php');
+
+      } elseif ($_SESSION["user"] == "1") { 
+        
+        header('location:twigAdmin.php');
+
+      }
+} 
+
 if(isset($_GET['empid'])) {
 
     $id = base64_decode($_GET['empid']);

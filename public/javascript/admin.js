@@ -37,12 +37,22 @@ $(document).ready(function() {
         element.addEventListener("click", (e)=>{
             id = e.target.id.substr(0,);
             id2 = e.target.name.substr(0,);
-            if(confirm("Are You Sure To Approved")) {
-                window.location = `/elms/twig/twigCheckStatus.php?Sapprove=${id}&userdetails=${id2}`
-            }
+            $.ajax({
+                url:'../view/department.php',
+                method:"POST",
+                data:{approveS:id2},
+                success:function(data){
+                    if (data > 24) {
+                        alert("User Have Exceeded Leave For This Year");
+                    } 
+                    if(confirm("Are You Sure To Approved")) {
+                        window.location = `/elms/twig/twigCheckStatus.php?Sapprove=${id}&userdetails=${id2}`
+                    }
+                }
+            })
         })
     })
-    
+
     document.querySelectorAll('.rejectS').forEach((element)=>{
         element.addEventListener("click", (e)=>{
             id = e.target.id.substr(0,);

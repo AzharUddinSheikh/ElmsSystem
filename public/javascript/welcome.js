@@ -27,8 +27,9 @@ $("#myForm").validate({
 document.querySelectorAll('.cancel').forEach((element)=>{
     element.addEventListener("click",(e)=>{
         id = e.target.id.substr(0,);
+        id1 = e.target.name;
         if(confirm("Are You Sure To Delete This Request")){
-            window.location = `twigUserLeave.php?cancel=${id}`
+            window.location = `twigUserLeave.php?cancel=${id}&id=${id1}`
         }
     })
 })

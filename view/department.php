@@ -101,4 +101,15 @@ if(isset($_POST["approve"])){
 
     echo $result;
 }
+
+if(isset($_POST["approveS"])){
+
+    $id = base64_decode($_POST["approveS"]);
+
+    $leave_num = new GetLeave($db);
+
+    $result = $leave_num->maxLeave($id);
+
+    echo $result;
+}
 ?>
