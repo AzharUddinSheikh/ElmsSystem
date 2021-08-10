@@ -1,6 +1,7 @@
 <?php
 
 namespace Azhar\ELMS\Getting;
+use \DateTime;
 
 class GetLeave
 {
@@ -10,6 +11,23 @@ class GetLeave
     public function __construct($db) 
     {
         $this->conn = $db;
+    }
+
+    public static function totalLeave($db, $id)
+    {
+        $sql = "SELECT * FROM leave_requests WHERE id = '$id'";
+
+        $result = $db->query($sql);
+        
+        while ($row = $result->fetch_assoc()){
+            $begin = new DateTime($row["start_date"]);
+            $end = new DateTime($row["end_date"]);
+        }
+        $count = 0;
+        for($i = $begin; $i <= $end; $i->modify('+1 day')){
+            $count++;
+        }
+        return $count;
     }
 
     public function isMaxLeave($id)

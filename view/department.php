@@ -91,13 +91,19 @@ if(isset($_POST["user_leave_id"])){
     echo $response;
 }
 
-if(isset($_POST["approve"])){
+if(isset($_POST["approve"]) && isset($_POST["ids"])){
+
+    $ids = base64_decode($_POST["ids"]);
+    
+    $total_leave = GetLeave::totalLeave($db, $ids);
 
     $id = base64_decode($_POST["approve"]);
 
     $leave_num = new GetLeave($db);
 
-    $result = $leave_num->isMaxLeave($id);
+    $leaves_approved = $leave_num->isMaxLeave($id);
+
+    $result = $leaves_approved + $total_leave;
 
     echo $result;
 }
