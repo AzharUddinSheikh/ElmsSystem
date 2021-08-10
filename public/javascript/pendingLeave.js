@@ -6,10 +6,10 @@ $(document).ready(function() {
             $.ajax({
                 url:'../view/department.php',
                 method:"POST",
-                data:{approve:id1},
+                data:{approve:id1, ids:id},
                 success:function(data){
-                    if (data > 24) {
-                        alert("User Have Exceeded Leave For This Year");
+                    if (data > 23) {
+                        alert("User Will Exceed Leave For This Year");
                     } 
                     if(confirm("Are You Sure To Approved")) {
                         window.location = `/elms/twig/twigPendingLeave.php?approve=${id}`

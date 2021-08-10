@@ -1,6 +1,6 @@
 $.validator.addMethod("noSpace", function (value, element) {
     return /^[a-zA-Z]+$/.test(value);
-}, "No Space And No Number Begin With");
+}, "No Space And No Number In Name");
 
 $.validator.addMethod("greater", function (value, element) {
     var today = new Date();
