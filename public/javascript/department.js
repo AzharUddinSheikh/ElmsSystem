@@ -48,7 +48,7 @@ $(document).ready(function() {
         element.addEventListener("click", (e)=>{
             id = e.target.id.substr(0,);
             if(confirm("Are You Sure To Delete")) {
-                window.location = `/elms/twig/twigDepartment.php?delete=${id}`
+                window.location = `/elms/twig/department.php?delete=${id}`
             }
         })
     })

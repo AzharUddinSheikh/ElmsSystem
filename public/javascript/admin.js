@@ -46,7 +46,7 @@ $(document).ready(function() {
                         alert("User Have Exceeded Leave For This Year");
                     } 
                     if(confirm("Are You Sure To Approved")) {
-                        window.location = `/elms/twig/twigCheckStatus.php?Sapprove=${id}&userdetails=${id2}`
+                        window.location = `/elms/twig/checkStatus.php?Sapprove=${id}&userdetails=${id2}`
                     }
                 }
             })
@@ -58,7 +58,7 @@ $(document).ready(function() {
             id = e.target.id.substr(0,);
             id2 = e.target.name.substr(0,);
             if(confirm("Are You Sure To Reject")) {
-                window.location = `/elms/twig/twigCheckStatus.php?Sreject=${id}&userdetails=${id2}`
+                window.location = `/elms/twig/checkStatus.php?Sreject=${id}&userdetails=${id2}`
             }
         })
     })

@@ -4,7 +4,7 @@ $(document).ready(function() {
         element.addEventListener("click",(e)=>{
             id = e.target.id.substr(0,);
             if(confirm("Are You Sure To Block This User")){
-                window.location = `/elms/twig/twigEmpManage.php?block=${id}`
+                window.location = `/elms/twig/empManage.php?block=${id}`
             }
         })
     })
@@ -13,7 +13,7 @@ $(document).ready(function() {
         element.addEventListener("click",(e)=>{
             id = e.target.id.substr(0,);
             if(confirm("Are You Sure To UnBlock This User")){
-                window.location = `/elms/twig/twigEmpManage.php?unblock=${id}`
+                window.location = `/elms/twig/empManage.php?unblock=${id}`
             }
         })
     })
@@ -21,14 +21,14 @@ $(document).ready(function() {
     document.querySelectorAll('.edit').forEach((element)=>{
         element.addEventListener("click",(e)=>{
             id = e.target.id.substr(0,);
-            location.href = `twigEdit.php?id=${id}`;
+            location.href = `edit.php?id=${id}`;
         })
     })
     
     document.querySelectorAll('.view').forEach((element)=>{
         element.addEventListener("click",(e)=>{
             id = e.target.id.substr(0,);
-            window.location = `/elms/twig/twigUserLeave.php?id=${id}`
+            window.location = `/elms/twig/userLeave.php?id=${id}`
         })
     })
     
@@ -36,7 +36,7 @@ $(document).ready(function() {
         element.addEventListener("click",(e)=>{
             id = e.target.id.substr(0,);
             if(confirm("Are You Sure To Delete This User")){
-                window.location = `/elms/twig/twigEmpManage.php?delete=${id}`
+                window.location = `/elms/twig/empManage.php?delete=${id}`
             }
         })
     })

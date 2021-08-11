@@ -12,7 +12,7 @@ $(document).ready(function() {
                         alert("User Will Exceed Leave For This Year");
                     } 
                     if(confirm("Are You Sure To Approved")) {
-                        window.location = `/elms/twig/twigPendingLeave.php?approve=${id}`
+                        window.location = `/elms/twig/pendingLeave.php?approve=${id}`
                     }
                 }
             })
@@ -23,7 +23,7 @@ $(document).ready(function() {
         element.addEventListener("click", (e)=>{
             id = e.target.id.substr(0,);
             if(confirm("Are You Sure To Reject")) {
-                window.location = `/elms/twig/twigPendingLeave.php?reject=${id}`
+                window.location = `/elms/twig/pendingLeave.php?reject=${id}`
             }
         })
     })
@@ -31,7 +31,7 @@ $(document).ready(function() {
     document.querySelectorAll('.userdetails').forEach((element)=>{
         element.addEventListener("click",(e)=>{
             id = e.target.id.substr(0,);
-            window.location = `/elms/twig/twigCheckStatus.php?userdetails=${id}`
+            window.location = `/elms/twig/checkStatus.php?userdetails=${id}`
         })
     })
 })

@@ -2,20 +2,20 @@
             <div class="border-end bg-white" id="sidebar-wrapper">
                 <div class="list-group list-group-flush">
                     {% if session.user == "0" %}  
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="twigWelcome.php">DASHBOARD</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="welcome.php">DASHBOARD</a>
                     {% elseif session.user == "1" %}
                     <a class="list-group-item list-group-item-action list-group-item-light p-3 dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">ADMIN</a>
                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="twigAdmin.php">ADMIN DASHBOARD</a>
-                        <a class="dropdown-item" href="twigDepartment.php">DEPARTMENT MANAGEMENT</a>
-                        <a class="dropdown-item" href="twigEmpManage.php">EMPLOYEE MANAGEMENT</a>
-                        <a class="dropdown-item" href="twigUserLeaveDetails.php">USER LEAVE MANAGEMENT</a>
+                        <a class="dropdown-item" href="admin.php">ADMIN DASHBOARD</a>
+                        <a class="dropdown-item" href="department.php">DEPARTMENT MANAGEMENT</a>
+                        <a class="dropdown-item" href="empManage.php">EMPLOYEE MANAGEMENT</a>
+                        <a class="dropdown-item" href="userLeaveDetails.php">USER LEAVE MANAGEMENT</a>
                     </div>
                     {% endif %}
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="twigEdit.php?id={{ session.emp_id | base64_encode }}">EDIT PROFILE</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="twigApplyLeave.php">APPLY LEAVE</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="twigUserLeave.php?id={{ session.id | base64_encode }}">VIEW LEAVE HISTORY</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="twigChangePassword.php">CHANGE PASSWORD</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="edit.php?id={{ session.emp_id | base64_encode }}">EDIT PROFILE</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="applyLeave.php">APPLY LEAVE</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="userLeave.php?id={{ session.id | base64_encode }}">VIEW LEAVE HISTORY</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="changePassword.php">CHANGE PASSWORD</a>
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="../partials/logout.php">LOGOUT</a>
                 </div>
             </div>
