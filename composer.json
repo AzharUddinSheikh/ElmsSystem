@@ -2,7 +2,7 @@
     "name": "azhar/elms",
     "autoload": {
         "psr-4": {
-            "Azhar\\Elms\\": "src/"
+            "Azhar\\Elms\\": "classes/"
         }
     },
     "authors": [
