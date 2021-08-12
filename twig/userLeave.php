@@ -13,14 +13,11 @@ if(isset($_SESSION["message"])){
     unset($_SESSION["message"]);
 }
 
-if(isset($_GET["id"])){
+if(base64_decode($_GET["id"]) != $_SESSION["id"] && $_SESSION["user"] != "1"){
 
-    if($_GET["id"] != $_SESSION["id"] && $_SESSION["user"] != "1"){
+    echo "User Request Rejected";
 
-        echo "User Request Rejected";
-
-        die();
-    }
+    die();
 }
 
 require_once '../vendor/autoload.php';
