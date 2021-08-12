@@ -81,7 +81,7 @@ $twig->addFunction($function1);
 
 $twig->addGlobal('session', $_SESSION);
 
-$template = $twig->load('pendingLeave.html.twig');
+$template = $twig->load('admin/leave/pendingLeave.html.twig');
 
 echo $template->render(['leaves' => $leaves, 'count' => sizeof($leaves)]);
 

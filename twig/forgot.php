@@ -37,7 +37,7 @@ $twig = new \Twig\Environment($loader);
 
 $twig->addFilter($filter);
 
-$template = $twig->load('forgot.html.twig');
+$template = $twig->load('partials/forgot.html.twig');
 
 echo $template->render();
 ?>

@@ -73,7 +73,7 @@ $twig->addFunction($function);
 
 $twig->addGlobal('session', $_SESSION);
 
-$template = $twig->load('addEmp.html.twig');
+$template = $twig->load('admin/employee/addEmp.html.twig');
 
 echo $template->render(['details' => $department, 'size' => sizeof($department)]);
 ?>

@@ -34,7 +34,7 @@ $twig->addFilter($filter);
 $twig->addFunction($function);
 $twig->addGlobal('session', $_SESSION);
 
-$template = $twig->load('welcome.html.twig');
+$template = $twig->load('user/index.html.twig');
 
 echo $template->render();
 

@@ -86,7 +86,7 @@ $twig->addFunction($function1);
 
 $twig->addGlobal('session', $_SESSION);
 
-$template = $twig->load('checkStatus.html.twig');
+$template = $twig->load('admin/leave/checkStatus.html.twig');
 
 echo $template->render(['leavedetail' => $leave_detailed, 'num' => sizeof($leave_detailed)]);
 ?>
