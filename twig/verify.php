@@ -3,7 +3,7 @@
 require_once '../vendor/autoload.php';
 
 use Azhar\Elms\Common\Database;
-use Azhar\Elms\Updating\SetPassword;
+use Azhar\Elms\Users;
 
 session_start();
 
@@ -14,43 +14,38 @@ if(isset($_SESSION["loggedin"])  && ($_SESSION["status"] == "1")){
         header('location:welcome.php');
 
       } elseif ($_SESSION["user"] == "1") { 
-        
-        header('location:admin.php');
 
+        header('location:admin.php');
       }
 } 
+
+$database = new Database();
+$db = $database->getConnection();
+
+$users = new Users($db);
 
 if(isset($_GET['empid'])) {
 
     $id = base64_decode($_GET['empid']);
 
-    $database = new Database();
-    $db = $database->getConnection();
+    $authorized = $users->verified($id);
 
-    $passCreate = new SetPassword($db, $id);
-
-    $authorized = $passCreate->verified();
-    
     if ($authorized){
-       
+
         $_SESSION["flash"] = "You Are not Authorized";
-       
+
         header("location: ../index.php");
     }
 
     if ($_SERVER['REQUEST_METHOD'] == "POST") {
-        
-        $pass = $_POST['pass'];
-        $pass1 = $_POST['pass1'];
-        
-        if ($pass === $pass1) {
-            
-            $passCreate->updatePass($pass);
 
-            $_SESSION["flash"] = "Password is Set You May Logged In";
-    
-            header("location: ../index.php");
-        } 
+        $password = $_POST['pass'];
+
+        $users->setPassword($password, $id);
+
+        $_SESSION["flash"] = "Password is Set You May Logged In";
+
+        header("location: ../index.php");
     }
 
 } else {

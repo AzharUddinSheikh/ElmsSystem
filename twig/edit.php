@@ -4,8 +4,8 @@ require_once '../vendor/autoload.php';
 
 use Azhar\Elms\Common\Inactivity;
 use Azhar\Elms\Common\Database;
-use Azhar\Elms\Getting\EditDetail;
-use Azhar\Elms\Updating\EditEmp;
+use Azhar\Elms\UserDetails;
+use Azhar\Elms\Users;
 
 session_start();
 
@@ -28,7 +28,10 @@ if(!isset($_GET["id"]) || (($id != $_SESSION["emp_id"])) && $_SESSION["user"] !=
 $database = new Database();
 $db = $database->getConnection();
 
-$detail_emp = EditDetail::detailEdit($db, $id);
+$users = new Users($db);
+$user_details = new UserDetails($db);
+
+$detail_emp = $user_details->gettingUserDetail($id);
 
 Inactivity::inActive($_SESSION["last_login_timestamp"]);
 
@@ -50,16 +53,15 @@ if(isset($_POST['submit'])){
     if ($_FILES["image"]['name'] == ""){
         $img = $detail_emp[6];
     } 
-      
-    $emp_edit = new EditEmp($db, $id);
-    $emp_edit->updateUser($fname, $lname, $email, $img);
-    $emp_edit->updateUserDetail($dob, $number);
-    $emp_edit->img_folder($img);
+
+    $users->updateUser($fname, $lname, $email, $img, $id);
+    $user_details->updateUserDetails($dob, $number, $id);
+    $users->saveProfileImage($img);
     
     $_SESSION["update"] = "PROFILE HAS BEEN UPDATED";
 }
 
-$emp_detail = EditDetail::detailEdit($db, $id);
+$emp_detail = $user_details->gettingUserDetail($id);
 
 $filter  = new \Twig\TwigFilter('base64_encode', function($string) {
     return base64_encode($string);

@@ -13,15 +13,16 @@ require_once '../vendor/autoload.php';
 
 use Azhar\Elms\Common\Inactivity;
 use Azhar\Elms\Common\Database;
-use Azhar\Elms\Updating\ApproveReject;
-use Azhar\Elms\Getting\GetLeave;
+use Azhar\Elms\LeaveDetails;
+use Azhar\Elms\LeaveRequests;
 
 Inactivity::inActive($_SESSION["last_login_timestamp"]);
 
 $database = new Database();
 $db = $database->getConnection();
 
-$apply_reject = new ApproveReject($db);
+$leave_detail = new LeaveDetails($db);
+$leave_request = new LeaveRequests($db);
 
 if(isset($_SESSION["message"])){
     unset($_SESSION["message"]);
@@ -31,7 +32,7 @@ if(isset($_GET['approve'])) {
 
     $id = base64_decode($_GET['approve']);
   
-    $apply_reject->approve($id);
+    $leave_detail->approveUserRequest($id);
 
     $_SESSION["message"] = "USER LEAVES APPROVED";
     
@@ -41,17 +42,14 @@ if(isset($_GET['reject'])) {
   
     $id = base64_decode($_GET['reject']);
     
-    $apply_reject->reject($id);
+    $leave_detail->rejectUserRequest($id);
 
     $_SESSION["message"] = "USER LEAVES REJECTED";
 }
 
-$comm = new GetLeave($db);
-                    
-$result = $comm->leaveRequest();
+$result = $leave_request->pendingLeaveRequest();
 
 $leaves = array();
-
 while($row = $result->fetch_assoc()) {
     array_push($leaves, $row);
 }

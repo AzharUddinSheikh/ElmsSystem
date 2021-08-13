@@ -6,23 +6,24 @@ session_start();
 
 use Azhar\Elms\Common\Email;
 use Azhar\Elms\Common\Database;
-use Azhar\Elms\Updating\SetStatus;
-use Azhar\Elms\Getting\GetEmpId;
+use Azhar\Elms\Users;
 
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
     $email = $_POST['email'];
-   
+
     $database = new Database();
     $db = $database->getConnection();
 
-    SetStatus::setToZero($db, $email);
+    $users = new Users($db);
+
+    $users->resetStatus($email);
     
-    if (Email::sendEmail($email, base64_encode(GetEmpId::getId($db, $email)))) {
+    if (Email::sendEmail($email, base64_encode($users->getUserId($email)))) {
 
         $_SESSION["flash"] = "Reset Link Has Been Sent To Registered Email";
 
-    } 
+    }
 
     header("location: ../index.php");
 }

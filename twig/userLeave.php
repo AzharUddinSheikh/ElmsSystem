@@ -24,28 +24,29 @@ require_once '../vendor/autoload.php';
 
 use Azhar\Elms\Common\InActivity;
 use Azhar\Elms\Common\Database;
-use Azhar\Elms\Updating\LeaveDelete;
-use Azhar\Elms\Getting\GetLeave;
+use Azhar\Elms\LeaveRequests;
+use Azhar\Elms\LeaveDetails;
 
 Inactivity::inActive($_SESSION["last_login_timestamp"]);
 
 $database = new Database();
 $db = $database->getConnection();
 
+$leave_detail = new LeaveDetails($db);
+$leave_request = new LeaveRequests($db);
+
 if(isset($_GET["cancel"])) {
 
   $id = base64_decode($_GET['cancel']);
 
-  LeaveDelete::deleteRequest($db, $id);
+  $leave_request->deleteUserRequest($id);
 
   $_SESSION["message"] = "DELETED SELECTED LEAVE PROPOSAL";
 }
 
-$user_leave = new GetLeave($db);
-
 $id = base64_decode($_GET["id"]);
 
-$result = $user_leave->userLeave($id);
+$result = $leave_request->showUserLeave($id);
 
 $history = array();
 while($row = $result->fetch_assoc()) {

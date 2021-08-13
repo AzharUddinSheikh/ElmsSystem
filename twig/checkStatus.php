@@ -13,37 +13,39 @@ require_once '../vendor/autoload.php';
 
 use Azhar\Elms\Common\Inactivity;
 use Azhar\Elms\Common\Database;
-use Azhar\Elms\Updating\ApproveReject;
+use Azhar\Elms\LeaveDetails;
+use Azhar\Elms\LeaveRequests;
 
 Inactivity::inActive($_SESSION["last_login_timestamp"]);
 
 $database = new Database();
 $db = $database->getConnection();
 
-$apply_reject = new ApproveReject($db);
+$leave_request = new LeaveRequests($db);
+$leave_detail = new LeaveDetails($db);
 
 if(isset($_SESSION["message"])){
     unset($_SESSION["message"]);
 }
 
 if(isset($_GET['Sreject'])) {
-  
+
     $id = base64_decode($_GET['Sreject']);
 
     $id1 = base64_decode($_GET['userdetails']);
-    
-    $apply_reject->rejectEachLeave($id, $id1);
+
+    $leave_detail->rejectEachLeave($id, $id1);
 
     $_SESSION["message"] = "SELECTED DATE REJECTED";
 }
 
 if(isset($_GET['Sapprove'])) {
-  
+
     $id = base64_decode($_GET['Sapprove']);
 
     $id1 = base64_decode($_GET['userdetails']);
-    
-    $apply_reject->approveEachLeave($id, $id1);
+
+    $leave_detail->approveEachLeave($id, $id1);
 
     $_SESSION["message"] = "SELECTED DATE APPROVED";
 }
@@ -52,9 +54,7 @@ if(isset($_GET["userdetails"])){
 
     $id = base64_decode($_GET["userdetails"]);
 
-    $sql = "SELECT * FROM leave_details WHERE leave_id = '$id'";
-
-    $result = $db->query($sql);
+    $result = $leave_detail->specificLeaveDetail($id);
 
     $leave_detailed = array();
     while ($row = $result->fetch_assoc()){

@@ -13,16 +13,14 @@ require_once '../vendor/autoload.php';
 
 use Azhar\Elms\Common\Inactivity;
 use Azhar\Elms\Common\Database;
-use Azhar\Elms\Updating\BlockUnBlock;
-use Azhar\Elms\Getting\DetailEmp;
-use Azhar\Elms\Updating\EditEmp;
+use Azhar\Elms\Users;
 
 Inactivity::inActive($_SESSION["last_login_timestamp"]);
 
 $database = new Database();
 $db = $database->getConnection();
 
-$block_unblock = new BlockUnBlock($db);
+$users = new Users($db);
 
 if(isset($_SESSION["message"])){
     unset($_SESSION["message"]);
@@ -32,35 +30,32 @@ if(isset($_GET['block'])) {
     
     $id = base64_decode($_GET['block']);
     
-    $block_unblock->block($id);
+    $users->blockUser($id);
 
-    $_SESSION["leave"] = "USER IS BLOCKED";
+    $_SESSION["message"] = "USER IS BLOCKED";
 }
 
 if(isset($_GET['delete'])) {
     
     $id = base64_decode($_GET['delete']);
     
-    EditEmp::deleteUser($db, $id);
+    $users->deleteUser($id);
 
-    $_SESSION["leave"] = "USER IS DELETED";
+    $_SESSION["message"] = "USER IS DELETED";
 }
 
 if(isset($_GET['unblock'])) {
     
     $id = base64_decode($_GET['unblock']);
     
-    $block_unblock->unBlock($id);
+    $users->unblockUser($id);
 
-    $_SESSION["leave"] = "USER IS UNBLOCKED";
+    $_SESSION["message"] = "USER IS UNBLOCKED";
 }
 
-$common = new DetailEmp($db);
-            
-$result = $common->showemp();
+$result = $users->showUserList();
 
 $details = array();
-
 while($row = $result->fetch_assoc()) {
     array_push($details, $row);
 }

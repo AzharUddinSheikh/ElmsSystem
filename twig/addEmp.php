@@ -5,8 +5,9 @@ require_once '../vendor/autoload.php';
 use Azhar\Elms\Common\Inactivity;
 use Azhar\Elms\Common\Database;
 use Azhar\Elms\Common\Email;
-use Azhar\Elms\Inserting\Employee;
-use Azhar\Elms\Getting\GetDepartment;
+use Azhar\Elms\Users;
+use Azhar\Elms\UserDetails;
+use Azhar\Elms\Department;
 
 session_start();
 
@@ -22,10 +23,13 @@ Inactivity::inActive($_SESSION["last_login_timestamp"]);
 $database = new Database();
 $db = $database->getConnection();
 
+$departments = new Department($db);
+$users = new Users($db);
+$user_details = new UserDetails($db);
+
 if(isset($_SESSION["added"])){
     unset($_SESSION["added"]);
 }
-
 
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
@@ -37,21 +41,19 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $empid = $_POST['empid']; 
     $dname = $_POST['dname'];
     $utype = $_POST['utype'];
-    
-    $common = (new Employee($db, $email));
 
-    $common->checkUser();
     Email::sendEmail($email, base64_encode($empid));
-    $common->createUser($empid, $fname, $lname, $dname, $utype);
-    $common->createDetail($number, $dob);
+
+    $users->createUser($empid, $fname, $lname, $email, $dname, $utype);
+
+    $user_details->createUserDetails($number, $dob, $email);
 
     $_SESSION["added"] = "EMPLOYEE ADDED AND NEED TO CHECK EMAIL FOR FURTHER PROCEDURE";
 }
 
-$result = GetDepartment::getDept($db);
+$result = $departments->showList();
 
 $department = array();
-
 while ($row = $result->fetch_assoc()){
     array_push($department, $row);
 }

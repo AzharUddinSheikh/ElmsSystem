@@ -13,25 +13,29 @@ require_once '../vendor/autoload.php';
 
 use Azhar\Elms\Common\Inactivity;
 use Azhar\Elms\Common\Database;
-use Azhar\Elms\Inserting\AddLeave;
+use Azhar\Elms\LeaveRequests;
+use Azhar\Elms\LeaveDetails;
 
 Inactivity::inActive($_SESSION["last_login_timestamp"]);
+
+$database = new Database();
+$db = $database->getConnection();
+
+$leave_request = new LeaveRequests($db);
+$leave_detail = new LeaveDetails($db);
 
 if(isset($_SESSION["message"])){
   unset($_SESSION["message"]);
 }
 
 if($_SERVER['REQUEST_METHOD'] == "POST") {
-    
+
     $reason = $_POST["textarea"];
     $date1 = $_POST["dob"];
     $date2 = $_POST["dob1"];
 
-    $database = new Database();
-    $db = $database->getConnection();
-    $leave = new AddLeave($db, $_SESSION["id"]);
-    $leave->appLeave($reason, $date1, $date2);
-    $leave->eachDay($date1, $date2);
+    $leave_request->applyLeave($reason, $date1, $date2, $_SESSION["id"]);
+    $leave_detail->createLeaveDetail($date1, $date2, $_SESSION["id"]);
 
     $_SESSION["message"] = "Leave Has Been Applied";
 }

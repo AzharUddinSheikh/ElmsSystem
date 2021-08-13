@@ -13,25 +13,22 @@ require_once '../vendor/autoload.php';
 
 use Azhar\Elms\Common\Inactivity;
 use Azhar\Elms\Common\Database;
-use Azhar\Elms\Getting\DetailEmp;
-use Azhar\Elms\Updating\EditEmp;
+use Azhar\Elms\Users;
 
 Inactivity::inActive($_SESSION["last_login_timestamp"]);
 
 $database = new Database();
 $db = $database->getConnection();
 
+$users = new Users($db);
 
 if(isset($_SESSION["message"])){
     unset($_SESSION["message"]);
 }
 
-$common = new DetailEmp($db);
-            
-$result = $common->showemp();
+$result = $users->showUserList();
 
 $details = array();
-
 while($row = $result->fetch_assoc()) {
     array_push($details, $row);
 }

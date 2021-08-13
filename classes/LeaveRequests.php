@@ -1,24 +1,29 @@
 <?php
 
-namespace Azhar\ELMS\Getting;
+namespace Azhar\ELMS;
 use \DateTime;
 
-class GetLeave
+class LeaveRequests
 {
-    private $sql;
-    private $conn;
 
     public function __construct($db) 
     {
         $this->conn = $db;
     }
 
-    public static function totalLeave($db, $id)
+    public function deleteUserRequest($id)
+    {
+        $sql = "DELETE FROM leave_requests WHERE id = $id";
+
+        mysqli_query($this->conn, $sql);
+    }
+
+    public function totalLeaveRequested($id)
     {
         $sql = "SELECT * FROM leave_requests WHERE id = '$id'";
 
-        $result = $db->query($sql);
-        
+        $result = $this->conn->query($sql);
+
         while ($row = $result->fetch_assoc()){
             $begin = new DateTime($row["start_date"]);
             $end = new DateTime($row["end_date"]);
@@ -30,7 +35,7 @@ class GetLeave
         return $count;
     }
 
-    public function isMaxLeave($id)
+    public function getApprovedLeave($id)
     {
         $sql = "SELECT ld.status FROM users u JOIN leave_requests lr on  u.id = lr.user_id join leave_details ld on lr.id = ld.leave_id where ld.status = 1 and YEAR(ld.leave_applied) = YEAR(CURDATE()) AND emp_id = '$id'";
 
@@ -41,24 +46,22 @@ class GetLeave
         return $row;
     }
     
-    public function maxLeave($id)
+
+    public function applyLeave($reason, $date1, $date2, $id)
     {
-        $extract = "SELECT * FROM leave_requests lr JOIN leave_details ld ON lr.id = ld.leave_id WHERE lr.id = '$id'";
+        $new_date1 = date("Y-m-d", strtotime($date1));
+        $new_date2 = date("Y-m-d", strtotime($date2));
 
-        $rows = $this->conn->query($extract);
+        $sql = "INSERT INTO leave_requests (user_id, reason, start_date, end_date) VALUES (?, ?, ?, ?)";
 
-        $user_id = $rows->fetch_assoc()["user_id"];
+        $stmt = $this->conn->prepare($sql);
 
-        $sql = "SELECT * FROM leave_details ld JOIN leave_requests lr ON ld.leave_id = lr.id WHERE lr.user_id = '$user_id' and ld.status = 1 and year(curdate()) = year(ld.leave_applied)";
+        $stmt->bind_param("isss", $id, $reason,  $new_date1, $new_date2);
 
-        $result = mysqli_query($this->conn, $sql);
-
-        $row = mysqli_num_rows($result);
-
-        return $row;
+        $stmt->execute();
     }
 
-    public function leaveRequest()
+    public function pendingLeaveRequest()
     {
         $sql = "SELECT * FROM users JOIN leave_requests WHERE users.id = leave_requests.user_id AND leave_requests.start_date > CURDATE() AND leave_requests.status = 0 ORDER BY leave_requests.id DESC";
 
@@ -67,7 +70,7 @@ class GetLeave
         return $result;
     }
 
-    public function userLeave($id)
+    public function showUserLeave($id)
     {
         $sql = "SELECT * FROM leave_requests WHERE user_id = '$id' ORDER BY ID DESC";
 
@@ -76,7 +79,7 @@ class GetLeave
         return $result;
     }
 
-    public function getEachLeave($id)
+    public function getEachLeaveStatus($id)
     {
         $sql = "SELECT * FROM leave_details WHERE leave_id = '$id'";
 
