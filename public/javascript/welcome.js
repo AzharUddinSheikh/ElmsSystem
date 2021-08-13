@@ -29,7 +29,7 @@ document.querySelectorAll('.cancel').forEach((element)=>{
         id = e.target.id.substr(0,);
         id1 = e.target.name;
         if(confirm("Are You Sure To Delete This Request")){
-            window.location = `twigUserLeave.php?cancel=${id}&id=${id1}`
+            window.location = `userLeave.php?cancel=${id}&id=${id1}`
         }
     })
 })
@@ -52,6 +52,6 @@ document.querySelectorAll('.view').forEach((element)=>{
 document.querySelectorAll('.userdetails').forEach((element)=>{
     element.addEventListener("click",(e)=>{
         id = e.target.id.substr(0,);
-        window.location = `/elms/twig/twigCheckStatus.php?userdetails=${id}`
+        window.location = `/elms/twig/checkStatus.php?userdetails=${id}`
     })
 })

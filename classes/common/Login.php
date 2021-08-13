@@ -20,11 +20,11 @@ class Login
 
             if ($row["user_type"] == '1') {
 
-                header("location:twig/twigAdmin.php");
+                header("location:twig/admin.php");
                 
             } else {
                 
-                header("location:twig/twigWelcome.php");
+                header("location:twig/welcome.php");
             }
         }
     }

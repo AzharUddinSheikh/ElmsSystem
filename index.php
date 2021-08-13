@@ -7,11 +7,11 @@ if(isset($_SESSION["loggedin"])){
 
     if($_SESSION["user"] == "0"  && ($_SESSION["status"] == "1")){
         
-        header('location:twig/twigWelcome.php');
+        header('location:twig/welcome.php');
         
       } elseif ($_SESSION["user"] == "1"  && ($_SESSION["status"] == "1")) { 
         
-        header('location: twig/twigAdmin.php');
+        header('location: twig/admin.php');
       
       } 
 } 
@@ -82,7 +82,7 @@ if ($_SERVER['REQUEST_METHOD']=="POST") {
       </div>
       <input class="form-control" name="password" type="password" id="password" placeholder="Enter Your Password">
       <div class="mb-3">
-        <a href="twig/twigForgot.php">Forgot Password ? Click Here</a>
+        <a href="twig/forgot.php">Forgot Password ? Click Here</a>
       </div>
       <button class="btn btn-lg btn-primary btn-block" id='submit' type="submit">Log In</button>
     </form>
