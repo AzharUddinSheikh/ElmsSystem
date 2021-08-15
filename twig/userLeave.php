@@ -26,6 +26,7 @@ use Azhar\Elms\Common\InActivity;
 use Azhar\Elms\Common\Database;
 use Azhar\Elms\LeaveRequests;
 use Azhar\Elms\LeaveDetails;
+use Azhar\Elms\Users;
 
 Inactivity::inActive($_SESSION["last_login_timestamp"]);
 
@@ -34,19 +35,24 @@ $db = $database->getConnection();
 
 $leave_detail = new LeaveDetails($db);
 $leave_request = new LeaveRequests($db);
+$users = new Users($db);
 
-if(isset($_GET["cancel"])) {
+if($_SERVER['REQUEST_METHOD'] == "POST") {
 
-  $id = base64_decode($_GET['cancel']);
+    $reason = $_POST["textarea"];
+    $date1 = $_POST["dob"];
+    $date2 = $_POST["dob1"];
 
-  $leave_request->deleteUserRequest($id);
+    $leave_request->applyLeave($reason, $date1, $date2, $_SESSION["id"]);
+    $leave_detail->createLeaveStatus($date1, $date2, $_SESSION["id"]);
 
-  $_SESSION["message"] = "DELETED SELECTED LEAVE PROPOSAL";
+    $_SESSION["message"] = "Leave Has Been Applied";
 }
 
 $id = base64_decode($_GET["id"]);
 
 $result = $leave_request->showUserLeave($id);
+$list = $users->getUserWithDept($id);
 
 $history = array();
 while($row = $result->fetch_assoc()) {
@@ -57,8 +63,9 @@ $filter  = new \Twig\TwigFilter('base64_encode', function($string) {
     return base64_encode($string);
 });
 
-$function = new \Twig\TwigFunction('getUrl', function() {
-    return basename($_SERVER['PHP_SELF']);
+$function = new \Twig\TwigFunction('getNoOfDays', function($start, $end) {
+    $days = abs(strtotime($start)-strtotime($end))/86400 +1;
+    return ($days);
 });
 
 $function1 = new \Twig\TwigFunction('diffTime', function($date) {
@@ -72,13 +79,13 @@ $loader = new \Twig\Loader\FilesystemLoader('../view');
 $twig = new \Twig\Environment($loader);
 
 $twig->addFilter($filter);
-$twig->addFunction($function);
 $twig->addFunction($function1);
+$twig->addFunction($function);
 
 $twig->addGlobal('session', $_SESSION);
 
 $template = $twig->load('user/userLeave.html.twig');
 
-echo $template->render(['userleave' => $history, 'size' => sizeof($history)]);
+echo $template->render(['userleave' => $history, 'size' => sizeof($history), 'details'=>$list]);
 
 ?>

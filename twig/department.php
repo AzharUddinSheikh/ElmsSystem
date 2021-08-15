@@ -51,8 +51,18 @@ $filter  = new \Twig\TwigFilter('base64_encode', function($string) {
     return base64_encode($string);
 });
 
-$function = new \Twig\TwigFunction('getUrl', function() {
-    return basename($_SERVER['PHP_SELF']);
+$function  = new \Twig\TwigFilter('getNoOfEmp', function($id) {
+    $database = new Database();
+    $db = $database->getConnection();
+
+    $result = Department::noOfUserInDept($db, $id);
+
+    $count = 0;
+    while($row = $result->fetch_assoc()){
+        $count++;
+    }
+
+    return $count;
 });
 
 $loader = new \Twig\Loader\FilesystemLoader('../view');
@@ -60,7 +70,7 @@ $loader = new \Twig\Loader\FilesystemLoader('../view');
 $twig = new \Twig\Environment($loader);
 
 $twig->addFilter($filter);
-$twig->addFunction($function);
+$twig->addFilter($function);
 
 $twig->addGlobal('session', $_SESSION);
 

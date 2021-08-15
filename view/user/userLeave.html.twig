@@ -6,68 +6,106 @@
 {% endblock %}
 
 {% block content %}
+
+    <div class="container">
+    <h2 class="text-center">USER PROFILE</h2>
+      <table class="table-dark table" id="table1">
+      <thead>
+          <tr>
+            <th scope="col">NAME</th>
+            <th scope="col">{{details[3]}} {{details[4]}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">EMAIL</th>
+            <td>{{details[1]}}</td>
+          </tr>
+          <tr>
+            <th scope="row">NUMBER</th>
+            <td>{{details[2]}}</td>
+          </tr>
+          <tr>
+            <th scope="row">DEPARTMENT</th>
+            <td>{{details[0]}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+
   <div class="container">
     {% if session.message %} 
       <div class="valid alert alert-warning" role="alert">{{session.message}}</div>
     {% endif %}
     <h2 class="text-center my-5">LEAVE HISTORY OF THE USER</h2>
     <div class="container mt-5 mb-5">
+     {% set id = details[5] %}
+     {% if session.id == id %}
+     <button class="btn btn-primary my-2" style="float:right;" data-bs-toggle="modal" data-bs-target="#applyLeave">Apply Leave</button>
+     {% endif %}
       <table class="table table-dark table-striped my-3" id="myTable">
           <thead>
             <tr>
-              <th scope="col">Sno</th>
-              <th scope="col">Reason</th>
-              <th scope="col">Applied On</th>
-              <th scope="col">StartDate</th>
-              <th scope="col">EndDate</th>
-              <th scope="col">Action</th>
+              <th scope="col">FROM</th>
+              <th scope="col">TO</th>
+              <th scope="col">DAYS</th>
+              <th scope="col">REASON</th>
+              <th scope="col">STATUS</th>
             </tr>
           </thead>
           <tbody>
           {% if size > 0 %}
             {% for leave in range(0, size-1) %}    
               <tr>
-                  <td>{{leave+1}}</td>
-                  <td>{{userleave[leave].reason}}</td>
-                  <td>{{userleave[leave].added_on}}</td>
                   <td>{{userleave[leave].start_date}}</td>
                   <td>{{userleave[leave].end_date}}</td>
+                  {% set days = getNoOfDays(userleave[leave].start_date, userleave[leave].end_date) %}
+                  <td>{{days}}</td>
+                  <td>{{userleave[leave].reason}}</td>
                   {% set userid = userleave[leave].user_id %}
-                  {% set difference = diffTime(userleave[leave].start_date) %}
-                  <td>
-                  {% if (session.user == "1" or session.user == "0") and session.id == userid %}
-                      {% if difference > 0 %} 
-                        <button id='{{ userleave[leave].id | base64_encode }}' name='{{ userleave[leave].user_id | base64_encode }}' class='cancel btn btn-secondary btn-sm'>CANCEL</button>
-                      {% else %}
-                        <button class='btn btn-info btn-sm' disabled>N/A</button>
-                      {% endif %}
-                  {% endif %}
-                  {% if session.user == "1" %}
-                      <button id='{{ userleave[leave].id | base64_encode }}' class="userdetails btn btn-info btn-sm">CHECK STATUS</button>
-                  {% endif %}
-                  <button id='{{ userleave[leave].id | base64_encode }}' class="view btn btn-info mx-1 btn-sm" data-toggle="modal" data-target="#exampleModal">VIEW</button>
-                  </td>
+                  <td>lOGIC PENDING</td>
               </tr>
             {% endfor %}
           {% endif %}
           </tbody>
       </table>
     </div>
-
-      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModal" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-              <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModal">User Leave Detail</h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="modal-body">
-              </div>
-          </div>
-        </div>
-      </div>
-
   </div>
-</body>
+<!-- Modal -->
+<div class="modal fade" id="applyLeave" tabindex="-1" role="dialog" aria-labelledby="applyLeaveModal" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="applyLeaveModal">APPLY LEAVE FORM</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="" method="POST" name="applyLeave">
+            <div class="mb-5">
+              <label for="dob" class="form-label">FROM</label>
+              <input type="text" class="date form-control" name="dob" id="dob" onkeypress="return false">
+            </div>
+            <div class="mb-5">
+              <label for="dob1" class="form-label">TO</label>
+              <input type="text" class="date form-control" name="dob1" id="dob1" onkeypress="return false">
+            </div>
+            <div class="form-group mb-5">
+                <label for="textarea">Reason</label>
+                <textarea class="form-control" id="textarea" name="textarea"></textarea>
+            </div>
+            <div class="col-md-12 text-center">
+              <span class="submit">
+                <button type="submit" class="btn btn-primary">Apply</button>
+              </span>
+              <button type="reset" class="btn btn-primary">Clear</button>
+            </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 <script src="../public/javascript/welcome.js"></script>
 {% endblock %}
