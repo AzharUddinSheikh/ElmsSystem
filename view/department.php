@@ -65,15 +65,6 @@ if (isset($_POST["email"])){
     }
 }
 
-if(isset($_POST["id"])){
-
-    $id = base64_decode($_POST["id"]);
-
-    $response = $leave_request->getEachLeaveStatus($id);
-
-    echo $response;
-}
-
 if(isset($_POST["approve"]) && isset($_POST["ids"])){
 
     $ids = base64_decode($_POST["ids"]);
@@ -92,9 +83,16 @@ if(isset($_POST["approve"]) && isset($_POST["ids"])){
 if(isset($_POST["approveS"])){
 
     $id = base64_decode($_POST["approveS"]);
-
+    
     $result = $leave_detail->maxLeave($id);
 
     echo $result;
+}
+
+if (isset($_POST["leave_id"])){
+
+    $result = $leave_request->gettingDate($_POST["leave_id"]);
+
+    echo json_encode($result);
 }
 ?>

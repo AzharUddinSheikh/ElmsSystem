@@ -11,7 +11,7 @@ class Users
 
     public function showUserList() 
     {
-        $sql = "SELECT * FROM departments JOIN users WHERE users.department_id = departments.id AND users.status != 0";
+        $sql = "SELECT * FROM departments d JOIN users u WHERE u.departments_id = d.id AND u.status != 0";
 
         $result = $this->conn->query($sql);
 
@@ -32,7 +32,7 @@ class Users
 
     public function createUser($empid, $fname, $lname, $email, $department, $usertype)
     {
-        $query = "INSERT INTO  users (emp_id, first_name, last_name, email, department_id, user_type) VALUES (?, ?, ?, ?, ?, ?)";
+        $query = "INSERT INTO  users (emp_id, first_name, last_name, email, departments_id, user_type) VALUES (?, ?, ?, ?, ?, ?)";
 
         $stmt = $this->conn->prepare($query);
 
@@ -139,6 +139,21 @@ class Users
 
             $update = $this->conn->query("UPDATE users SET password = '$setPass',status = 1 WHERE emp_id = '$id' LIMIT 1");
         }
+    }
+
+    public function getUserWithDept($id)
+    {
+        $sql = "SELECT u.id, u.email, u.first_name, u.last_name, d.name, ud.user_value FROM users u JOIN user_details ud ON ud.user_id = u.id JOIN departments d ON u.departments_id = d.id WHERE user_key = 'number' AND u.id = '$id'";
+
+        $result = $this->conn->query($sql);
+
+        $detail = array();
+
+        while ($row = $result->fetch_assoc()){
+            array_push($detail, $row["name"], $row["email"], $row["user_value"], $row["first_name"], $row["last_name"], $row["id"]);
+        }
+
+        return $detail;
     }
 }
 

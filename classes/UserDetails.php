@@ -66,7 +66,7 @@ class UserDetails
         for ($x = 0; $x < 2; $x++) {
 
             if ($x == 0) {
-                
+
                 $sql = "UPDATE user_details ud JOIN users u ON ud.user_id = u.id SET ud.user_value = '$birthday' WHERE u.emp_id = '$id' AND ud.user_key='birthday'";
 
             } else {

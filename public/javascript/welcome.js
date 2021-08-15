@@ -24,34 +24,49 @@ $("#myForm").validate({
     }
 })
 
-document.querySelectorAll('.cancel').forEach((element)=>{
-    element.addEventListener("click",(e)=>{
-        id = e.target.id.substr(0,);
-        id1 = e.target.name;
-        if(confirm("Are You Sure To Delete This Request")){
-            window.location = `userLeave.php?cancel=${id}&id=${id1}`
+$.validator.addMethod("greaterThan", function (value, element) {
+    var today = new Date();
+    return Date.parse(value) >= Date.parse(today);
+}, "Date Should be greater than Today");
+
+$.validator.addMethod("greater", function (value, element) {
+    var startdate = $('#dob').val();
+    return Date.parse(value) >= Date.parse(startdate);
+}, "End Date Should Be Greater than Start Date");
+
+$("form[name='applyLeave']").validate({
+    rules: {
+        textarea: {
+            required: true,
+            minlength: 15
+        },
+        dob: {
+            required: true,
+            date: true,
+            greaterThan: true
+        },
+        dob1: {
+            required: true,
+            date: true,
+            greaterThan: true,
+            greater: true,
         }
-    })
-})
+    },
+    messages: {
+        textarea: {
+            required: "Please Provide Reason",
+            minlength: "reason should be atleast 15 character"
+        }
+    },
+    submitHandler: function (form) {
+        form.submit();
+    }
+});
 
-document.querySelectorAll('.view').forEach((element)=>{
-    element.addEventListener("click",(e)=>{
-        id = e.target.id.substr(0,);
-        $.ajax({
-            url: '../view/department.php',
-            method: 'POST',
-            data:{id : id},
-            success: function(data){
-                $('.modal-body').html(data);
-                $('#exampleModal').modal('toggle');
-            }
-        })
-    })
-})
+$(function(){
+    $(".date").datepicker({ dateFormat: 'yy-mm-dd' });
+});
 
-document.querySelectorAll('.userdetails').forEach((element)=>{
-    element.addEventListener("click",(e)=>{
-        id = e.target.id.substr(0,);
-        window.location = `/elms/twig/checkStatus.php?userdetails=${id}`
-    })
-})
+if ( window.history.replaceState ) {
+    window.history.replaceState( null, null, window.location.href )
+}

@@ -11,13 +11,6 @@ class LeaveRequests
         $this->conn = $db;
     }
 
-    public function deleteUserRequest($id)
-    {
-        $sql = "DELETE FROM leave_requests WHERE id = $id";
-
-        mysqli_query($this->conn, $sql);
-    }
-
     public function totalLeaveRequested($id)
     {
         $sql = "SELECT * FROM leave_requests WHERE id = '$id'";
@@ -63,7 +56,7 @@ class LeaveRequests
 
     public function pendingLeaveRequest()
     {
-        $sql = "SELECT * FROM users JOIN leave_requests WHERE users.id = leave_requests.user_id AND leave_requests.start_date > CURDATE() AND leave_requests.status = 0 ORDER BY leave_requests.id DESC";
+        $sql = "SELECT u.id as user_id, lr.id, u.emp_id, lr.reason, lr.start_date, lr.end_date, u.first_name, u.last_name FROM users u JOIN leave_requests lr ON u.id = lr.user_id WHERE lr.start_date > CURDATE() AND lr.status = 0";
 
         $result = $this->conn->query($sql);
 
@@ -79,44 +72,20 @@ class LeaveRequests
         return $result;
     }
 
-    public function getEachLeaveStatus($id)
+    public function gettingDate($encoded)
     {
-        $sql = "SELECT * FROM leave_details WHERE leave_id = '$id'";
+        $id = base64_decode($encoded);
+
+        $sql = "SELECT * FROM leave_requests WHERE id = '$id'";
 
         $result = $this->conn->query($sql);
 
-        $count = 0;
-        $response = 
-        '<table class="table table-dark table-striped my-3">
-        <thead>
-        <tr>
-        <th scope="col">Sno</th>
-            <th scope="col">Leave Date</th>
-            <th scope="col">Status</th>
-        </tr>
-        </thead>
-        <tbody>';
+        $dataarray = array();
         while ($row = $result->fetch_assoc()){
-            
-            if ($row['status'] == 0){
-                $status = "PENDING";
-            } elseif ($row['status'] == 1){
-                $status = "APPROVED";
-            } else {
-                $status = "REJECTED";
-            }
-
-            $count++;
-            $response .= 
-            '<tr>
-                <td>'.$count.'</td>
-                <td>'.$row['leave_applied'].'</td>
-                <td>'.$status.'</td>
-            </tr>';
+            array_push($dataarray, $row["start_date"], $row["end_date"]);
         }
-        $response .= '</tbody>';
 
-        return $response;
+        return $dataarray;
     }
 }
 

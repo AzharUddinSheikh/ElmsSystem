@@ -31,15 +31,6 @@ $(document).ready(function() {
             window.location = `/elms/twig/userLeave.php?id=${id}`
         })
     })
-    
-    document.querySelectorAll('.delete').forEach((element)=>{
-        element.addEventListener("click",(e)=>{
-            id = e.target.id.substr(0,);
-            if(confirm("Are You Sure To Delete This User")){
-                window.location = `/elms/twig/empManage.php?delete=${id}`
-            }
-        })
-    })
 })
 
 if ( window.history.replaceState ) {

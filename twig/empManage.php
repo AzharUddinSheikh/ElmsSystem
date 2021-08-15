@@ -35,15 +35,6 @@ if(isset($_GET['block'])) {
     $_SESSION["message"] = "USER IS BLOCKED";
 }
 
-if(isset($_GET['delete'])) {
-    
-    $id = base64_decode($_GET['delete']);
-    
-    $users->deleteUser($id);
-
-    $_SESSION["message"] = "USER IS DELETED";
-}
-
 if(isset($_GET['unblock'])) {
     
     $id = base64_decode($_GET['unblock']);
