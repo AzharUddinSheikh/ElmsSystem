@@ -44,32 +44,54 @@
      {% if session.id == id %}
      <button class="btn btn-primary my-2" style="float:right;" data-bs-toggle="modal" data-bs-target="#applyLeave">Apply Leave</button>
      {% endif %}
-      <table class="table table-dark table-striped my-3" id="myTable">
-          <thead>
-            <tr>
-              <th scope="col">FROM</th>
-              <th scope="col">TO</th>
-              <th scope="col">DAYS</th>
-              <th scope="col">REASON</th>
-              <th scope="col">STATUS</th>
-            </tr>
-          </thead>
-          <tbody>
-          {% if size > 0 %}
-            {% for leave in range(0, size-1) %}    
+        <table class="table table-dark table-striped my-3">
+            <thead>
               <tr>
-                  <td>{{userleave[leave].start_date}}</td>
-                  <td>{{userleave[leave].end_date}}</td>
-                  {% set days = getNoOfDays(userleave[leave].start_date, userleave[leave].end_date) %}
-                  <td>{{days}}</td>
-                  <td>{{userleave[leave].reason}}</td>
-                  {% set userid = userleave[leave].user_id %}
-                  <td>lOGIC PENDING</td>
-              </tr>
-            {% endfor %}
-          {% endif %}
-          </tbody>
-      </table>
+                <th scope="col" rowspan="2">FROM</th>
+                <th scope="col" rowspan="2">TO</th>
+                <th scope="col" rowspan="2">DAYS</th>
+                <th scope="col" rowspan="2">REASON</th>
+                <th scope="col" colspan="4" class="text-center">STATUS</th>
+                <tr>
+                    <th></th>
+                    <th>from</th>
+                    <th>to</th>
+                    <th>days</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% if size > 0 %}
+              {% for leave in range(0, size-1) %}
+                <tr >
+                    <td>{{userleave[leave].start | date("d-m-Y") }}</td>
+                    <td>{{userleave[leave].end | date("d-m-Y") }}</td>
+                    {% set days = getNoOfDays(userleave[leave].start, userleave[leave].end) %}
+                    <td>{{days}}</td>
+                    <td>{{userleave[leave].excuse}}</td>
+                    {% set day = getNoOfDays(userleave[leave].from, userleave[leave].to) %}
+                    {% set status = userleave[leave].status %}
+                    {% if status == 2 %}
+                    <td><a data-toggle="tooltip" data-placement="top" title="REASON  {{userleave[leave].reason}}">REJECTED</a></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    {% elseif status == 1 %}
+                    <td style="color: green;">GRANTED</td>
+                    <td style="color: green;">{{userleave[leave].from}}</td>
+                    <td style="color: green;">{{userleave[leave].to}}</td>
+                    {% set day = getNoOfDays(userleave[leave].from, userleave[leave].to) %}
+                    <td style="color: green;">{{day}}</td>
+                    {% else %}
+                        <td>PENDING</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        {% endif %}
+                </tr>
+              {% endfor %}
+            {% endif %}
+            </tbody>
+        </table>
     </div>
   </div>
 <!-- Modal -->
@@ -107,5 +129,6 @@
     </div>
   </div>
 </div>
+<!-- $('.dropdown-toggle').dropdown() -->
 <script src="../public/javascript/welcome.js"></script>
 {% endblock %}

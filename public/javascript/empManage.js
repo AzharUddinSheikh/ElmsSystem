@@ -24,13 +24,6 @@ $(document).ready(function() {
             location.href = `edit.php?id=${id}`;
         })
     })
-    
-    document.querySelectorAll('.view').forEach((element)=>{
-        element.addEventListener("click",(e)=>{
-            id = e.target.id.substr(0,);
-            window.location = `/elms/twig/userLeave.php?id=${id}`
-        })
-    })
 })
 
 if ( window.history.replaceState ) {

@@ -111,6 +111,15 @@ class LeaveDetails
 
         mysqli_query($this->conn, $sql1);
     }
+
+    public function showLeaves()
+    {
+        $sql = "SELECT * FROM leave_requests lr JOIN leave_status ls ON lr.id = ls.requests_id JOIN users u ON u.id = lr.user_id";
+
+        $result = $this->conn->query($sql);
+
+        return $result;
+    }
 }
 
 ?>
