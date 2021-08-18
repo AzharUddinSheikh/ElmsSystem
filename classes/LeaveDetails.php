@@ -90,31 +90,18 @@ class LeaveDetails
         mysqli_query($this->conn, $sql1);
     }
 
-    public function rejectEachLeave($id, $id1)
+    public function approvedLeave()
     {
-        $sql = "UPDATE leave_status SET status = 2 WHERE id = '$id'";
+        $sql = "SELECT ls.from_date as 'from', ls.to_date as 'to', lr.reason AS excuse, ls.reason, lr.start_date, lr.end_date, lr.added_on, lr.user_id, lr.id, u.first_name, u.last_name FROM leave_requests lr JOIN leave_status ls ON lr.id = ls.requests_id JOIN users u ON u.id = lr.user_id WHERE ls.status = 2";
 
-        $sql1 = "UPDATE leave_requests SET status = 1 WHERE id = $id1";
+        $result = $this->conn->query($sql);
 
-        mysqli_query($this->conn, $sql);
-
-        mysqli_query($this->conn, $sql1);
+        return $result;
     }
 
-    public function approveEachLeave($id, $id1)
+    public function rejectedLeave()
     {
-        $sql = "UPDATE leave_status SET status = 1 WHERE id = '$id'";
-
-        $sql1 = "UPDATE leave_requests SET status = 1 WHERE id = $id1";
-
-        mysqli_query($this->conn, $sql);
-
-        mysqli_query($this->conn, $sql1);
-    }
-
-    public function showLeaves()
-    {
-        $sql = "SELECT * FROM leave_requests lr JOIN leave_status ls ON lr.id = ls.requests_id JOIN users u ON u.id = lr.user_id";
+        $sql = "SELECT lr.reason AS excuse, ls.reason, lr.start_date, lr.end_date, lr.added_on, lr.user_id, lr.id, u.first_name, u.last_name FROM leave_requests lr JOIN leave_status ls ON lr.id = ls.requests_id JOIN users u ON u.id = lr.user_id WHERE ls.status = 2";
 
         $result = $this->conn->query($sql);
 
