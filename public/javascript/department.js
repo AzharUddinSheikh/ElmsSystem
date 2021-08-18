@@ -6,7 +6,7 @@ $(document).ready(function() {
         var dname = $(this).val();
 
         if( dname.trim().length ==  0) {
-            $('#available').html('<span class="text-warning">Provide The Department Name</span>');
+            $('#available').html('<span></span>');
             $('#submit').prop("disabled", true);
         } else {
             $.ajax({
@@ -23,7 +23,7 @@ $(document).ready(function() {
                     }
                     else 
                     {
-                        $('#available').html('<span class="text-danger">Department Available Cant Add</span>');
+                        $('#available').html('<span></span>');
                         $('#submit').prop("disabled", true);
                     }
                 }
