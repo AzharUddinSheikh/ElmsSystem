@@ -12,33 +12,93 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true || $_SESSION['
 require_once '../vendor/autoload.php';
 
 use Azhar\Elms\Common\Inactivity;
+use Azhar\Elms\LeaveRequests;
+use Azhar\Elms\LeaveDetails;
 use Azhar\Elms\Common\Database;
-use Azhar\Elms\Users;
 
 Inactivity::inActive($_SESSION["last_login_timestamp"]);
 
 $database = new Database();
 $db = $database->getConnection();
 
-$users = new Users($db);
+$leave_detail = new LeaveDetails($db);
+$leave_request = new LeaveRequests($db);
 
 if(isset($_SESSION["message"])){
     unset($_SESSION["message"]);
 }
 
-$result = $users->showUserList();
+if(isset($_GET['approve'])) {
 
-$details = array();
-while($row = $result->fetch_assoc()) {
-    array_push($details, $row);
+    $id = base64_decode($_GET['approve']);
+  
+    $leave_detail->approveUserRequest($id);
+
+    $_SESSION["message"] = "USER LEAVES APPROVED";
+    
+}
+
+$leaves = $reject = $approve =  array();
+
+if(isset($_POST["submit2"])) {
+
+    $action = $_POST["pleave"];
+
+    if ($action == "0") {
+
+        $result = $leave_request->pendingLeaveRequest();
+
+        while($row = $result->fetch_assoc()) {
+            array_push($leaves, $row);
+        }
+
+    } elseif ($action == "2") {
+
+        $result = $leave_detail->rejectedLeave();
+
+        while($row = $result->fetch_assoc()) {
+            array_push($reject, $row);
+        }
+    } else {
+
+        $result = $leave_detail->approvedLeave();
+
+        while($row = $result->fetch_assoc()) {
+            array_push($approve, $row);
+        }
+    }
+}
+
+if(isset($_POST["submit"])) {
+
+    $dob = $_POST["dob"];
+    $dob1 = $_POST["dob1"];
+
+    $id = base64_decode($_POST["userleaveid"]);
+
+    $leave_detail->updateLeave($dob, $dob1, $id);
+
+    $_SESSION["message"] = "USER LEAVE UPDATED";
+}
+
+if(isset($_POST["submit1"])){
+
+    $reason = $_POST["reason"];
+
+    $id = base64_decode($_POST["rejectid"]);
+
+    $leave_detail->rejectUserRequest($id, $reason);
+
+    $_SESSION["message"] = "USER LEAVES REJECTED";
 }
 
 $filter  = new \Twig\TwigFilter('base64_encode', function($string) {
     return base64_encode($string);
 });
 
-$function = new \Twig\TwigFunction('getUrl', function() {
-    return basename($_SERVER['PHP_SELF']);
+$function = new \Twig\TwigFunction('getNoOfDays', function($start, $end) {
+    $days = abs(strtotime($start)-strtotime($end))/86400 +1;
+    return ($days);
 });
 
 $loader = new \Twig\Loader\FilesystemLoader('../view');
@@ -52,4 +112,4 @@ $twig->addGlobal('session', $_SESSION);
 
 $template = $twig->load('admin/leave/index.html.twig');
 
-echo $template->render(['employees' => $details, 'size' => sizeof($details)]);
+echo $template->render(['leaves' => $leaves, 'reject' => $reject, 'approve' => $approve, 'count' => sizeof($leaves), 'number' => sizeof($reject), 'total' => sizeof($approve)]);

@@ -15,36 +15,184 @@
     {% endif %}
 </div>
 <div class="container mt-5">
-    <h1 class="text-center">EMPLOYEE LEAVE APPLICATIONS</h1>
+    <h1 class="text-center mb-5">LEAVE MANAGEMENT CHECK PENDING, APPROVED, REJECTED LEAVES</h1>
 </div>
-<div class="container mt-5 mb-5">
-    <a href="pendingLeave.php" class="btn btn-primary mb-3" style="float:right;">PENDING LEAVE</a>
-    <table class="table table-dark table-striped my-3" id="myTable">
-        <thead>
-                <tr>
-                    <th scope="col">Sno</th>
-                    <th scope="col">Emp-ID</th>
-                    <th scope="col">First-Name</th>
-                    <th scope="col">Last-Name</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Action</th>
-                </tr>
-        </thead>
-        <tbody>
-            {% if size > 0 %}
-                {% for employee in range(0, size-1) %}                        
-                    <tr>
-                        <td>{{employee+1}}</td>
-                        <td>{{employees[employee].emp_id}}</td>
-                        <td>{{employees[employee].first_name}}</td>
-                        <td>{{employees[employee].last_name}}</td> 
-                        <td>{{employees[employee].email}}</td> 
-                        <td><button id='{{ employees[employee].id | base64_encode }}' type='button' class='view btn btn-secondary'>VIEW LEAVE</button></td>
-                    </tr>
-                {% endfor %}
-            {% endif %}
-        </tbody>
-    </table>
+
+<form action="" method="POST">
+
+    <select class="col-lg-5 px-md-4 py-md-1 mb-5" name="pleave" id="pleave">
+        <option value="" disabled selected>CHECK</option>
+        <option value="0">PENDING</option>
+        <option value="1">APPROVED</option>
+        <option value="2">REJECTED</option>
+    </select>
+    
+    <button type="submit" name="submit2" class="btn btn-secondary btn-sm mx-3">SHOW</button>
+</form>
+{% if count > 0 %}
+<table class="table table-dark table-striped my-3">
+    <thead>
+        <tr>
+            <th scope="col">NAME</th>
+            <th scope="col">FROM</th>
+            <th scope="col">TO</th>
+            <th scope="col">DAYS</th>
+            <th scope="col">REASON</th>
+            <th scope="col">APPLIED ON</th>
+            <th scope="col">ACTION</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% if count > 0 %}
+        {% for leave in range(0, count-1) %}
+            <tr>
+                <td><a href="userLeave.php?id={{leaves[leave].user_id|base64_encode}}">{{leaves[leave].first_name}} {{leaves[leave].last_name}}</a></td>
+                <td>{{leaves[leave].start_date}}</td>
+                <td>{{leaves[leave].end_date}}</td>
+                {% set days = getNoOfDays(leaves[leave].start_date, leaves[leave].end_date) %}
+                <td>{{days}}</td>
+                <td>{{leaves[leave].reason}}</td>
+                <td>{{leaves[leave].added_on | date("d-m-Y")}}</td>
+                <td>
+                    <button id='{{ leaves[leave].id | base64_encode }}' class="approve btn btn-success">Approve</button>  <button id='{{ leaves[leave].id | base64_encode }}' class="reject btn btn-danger mx-1" data-toggle="modal" data-target="#rejectUserLeave">Reject</button> <button class="userdetails btn btn-info" id='{{ leaves[leave].id | base64_encode }}'  data-toggle="modal" data-target="#editUserLeave">Modify</button>
+                </td>
+            </tr>
+        {% endfor %}
+    {% endif %}
+    </tbody>
+</table>
+{% endif %}
+
+
+{% if number > 0 %}
+<h2 class="text-center"> REJECTED USER LEAVE</h2>
+<table class="table table-dark table-striped my-3">
+    <thead>
+        <tr>
+            <th scope="col">NAME</th>
+            <th scope="col">FROM</th>
+            <th scope="col">TO</th>
+            <th scope="col">DAYS</th>
+            <th scope="col">REASON</th>
+            <th scope="col">ADDED ON</th>
+            <th scope="col">REJECTED REASON</th>
+            <th scope="col">ACTION</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% if number > 0 %}
+        {% for leave in range(0, number-1) %}
+            <tr>
+                <td><a href="userLeave.php?id={{reject[leave].user_id|base64_encode}}">{{reject[leave].first_name}} {{reject[leave].last_name}}</a></td>
+                <td>{{reject[leave].start_date}}</td>
+                <td>{{reject[leave].end_date}}</td>
+                {% set days = getNoOfDays(reject[leave].start_date, reject[leave].end_date) %}
+                <td>{{days}}</td>
+                <td>{{reject[leave].excuse}}</td>
+                <td>{{reject[leave].added_on | date("d-m-Y")}}</td>
+                <td>{{reject[leave].reason}}</td>
+                <td>
+                    <button id='{{ reject[leave].id | base64_encode }}' class="approve btn btn-success">Approve</button> <button class="userdetails btn btn-info" id='{{ reject[leave].id | base64_encode }}'  data-toggle="modal" data-target="#editUserLeave">Modify</button>
+                </td>
+            </tr>
+        {% endfor %}
+    {% endif %}
+    </tbody>
+</table>
+{% endif %}
+
+{% if total > 0 %}
+<h2 class="text-center"> APPROVED USER LEAVE</h2>
+<table class="table table-dark table-striped my-3">
+    <thead>
+        <tr>
+            <th scope="col">NAME</th>
+            <th scope="col">FROM</th>
+            <th scope="col">TO</th>
+            <th scope="col">DAYS</th>
+            <th scope="col">REASON</th>
+            <th scope="col">ADDED ON</th>
+            <th scope="col">from</th>
+            <th scope="col">to</th>
+            <th scope="col">days</th>
+            <th scope="col">ACTION</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% if total > 0 %}
+        {% for leave in range(0, total-1) %}
+            <tr>
+                <td><a href="userLeave.php?id={{approve[leave].user_id|base64_encode}}">{{approve[leave].first_name}} {{approve[leave].last_name}}</a></td>
+                <td>{{approve[leave].start_date}}</td>
+                <td>{{approve[leave].end_date}}</td>
+                {% set days = getNoOfDays(approve[leave].start_date, approve[leave].end_date) %}
+                <td>{{days}}</td>
+                <td>{{approve[leave].excuse}}</td>
+                <td>{{approve[leave].added_on | date("d-m-Y")}}</td>
+                <td>{{approve[leave].from | date("d-m-Y")}}</td>
+                <td>{{approve[leave].to | date("d-m-Y")}}</td>
+                {% set day = getNoOfDays(approve[leave].from, approve[leave].to) %}
+                <td>{{day}}</td>
+                <td>
+                    <button id='{{ approve[leave].id | base64_encode }}' class="reject btn btn-danger mx-1" data-toggle="modal" data-target="#rejectUserLeave">Reject</button>
+                </td>
+            </tr>
+        {% endfor %}
+    {% endif %}
+    </tbody>
+</table>
+{% endif %}
+ <!-- Modal -->
+ <div class="modal fade" id="editUserLeave" tabindex="-1" role="dialog" aria-labelledby="editUserLeaveLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editUserLeaveLabel">EDIT USER LEAVE</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="http://localhost/elms/twig/admin.php" autocomplete="off" method="POST" name="editleave">
+                    <input type="hidden" name="userleaveid" id='userleaveid'>
+                    <div class="mb-5">
+                        <label for="dob" class="form-label">FROM</label>
+                        <input type="text" class="date form-control" name="dob" id="dob" onkeypress="return false">
+                    </div>
+                    <div class="mb-5">
+                        <label for="dob1" class="form-label">TO</label>
+                        <input type="text" class="date form-control" name="dob1" id="dob1" onkeypress="return false">
+                    </div>
+                    <div class="col-md-12 text-center">
+                        <span class="submit">
+                        <button type="submit" name="submit" class="btn btn-primary">Approved On Update</button>
+                        </span>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
-    <script src="../public/javascript/empManage.js"></script>
+<div class="modal fade" id="rejectUserLeave" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">User Leave Rejecting</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="http://localhost/elms/twig/admin.php" autocomplete="off" method="POST" id="myForm">
+                    <input type="hidden" name="rejectid" id='rejectid'>
+                    <div class="input-group">
+                        <textarea class="form-control" aria-label="With textarea" id="reason" name="reason" placeholder="Reason For Rejecting Leave"></textarea>
+                      </div>
+                    <div class="col-md-12 text-center  mt-5"><button type="submit" name="submit1" class="btn btn-danger">Reject On Submit</button></div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../public/javascript/userLeaveDetail.js"></script>
 {% endblock %}
