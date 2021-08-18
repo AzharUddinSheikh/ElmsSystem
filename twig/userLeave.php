@@ -68,18 +68,11 @@ $function = new \Twig\TwigFunction('getNoOfDays', function($start, $end) {
     return ($days);
 });
 
-$function1 = new \Twig\TwigFunction('diffTime', function($date) {
-    $today_date = strtotime(date('Y-m-d'));
-    $start_date = strtotime($date);
-    return ($start_date - $today_date);
-});
-
 $loader = new \Twig\Loader\FilesystemLoader('../view');
 
 $twig = new \Twig\Environment($loader);
 
 $twig->addFilter($filter);
-$twig->addFunction($function1);
 $twig->addFunction($function);
 
 $twig->addGlobal('session', $_SESSION);
