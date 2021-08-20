@@ -2,8 +2,7 @@
 
 require_once '../vendor/autoload.php';
 
-use Azhar\Elms\Common\Inactivity;
-use Azhar\Elms\Common\Database;
+use Azhar\Elms\Database;
 use Azhar\Elms\UserDetails;
 use Azhar\Elms\Users;
 
@@ -32,8 +31,6 @@ $users = new Users($db);
 $user_details = new UserDetails($db);
 
 $detail_emp = $user_details->gettingUserDetail($id);
-
-Inactivity::inActive($_SESSION["last_login_timestamp"]);
 
 if(isset($_SESSION["update"])){
     unset($_SESSION["update"]);
@@ -67,15 +64,10 @@ $filter  = new \Twig\TwigFilter('base64_encode', function($string) {
     return base64_encode($string);
 });
 
-$function = new \Twig\TwigFunction('getUrl', function() {
-    return basename($_SERVER['PHP_SELF']);
-});
-
 $loader = new \Twig\Loader\FilesystemLoader('../view');
 
 $twig = new \Twig\Environment($loader);
 
-$twig->addFunction($function);
 $twig->addFilter($filter);
 $twig->addGlobal('session', $_SESSION);
 

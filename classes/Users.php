@@ -143,17 +143,68 @@ class Users
 
     public function getUserWithDept($id)
     {
-        $sql = "SELECT u.id, u.email, u.first_name, u.last_name, d.name, ud.user_value, u.image FROM users u JOIN user_details ud ON ud.user_id = u.id JOIN departments d ON u.departments_id = d.id WHERE user_key = 'number' AND u.id = '$id'";
+        $sql = "SELECT u.id, u.email, u.first_name, u.last_name, d.name, ud.user_value, u.image, u.user_type FROM users u JOIN user_details ud ON ud.user_id = u.id JOIN departments d ON u.departments_id = d.id WHERE user_key = 'number' AND u.id = '$id'";
 
         $result = $this->conn->query($sql);
 
         $detail = array();
 
         while ($row = $result->fetch_assoc()){
-            array_push($detail, $row["name"], $row["email"], $row["user_value"], $row["first_name"], $row["last_name"], $row["id"], $row["image"]);
+            array_push($detail, $row["name"], $row["email"], $row["user_value"], $row["first_name"], $row["last_name"], $row["id"], $row["image"], $row["user_type"]);
         }
 
         return $detail;
+    }
+
+    public function validPass($form_pass, $row) 
+    {
+        if (password_verify($form_pass, $row["password"])) {
+
+            include 'partials/_sessionstart.php';
+
+            if ($row["user_type"] == '1') {
+
+                header("location:twig/admin.php");
+
+            } else {
+
+                header("location:twig/welcome.php");
+            }
+        }
+    }
+
+    public function validUser($email) 
+    {
+
+        $sql = "SELECT * FROM users u JOIN user_details ud WHERE u.id = ud.user_id AND email='$email'";
+
+        $result = $this->conn->query($sql);
+        
+        if ($result->num_rows > 0) {
+
+            while($row = $result->fetch_assoc()) {
+
+                return $row;
+              }
+        } 
+    }
+
+    public function checkPassword($id, $oldpass)
+    {
+        $sql = "SELECT * FROM users WHERE users.id = '$id' LIMIT 1"; 
+
+        $result = $this->conn->query($sql);
+
+        $row = $result->fetch_assoc();
+
+        if (!password_verify($oldpass, $row["password"])) {
+
+            return false;
+
+        } else {
+
+            return true;
+        }
     }
 }
 

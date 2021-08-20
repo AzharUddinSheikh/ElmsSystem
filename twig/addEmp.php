@@ -2,9 +2,8 @@
 
 require_once '../vendor/autoload.php';
 
-use Azhar\Elms\Common\Inactivity;
-use Azhar\Elms\Common\Database;
-use Azhar\Elms\Common\Email;
+use Azhar\Elms\Database;
+use Azhar\Elms\Email;
 use Azhar\Elms\Users;
 use Azhar\Elms\UserDetails;
 use Azhar\Elms\Department;
@@ -17,8 +16,6 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true || $_SESSION['
 
     exit;
 }
-
-Inactivity::inActive($_SESSION["last_login_timestamp"]);
 
 $database = new Database();
 $db = $database->getConnection();
@@ -62,16 +59,11 @@ $filter  = new \Twig\TwigFilter('base64_encode', function($string) {
     return base64_encode($string);
 });
 
-$function = new \Twig\TwigFunction('getUrl', function() {
-    return basename($_SERVER['PHP_SELF']);
-});
-
 $loader = new \Twig\Loader\FilesystemLoader('../view');
 
 $twig = new \Twig\Environment($loader);
 
 $twig->addFilter($filter);
-$twig->addFunction($function);
 
 $twig->addGlobal('session', $_SESSION);
 

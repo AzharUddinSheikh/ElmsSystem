@@ -3,19 +3,19 @@ $(document).ready(function() {
         element.addEventListener("click", (e)=>{
             id = e.target.id.substr(0,);
             id1 = e.target.name.substr(0,);
-            // $.ajax({
-            //     url:'../view/department.php',
-            //     method:"POST",
-            //     data:{approve:id1, ids:id},
-            //     success:function(data){
-            //         if (data > 23) {
-            //             alert("User Will Exceed Leave For This Year");
-            //         } 
-            //     }
-            // })
-            if(confirm("Are You Sure To Approved")) {
-                window.location = `/elms/twig/admin.php?approve=${id}`
-            }
+            $.ajax({
+                url:'../view/department.php',
+                method:"POST",
+                data:{approve:id1, ids:id},
+                success:function(data){
+                    if (data > 23) {
+                        alert("User Will Exceed Leave For This Year");
+                    } 
+                    if(confirm("Are You Sure To Approved")) {
+                        window.location = `/elms/twig/admin.php?approve=${id}`
+                    }
+                }
+            })
         })
     })
 
@@ -29,13 +29,25 @@ $(document).ready(function() {
 
     document.querySelectorAll('.userdetails').forEach((element)=>{
         element.addEventListener("click",(e)=>{
-            tr = e.target.parentNode.parentNode;
-            startdate = tr.getElementsByTagName("td")[1].innerText;
-            enddate = tr.getElementsByTagName("td")[2].innerText;
-            dob.value = startdate;
-            userleaveid.value = e.target.id;
-            dob1.value = enddate;
-            $("#editUserLeave").modal("toggle");
+            id = e.target.id.substr(0,);
+            id1 = e.target.name.substr(0,);
+            $.ajax({
+                url:'../view/department.php',
+                method:"POST",
+                data:{approve:id1, ids:id},
+                success:function(data){
+                    if (data > 23) {
+                        alert("User Will Exceed Leave For This Year");
+                    } 
+                    tr = e.target.parentNode.parentNode;
+                    enddate = tr.getElementsByTagName("td")[1].innerText.slice(0,10);
+                    startdate = tr.getElementsByTagName("td")[1].innerText.slice(11,21);
+                    dob.value = startdate;
+                    userleaveid.value = e.target.id;
+                    dob1.value = enddate;
+                    $("#editUserLeave").modal("toggle");
+                }
+            })
         })
     })
 
@@ -80,7 +92,7 @@ $(document).ready(function() {
             }
         });
         return (enddate <= Date.parse(data[1]));
-    }, "End Date Should Be Less or Equal Than User End Date");
+    }, "End Date Should Not Be Greater Than User End Date");
 
     $("form[name='editleave']").validate({
         rules: {

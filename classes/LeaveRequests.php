@@ -30,15 +30,22 @@ class LeaveRequests
 
     public function getApprovedLeave($id)
     {
-        $sql = "SELECT ld.status FROM users u JOIN leave_requests lr on  u.id = lr.user_id join leave_details ld on lr.id = ld.leave_id where ld.status = 1 and YEAR(ld.leave_applied) = YEAR(CURDATE()) AND emp_id = '$id'";
+        $sql = "SELECT ls.from_date, ls.to_date FROM users u JOIN leave_requests lr ON u.id = lr.user_id JOIN leave_status ls ON ls.requests_id = lr.id WHERE u.emp_id = $id AND ls.status = 1 AND YEAR(ls.from_date) = YEAR(CURDATE())";
 
-        $result = mysqli_query($this->conn, $sql);
+        $result = $this->conn->query($sql);
 
-        $row = mysqli_num_rows($result);
+        $count = 0;
+        while ($row = $result->fetch_assoc()){
+            $begin = new DateTime($row["from_date"]);
+            $end = new DateTime($row["to_date"]);
 
-        return $row;
+            for($i = $begin; $i <= $end; $i->modify('+1 day')){
+                $count++;
+            }
+        }
+        return $count;
     }
-    
+
 
     public function applyLeave($reason, $date1, $date2, $id)
     {
@@ -56,7 +63,7 @@ class LeaveRequests
 
     public function pendingLeaveRequest()
     {
-        $sql = "SELECT u.id as user_id, lr.id, u.emp_id, lr.reason, lr.start_date, lr.end_date, u.first_name, u.last_name FROM users u JOIN leave_requests lr ON u.id = lr.user_id WHERE lr.start_date > CURDATE() AND lr.status = 0";
+        $sql = "SELECT u.id as user_id, lr.id, u.emp_id, lr.reason, lr.start_date, lr.end_date, u.first_name, u.last_name FROM users u JOIN leave_requests lr ON u.id = lr.user_id WHERE lr.start_date > CURDATE() AND lr.status = 0 ORDER BY lr.id DESC";
 
         $result = $this->conn->query($sql);
 
@@ -65,7 +72,7 @@ class LeaveRequests
 
     public function showUserLeave($id)
     {
-        $sql = "SELECT lr.start_date as start , lr.end_date as end, lr.reason as excuse, ls.status, ls.reason, ls.from_date as 'from', ls.to_date as 'to'  FROM leave_requests lr JOIN leave_status ls ON lr.id = ls.requests_id WHERE lr.user_id = '$id' ORDER BY lr.id DESC";
+        $sql = "SELECT lr.id, lr.start_date as 'start' , lr.end_date as 'end', lr.reason as excuse, ls.status, ls.reason, ls.from_date as 'from', ls.to_date as 'to' FROM leave_requests lr JOIN leave_status ls ON lr.id = ls.requests_id WHERE lr.user_id = '$id' ORDER BY lr.id DESC";
 
         $result = $this->conn->query($sql);
 

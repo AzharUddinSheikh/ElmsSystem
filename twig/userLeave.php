@@ -22,13 +22,10 @@ if(base64_decode($_GET["id"]) != $_SESSION["id"] && $_SESSION["user"] != "1"){
 
 require_once '../vendor/autoload.php';
 
-use Azhar\Elms\Common\InActivity;
-use Azhar\Elms\Common\Database;
+use Azhar\Elms\Database;
 use Azhar\Elms\LeaveRequests;
 use Azhar\Elms\LeaveDetails;
 use Azhar\Elms\Users;
-
-Inactivity::inActive($_SESSION["last_login_timestamp"]);
 
 $database = new Database();
 $db = $database->getConnection();

@@ -13,7 +13,9 @@
                     </div>
                     {% endif %}
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="edit.php?id={{ session.emp_id | base64_encode }}">EDIT PROFILE</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="userLeave.php?id={{ session.id | base64_encode }}">VIEW LEAVE HISTORY</a>
+                    {% if session.user != "1" %}
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="userLeave.php?id={{ session.id | base64_encode }}">VIEW PROFILE</a>
+                    {% endif %}
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="changePassword.php">CHANGE PASSWORD</a>
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="../partials/logout.php">LOGOUT</a>
                 </div>
