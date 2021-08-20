@@ -2,9 +2,8 @@
 
 require_once '../vendor/autoload.php';
 
-use Azhar\Elms\Common\Inactivity;
-use Azhar\Elms\Common\Database;
-use Azhar\Elms\Common\Email;
+use Azhar\Elms\Database;
+use Azhar\Elms\Email;
 use Azhar\Elms\Users;
 use Azhar\Elms\UserDetails;
 use Azhar\Elms\Department;
@@ -17,8 +16,6 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true || $_SESSION['
 
     exit;
 }
-
-Inactivity::inActive($_SESSION["last_login_timestamp"]);
 
 $database = new Database();
 $db = $database->getConnection();

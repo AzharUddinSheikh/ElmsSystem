@@ -2,8 +2,7 @@
 
 require_once '../vendor/autoload.php';
 
-use Azhar\Elms\Common\Inactivity;
-use Azhar\Elms\Common\Database;
+use Azhar\Elms\Database;
 use Azhar\Elms\Department;
 
 session_start();
@@ -19,8 +18,6 @@ if(!isset($_GET["id"])){
     $_SESSION["message"] = "REQUEST REJECTED WRONG URL";
     header("location : index.php");
 }
-
-Inactivity::inActive($_SESSION["last_login_timestamp"]);
 
 $database = new Database();
 $db = $database->getConnection();

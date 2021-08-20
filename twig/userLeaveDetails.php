@@ -11,12 +11,9 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true || $_SESSION['
 
 require_once '../vendor/autoload.php';
 
-use Azhar\Elms\Common\Inactivity;
 use Azhar\Elms\LeaveRequests;
 use Azhar\Elms\LeaveDetails;
-use Azhar\Elms\Common\Database;
-
-Inactivity::inActive($_SESSION["last_login_timestamp"]);
+use Azhar\Elms\Database;
 
 $database = new Database();
 $db = $database->getConnection();

@@ -1,6 +1,6 @@
 <?php
 
-namespace Azhar\ELMS\Common;
+namespace Azhar\ELMS;
 
 class Email
 {

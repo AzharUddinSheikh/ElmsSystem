@@ -4,8 +4,8 @@ require_once '../vendor/autoload.php';
 
 session_start();
 
-use Azhar\Elms\Common\Email;
-use Azhar\Elms\Common\Database;
+use Azhar\Elms\Email;
+use Azhar\Elms\Database;
 use Azhar\Elms\Users;
 
 if ($_SERVER['REQUEST_METHOD'] == "POST") {

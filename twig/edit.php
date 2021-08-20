@@ -2,8 +2,7 @@
 
 require_once '../vendor/autoload.php';
 
-use Azhar\Elms\Common\Inactivity;
-use Azhar\Elms\Common\Database;
+use Azhar\Elms\Database;
 use Azhar\Elms\UserDetails;
 use Azhar\Elms\Users;
 
@@ -32,8 +31,6 @@ $users = new Users($db);
 $user_details = new UserDetails($db);
 
 $detail_emp = $user_details->gettingUserDetail($id);
-
-Inactivity::inActive($_SESSION["last_login_timestamp"]);
 
 if(isset($_SESSION["update"])){
     unset($_SESSION["update"]);

@@ -2,7 +2,7 @@
 
 require_once '../vendor/autoload.php';
 
-use Azhar\Elms\Common\Database;
+use Azhar\Elms\Database;
 use Azhar\Elms\Users;
 
 session_start();

@@ -11,10 +11,6 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true || $_SESSION["
 
 require_once '../vendor/autoload.php';
 
-use Azhar\Elms\Common\InActivity;
-
-Inactivity::inActive($_SESSION["last_login_timestamp"]);
-
 $filter  = new \Twig\TwigFilter('base64_encode', function($string) {
     return base64_encode($string);
 });
