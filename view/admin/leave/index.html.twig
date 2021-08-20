@@ -37,6 +37,7 @@
             <th scope="col">FROM-TO (DAYS)</th>
             <th scope="col">REASON</th>
             <th scope="col">APPLIED ON</th>
+            <th scope="col">ACTION</th>
         </tr>
     </thead>
     <tbody>
@@ -49,7 +50,7 @@
                 <td>{{leaves[leave].reason}}</td>
                 <td>{{leaves[leave].added_on | date("d/m/Y")}}</td>
                 <td>
-                    <button id='{{ leaves[leave].id | base64_encode }}' class="approve btn btn-success">Approve</button>  <button id='{{ leaves[leave].id | base64_encode }}' class="reject btn btn-danger mx-1" data-toggle="modal" data-target="#rejectUserLeave">Reject</button> <button class="userdetails btn btn-info" id='{{ leaves[leave].id | base64_encode }}'  data-toggle="modal" data-target="#editUserLeave">Modify</button>
+                    <button id='{{ leaves[leave].id | base64_encode }}' name='{{ leaves[leave].emp_id | base64_encode }}' class="approve btn btn-success">Approve</button>  <button id='{{ leaves[leave].id | base64_encode }}' class="reject btn btn-danger mx-1" data-toggle="modal" data-target="#rejectUserLeave">Reject</button> <button class="userdetails btn btn-info" id='{{ leaves[leave].id | base64_encode }}' name='{{ leaves[leave].emp_id | base64_encode }}'  data-toggle="modal" data-target="#editUserLeave">Modify</button>
                 </td>
             </tr>
         {% endfor %}
@@ -67,7 +68,7 @@
             <th scope="col">FROM-TO (DAYS)</th>
             <th scope="col">REASON</th>
             <th scope="col">ADDED ON</th>
-            <th scope="col">REJECTED REASON</th>
+            <th scope="col">STATUS</th>
         </tr>
     </thead>
     <tbody>
@@ -79,7 +80,7 @@
                 <td>{{reject[leave].start_date | date("d/m/Y") }}-{{reject[leave].end_date | date("d/m/Y") }} ({{days}})</td>
                 <td>{{reject[leave].excuse}}</td>
                 <td>{{reject[leave].added_on | date("d/m/Y")}}</td>
-                <td>{{reject[leave].reason}}</td>
+                <td>REJECTED {{reject[leave].reason}}</td>
             </tr>
         {% endfor %}
     {% endif %}
@@ -96,9 +97,7 @@
             <th scope="col">FROM-TO (DAYS)</th>
             <th scope="col">REASON</th>
             <th scope="col">ADDED ON</th>
-            <th scope="col">from</th>
-            <th scope="col">to</th>
-            <th scope="col">days</th>
+            <th scope="col">STATUS</th>
         </tr>
     </thead>
     <tbody>
@@ -110,10 +109,8 @@
                 <td>{{approve[leave].start_date | date("d/m/Y") }}-{{approve[leave].end_date | date("d/m/Y") }} ({{days}})</td>
                 <td>{{approve[leave].excuse}}</td>
                 <td>{{approve[leave].added_on | date("d/m/Y")}}</td>
-                <td>{{approve[leave].from | date("d/m/Y")}}</td>
-                <td>{{approve[leave].to | date("d/m/Y")}}</td>
                 {% set day = getNoOfDays(approve[leave].from, approve[leave].to) %}
-                <td>{{day}}</td>
+                <td>GRANTED {{approve[leave].to | date("d/m/Y")}}-{{approve[leave].from | date("d/m/Y")}} ({{day}})</td>
             </tr>
         {% endfor %}
     {% endif %}

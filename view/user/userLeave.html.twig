@@ -43,12 +43,16 @@
     {% if session.message %} 
       <div class="valid alert alert-warning" role="alert">{{session.message}}</div>
     {% endif %}
+    {% if session.id == id and type == 0 %}
     <h2 class="text-center my-5">LEAVE HISTORY</h2>
+    {% endif %}
     <div class="container mt-5 mb-5">
      {% set id = details[5] %}
-     {% if session.id == id %}
+     {% set type = details[7] %}
+     {% if session.id == id and session.user == 0 %}
      <button class="btn btn-primary my-2" style="float:right;" data-bs-toggle="modal" data-bs-target="#applyLeave">Apply Leave</button>
      {% endif %}
+     {% if type == 0 %}
         <table class="table table-dark table-striped my-3">
             <thead>
               <tr>
@@ -66,9 +70,9 @@
                       {% set day = getNoOfDays(userleave[leave].from, userleave[leave].to) %}
                       {% set status = userleave[leave].status %}
                       {% if status == 2 %}
-                        <td>REJECTED Reason >> {{userleave[leave].reason}}</td>
+                        <td>REJECTED {{userleave[leave].reason}}</td>
                       {% elseif status == 1 %}
-                        <td>GRANTED To-From (days) {{userleave[leave].to | date("d/m/Y") }}-{{userleave[leave].from | date("d/m/Y") }} ({{day}})</td>
+                        <td>GRANTED {{userleave[leave].to | date("d/m/Y") }}-{{userleave[leave].from | date("d/m/Y") }} ({{day}})</td>
                       {% else %}
                         <td>PENDING</td>
                       {% endif %}
@@ -77,6 +81,7 @@
               {% endif %}
             </tbody>
         </table>
+      {% endif %}
     </div>
   </div>
 <!-- Modal -->

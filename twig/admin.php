@@ -76,12 +76,6 @@ $filter  = new \Twig\TwigFilter('base64_encode', function($string) {
     return base64_encode($string);
 });
 
-$function1 = new \Twig\TwigFunction('diffTime', function($date) {
-    $today_date = strtotime(date('Y-m-d'));
-    $start_date = strtotime($date);
-    return ($start_date - $today_date);
-});
-
 $function = new \Twig\TwigFunction('getNoOfDays', function($start, $end) {
     $days = abs(strtotime($start)-strtotime($end))/86400 +1;
     return ($days);
@@ -90,7 +84,6 @@ $function = new \Twig\TwigFunction('getNoOfDays', function($start, $end) {
 $twig = new \Twig\Environment($loader);
 
 $twig->addFilter($filter);
-$twig->addFunction($function1);
 $twig->addFunction($function);
 
 $twig->addGlobal('session', $_SESSION);

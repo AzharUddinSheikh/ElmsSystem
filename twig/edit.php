@@ -67,15 +67,10 @@ $filter  = new \Twig\TwigFilter('base64_encode', function($string) {
     return base64_encode($string);
 });
 
-$function = new \Twig\TwigFunction('getUrl', function() {
-    return basename($_SERVER['PHP_SELF']);
-});
-
 $loader = new \Twig\Loader\FilesystemLoader('../view');
 
 $twig = new \Twig\Environment($loader);
 
-$twig->addFunction($function);
 $twig->addFilter($filter);
 $twig->addGlobal('session', $_SESSION);
 

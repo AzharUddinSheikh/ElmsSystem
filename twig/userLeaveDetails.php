@@ -59,6 +59,40 @@ if(isset($_POST["submit2"])) {
     }
 }
 
+if(isset($_GET['approve'])) {
+
+    $id = base64_decode($_GET['approve']);
+
+    $leave_detail->approveUserRequest($id);
+
+    $_SESSION["message"] = "USER LEAVES APPROVED";
+    
+}
+
+if(isset($_POST["submit"])) {
+
+    $dob = $_POST["dob"];
+    $dob1 = $_POST["dob1"];
+
+    $id = base64_decode($_POST["userleaveid"]);
+
+    $leave_detail->updateLeave($dob, $dob1, $id);
+
+    $_SESSION["message"] = "USER LEAVE UPDATED";
+}
+
+if(isset($_POST["submit1"])){
+
+    $reason = $_POST["reason"];
+
+    $id = base64_decode($_POST["rejectid"]);
+
+    $leave_detail->rejectUserRequest($id, $reason);
+
+    $_SESSION["message"] = "USER LEAVES REJECTED";
+}
+
+
 $filter  = new \Twig\TwigFilter('base64_encode', function($string) {
     return base64_encode($string);
 });

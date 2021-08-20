@@ -143,14 +143,14 @@ class Users
 
     public function getUserWithDept($id)
     {
-        $sql = "SELECT u.id, u.email, u.first_name, u.last_name, d.name, ud.user_value, u.image FROM users u JOIN user_details ud ON ud.user_id = u.id JOIN departments d ON u.departments_id = d.id WHERE user_key = 'number' AND u.id = '$id'";
+        $sql = "SELECT u.id, u.email, u.first_name, u.last_name, d.name, ud.user_value, u.image, u.user_type FROM users u JOIN user_details ud ON ud.user_id = u.id JOIN departments d ON u.departments_id = d.id WHERE user_key = 'number' AND u.id = '$id'";
 
         $result = $this->conn->query($sql);
 
         $detail = array();
 
         while ($row = $result->fetch_assoc()){
-            array_push($detail, $row["name"], $row["email"], $row["user_value"], $row["first_name"], $row["last_name"], $row["id"], $row["image"]);
+            array_push($detail, $row["name"], $row["email"], $row["user_value"], $row["first_name"], $row["last_name"], $row["id"], $row["image"], $row["user_type"]);
         }
 
         return $detail;

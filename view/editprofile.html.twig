@@ -4,13 +4,7 @@
 {% endblock %}
 
 {% block content %}
-<h1 class="mt-4 mb5 text-center">
-        {% if session.user == "1" %}
-          ADMIN DETAIL EDIT
-        {% else %} 
-          USER DETAIL EDIT
-        {% endif %}
-      </h1>
+<h1 class="mt-4 mb5 text-center">{{ userdetail[0] }} {{ userdetail[1] }}</h1>
 {% if session.update %}
       <div class="alert alert-info" role="alert">{{session.update}}</div>
 {% endif %}
