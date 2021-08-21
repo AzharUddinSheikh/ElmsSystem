@@ -8,7 +8,7 @@ $(document).ready(function() {
             }
         })
     })
-    
+
     document.querySelectorAll('.unblock').forEach((element)=>{
         element.addEventListener("click",(e)=>{
             id = e.target.id.substr(0,);
@@ -17,15 +17,4 @@ $(document).ready(function() {
             }
         })
     })
-
-    document.querySelectorAll('.edit').forEach((element)=>{
-        element.addEventListener("click",(e)=>{
-            id = e.target.id.substr(0,);
-            location.href = `edit.php?id=${id}`;
-        })
-    })
 })
-
-if ( window.history.replaceState ) {
-    window.history.replaceState( null, null, window.location.href )
-}

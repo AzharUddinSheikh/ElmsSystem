@@ -2,8 +2,7 @@
 
 require_once '../vendor/autoload.php';
 
-use Azhar\Elms\Common\Database;
-use Azhar\Elms\Common\Login;
+use Azhar\Elms\Database;
 use Azhar\Elms\Department;
 use Azhar\Elms\Users;
 use Azhar\Elms\LeaveRequests;
@@ -14,7 +13,6 @@ $db = $database->getConnection();
 
 $department = new Department($db);
 $users = new Users($db);
-$login = new Login($db);
 $leave_request = new LeaveRequests($db);
 $leave_detail = new LeaveDetails($db);
 
@@ -39,7 +37,7 @@ if(isset($_POST["newpass"]) && isset($_POST["oldpass"])) {
 
     session_start();
 
-    if ($login->checkPassword($_SESSION["id"], $_POST["oldpass"])){
+    if ($users->checkPassword($_SESSION["id"], $_POST["oldpass"])){
 
         $pass = password_hash($_POST["newpass"], PASSWORD_DEFAULT);
 
@@ -68,7 +66,7 @@ if (isset($_POST["email"])){
 if(isset($_POST["approve"]) && isset($_POST["ids"])){
 
     $ids = base64_decode($_POST["ids"]);
-    
+
     $total_leave = $leave_request->totalLeaveRequested($ids);
 
     $id = base64_decode($_POST["approve"]);
@@ -83,7 +81,7 @@ if(isset($_POST["approve"]) && isset($_POST["ids"])){
 if(isset($_POST["approveS"])){
 
     $id = base64_decode($_POST["approveS"]);
-    
+
     $result = $leave_detail->maxLeave($id);
 
     echo $result;

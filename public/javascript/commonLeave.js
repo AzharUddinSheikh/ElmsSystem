@@ -3,6 +3,7 @@ $(document).ready(function() {
         element.addEventListener("click", (e)=>{
             id = e.target.id.substr(0,);
             id1 = e.target.name.substr(0,);
+            filename = window.location.href.replace(/^.*[\\\/]/, '');
             $.ajax({
                 url:'../view/department.php',
                 method:"POST",
@@ -12,18 +13,10 @@ $(document).ready(function() {
                         alert("User Will Exceed Leave For This Year");
                     } 
                     if(confirm("Are You Sure To Approved")) {
-                        window.location = `/elms/twig/userLeaveDetails.php?approve=${id}`
+                        window.location = '/elms/twig/'+filename+`?approve=${id}`
                     }
                 }
             })
-        })
-    })
-
-    document.querySelectorAll('.reject').forEach((element)=>{
-        element.addEventListener("click", (e)=>{
-            id = e.target.id.substr(0,);
-            rejectid.value = id;
-            $("#rejectUserLeave").modal("toggle");
         })
     })
 
@@ -36,7 +29,7 @@ $(document).ready(function() {
                 method:"POST",
                 data:{approve:id1, ids:id},
                 success:function(data){
-                    if (data > 5) {
+                    if (data > 23) {
                         alert("User Will Exceed Leave For This Year");
                     } 
                     tr = e.target.parentNode.parentNode;
@@ -50,49 +43,14 @@ $(document).ready(function() {
             })
         })
     })
-
-    $(function(){
-        $(".date").datepicker({ dateFormat: 'yy-mm-dd' });
-    });
-
-    $.validator.addMethod("greater", function (value, element) {
-        var startdate = $('#dob').val();
-        return Date.parse(value) >= Date.parse(startdate);
-    }, "End Date Should Be Greater than Start Date");
-
-    $.validator.addMethod("userLeave", function (value, element) {
-        var startdate = Date.parse($('#dob').val());
-        id = document.getElementById("userleaveid").value;
-        var data;
-        $.ajax({
-            async: false,
-            type:"POST",
-            url: "../view/department.php",
-            data: {leave_id: id},
-            dataType:"json",
-            success: function(resp){
-                data = resp;
-            }
-        });
-        return ((startdate >= Date.parse(data[0])));
-    }, "Start Date Should Not Be Less Than User Start Date");
-
-    $.validator.addMethod("userLeave1", function (value, element) {
-        var enddate = Date.parse($('#dob1').val());
-        id = document.getElementById("userleaveid").value;
-        var data;
-        $.ajax({
-            async: false,
-            type:"POST",
-            url: "../view/department.php",
-            data: {leave_id: id},
-            dataType:"json",
-            success: function(resp){
-                data = resp;
-            }
-        });
-        return (enddate <= Date.parse(data[1]));
-    }, "End Date Should Be Less or Equal Than User End Date");
+    
+    document.querySelectorAll('.reject').forEach((element)=>{
+        element.addEventListener("click", (e)=>{
+            id = e.target.id.substr(0,);
+            rejectid.value = id;
+            $("#rejectUserLeave").modal("toggle");
+        })
+    })
 
     $("form[name='editleave']").validate({
         rules: {
@@ -122,9 +80,4 @@ $(document).ready(function() {
             form.submit();
         }
     });
-
-    if ( window.history.replaceState ) {
-        window.history.replaceState( null, null, window.location.href )
-    }
-
 })

@@ -49,7 +49,7 @@
                                 <button id='{{ employees[employee].id | base64_encode }}' class='unblock btn btn-warning'>UNBLOCK</button>
                             {% endif %}
                         {% endif %}
-                        <button id='{{ employees[employee].emp_id | base64_encode }}' type='button' class='edit btn btn-warning'>EDIT</button>  
+                        <a class="btn btn-warning" href="edit.php?id={{ employees[employee].emp_id | base64_encode }}">EDIT</a>
                         </td>
                     </tr>
                 {% endfor %}
@@ -57,5 +57,5 @@
         </tbody>
     </table>
 </div>
-    <script src="../public/javascript/empManage.js"></script>
+<script src="../public/javascript/empManage.js"></script>
 {% endblock %}
