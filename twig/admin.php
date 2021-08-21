@@ -78,15 +78,19 @@ $function = new \Twig\TwigFunction('getNoOfDays', function($start, $end) {
     return ($days);
 });
 
+$function1 = new \Twig\TwigFunction('getUrl', function() {
+    return basename($_SERVER['PHP_SELF']);
+});
+
 $twig = new \Twig\Environment($loader);
 
 $twig->addFilter($filter);
 $twig->addFunction($function);
+$twig->addFunction($function1);
 
 $twig->addGlobal('session', $_SESSION);
 
 $template = $twig->load('admin/index.html.twig');
 
 echo $template->render(['leaves' => $leaves, 'count' => sizeof($leaves)]);
-
 ?>

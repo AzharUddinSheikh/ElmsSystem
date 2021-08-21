@@ -6,17 +6,17 @@ session_start();
 if(isset($_SESSION["loggedin"])){
 
     if($_SESSION["user"] == "0"  && ($_SESSION["status"] == "1")){
-        
+
         header('location:twig/welcome.php');
-        
+
       } elseif ($_SESSION["user"] == "1"  && ($_SESSION["status"] == "1")) { 
-        
+
         header('location: twig/admin.php');
-      
-      } 
+
+      }
 } 
 
-use Azhar\Elms\Common\Database;
+use Azhar\Elms\Database;
 use Azhar\Elms\Users;
 
 $database = new Database();

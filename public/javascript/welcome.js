@@ -24,21 +24,11 @@ $("#myForm").validate({
     }
 })
 
-$.validator.addMethod("greaterThan", function (value, element) {
-    var today = new Date();
-    return Date.parse(value) >= Date.parse(today);
-}, "Date Should be greater than Today");
-
-$.validator.addMethod("greater", function (value, element) {
-    var startdate = $('#dob').val();
-    return Date.parse(value) >= Date.parse(startdate);
-}, "End Date Should Be Greater than Start Date");
-
 $("form[name='applyLeave']").validate({
     rules: {
         textarea: {
             required: true,
-            minlength: 15
+            minlength: 6
         },
         dob: {
             required: true,
@@ -52,21 +42,8 @@ $("form[name='applyLeave']").validate({
             greater: true,
         }
     },
-    messages: {
-        textarea: {
-            required: "Please Provide Reason",
-            minlength: "reason should be atleast 15 character"
-        }
-    },
+
     submitHandler: function (form) {
         form.submit();
     }
 });
-
-$(function(){
-    $(".date").datepicker({ dateFormat: 'yy-mm-dd' });
-});
-
-if ( window.history.replaceState ) {
-    window.history.replaceState( null, null, window.location.href )
-}
