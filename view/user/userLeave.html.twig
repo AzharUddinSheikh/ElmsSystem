@@ -49,6 +49,9 @@
     <div class="container mt-5 mb-5">
      {% set id = details[5] %}
      {% set type = details[7] %}
+     {% if session.user == 1 and type == 0 %} 
+     <button id="{{id}}" class="export btn btn-secondary my-2" style="float: left;">EXPORT/MAIL LEAVE</button> <span id="exported" class="info"></span>
+     {% endif %}
      {% if session.id == id and session.user == 0 %}
      <button class="btn btn-primary my-2" style="float:right;" data-bs-toggle="modal" data-bs-target="#applyLeave">Apply Leave</button>
      {% endif %}
