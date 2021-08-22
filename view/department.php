@@ -5,6 +5,7 @@ require_once '../vendor/autoload.php';
 use Azhar\Elms\Database;
 use Azhar\Elms\Department;
 use Azhar\Elms\Users;
+use Azhar\Elms\Export;
 use Azhar\Elms\LeaveRequests;
 use Azhar\Elms\LeaveDetails;
 
@@ -92,5 +93,12 @@ if (isset($_POST["leave_id"])){
     $result = $leave_request->gettingDate($_POST["leave_id"]);
 
     echo json_encode($result);
+}
+
+if (isset($_POST["export"])){
+
+    $result = Export::mailAndExport($db, $_POST["export"]);
+
+    echo $result;
 }
 ?>

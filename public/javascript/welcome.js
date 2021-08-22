@@ -47,3 +47,18 @@ $("form[name='applyLeave']").validate({
         form.submit();
     }
 });
+
+document.querySelectorAll('.export').forEach((element)=>{
+    element.addEventListener("click", (e)=>{
+        id = e.target.id;
+        $.ajax({
+            url:'../view/department.php',
+            method:"POST",
+            data:{export:id},
+            success:function(data)
+            {
+                $('#exported').html('<span class="alert alert-danger mx-5" role="alert">'+data+'</span>');
+            }
+        })
+    })
+})
