@@ -50,8 +50,6 @@ class Export
             }
             $filename = $name.'leave.xlsx';
 
-            echo $filename;
-
             if (!file_exists('export')) {
                 mkdir('export', 0755);
             }

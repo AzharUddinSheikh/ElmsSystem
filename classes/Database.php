@@ -4,9 +4,9 @@ namespace Azhar\ELMS;
 
 class Database
 {
-    private $servername = "127.0.0.1:3306";
+    private $servername = "127.0.0.1:3307";
     private $username = "root";
-    private $password = "admin";
+    private $password = "";
     private $dbname = 'elms';
     public $conn;
    

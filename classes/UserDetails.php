@@ -4,7 +4,8 @@ namespace Azhar\ELMS;
 
 class UserDetails
 {
-
+    private $conn;
+    
     public function __construct($db)
     {
         $this->conn = $db;

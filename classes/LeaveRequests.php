@@ -5,6 +5,7 @@ use \DateTime;
 
 class LeaveRequests
 {
+    private $conn;
 
     public function __construct($db) 
     {

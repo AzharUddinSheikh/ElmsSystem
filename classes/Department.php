@@ -4,6 +4,8 @@ namespace Azhar\ELMS;
 
 class Department
 {
+    private $conn;
+
     public function __construct($db)
     {
         $this->conn = $db;
@@ -60,7 +62,7 @@ class Department
 
     public static function noOfUserInDept($db, $id)
     {
-        $sql = "SELECT d.name, u.emp_id, u.email, u.first_name, u.last_name, u.id as user_id FROM departments d JOIN users u ON d.id = u.departments_id WHERE d.id = '$id'";
+        $sql = "SELECT d.name, u.emp_id, u.email, u.first_name, u.last_name, u.id as user_id FROM departments d JOIN users u ON d.id = u.department_id WHERE d.id = '$id'";
 
         $result = $db->query($sql);
 

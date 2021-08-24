@@ -4,6 +4,8 @@ namespace Azhar\ELMS;
 
 class LeaveDetails
 {
+    private $conn;
+    
     public function __construct($db)
     {
         $this->conn = $db;
