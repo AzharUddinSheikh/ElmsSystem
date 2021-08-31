@@ -4,11 +4,8 @@ namespace Azhar\ELMS;
 
 class Email
 {
-    private $email;
-    private $empid;
-
-    public static function sendEmail($email, $empid)
-    {
+	public static function sendEmail(string $email, int $empid) : bool
+	{
         $to = $email;
         $subject = "ELMS Employee Email Verification";
         $message = '<a href=http://localhost/elms/twig/verify.php?empid='.$empid.'>Verified Your Account</a>';

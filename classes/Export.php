@@ -8,10 +8,9 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use PHPMailer\PHPMailer\PHPMailer;
 
-
 class Export
 {
-    public static function mailAndExport($db, $id)
+    public static function mailAndExport($db, int $id) : void
     {
         $spreadsheet = new Spreadsheet();
         $spreadsheet->setActiveSheetIndex(0);
@@ -35,6 +34,7 @@ class Export
             $activeSheet->setCellValue('I1', 'Reason');
 
             $i = 2;
+			$name = "";
             while($row = $result->fetch_assoc()){
                 $activeSheet->setCellValue('A'.$i , $row['id']);
                 $activeSheet->setCellValue('B'.$i , $row['excuse']);
@@ -55,7 +55,7 @@ class Export
             }
 
             $writer = new Xlsx($spreadsheet);
-            $writer->save('export/'.$filename);
+            $writer->save('../export/'.$filename);
 
             $mail->isSMTP();
             $mail->Host = 'smtp.gmail.com';

@@ -10,8 +10,11 @@ class UserDetails
     {
         $this->conn = $db;
     }
-
-    public function gettingUserDetail($id)
+	
+	/**
+	* @return array<int, mixed>
+	*/
+    public function gettingUserDetail(int $id)
     {
         $sql = "SELECT * FROM users JOIN user_details WHERE users.id = user_details.user_id AND users.emp_id = '$id'";
         $result = $this->conn->query($sql);
@@ -35,7 +38,7 @@ class UserDetails
         return $detail;
     }
 
-    public function createUserDetails($number, $dob, $email)
+    public function createUserDetails(int $number, string $dob, string $email) : void
     {
         $result = $this->conn->query("SELECT id FROM users WHERE `email`= '$email'");
         $last_id = (int)$result->fetch_assoc()["id"];
@@ -62,7 +65,7 @@ class UserDetails
         }
     }
 
-    public function updateUserDetails($birthday, $number, $id)
+    public function updateUserDetails(string $birthday, int $number, int $id) : void
     {
         for ($x = 0; $x < 2; $x++) {
 

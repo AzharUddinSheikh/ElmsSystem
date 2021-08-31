@@ -41,7 +41,10 @@ if ($_SERVER['REQUEST_METHOD']=="POST") {
 
     } else {
 
-        $result = $users->validPass($password, $valid);
+        $actual_password = $valid["password"];
+        $user_type = $valid["user_type"];
+
+        $result = $users->validPass($password, $actual_password, $user_type, $valid);
 
         if(!$result){
 

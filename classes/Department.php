@@ -11,7 +11,7 @@ class Department
         $this->conn = $db;
     }
 
-    public function update($name, $encoded)
+    public function update(string $name, string $encoded) : void
     {
         $id = base64_decode($encoded);
 
@@ -20,7 +20,7 @@ class Department
         $this->conn->query($sql);
     }
 
-    public function delete($encoded)
+    public function delete(string $encoded) : void
     {
         $id = base64_decode($encoded);
 
@@ -29,7 +29,7 @@ class Department
         $this->conn->query($sql);
     }
 
-    public function showList()
+    public function showList() : object
     {
         $sql = "SELECT * FROM departments ORDER BY id DESC";
 
@@ -38,16 +38,16 @@ class Department
         return $result;
     }
 
-    public function isExists($dept_name)
+    public function isExists(string $dept_name) : int|string
     {
         $existsql = "SELECT * FROM departments WHERE name = '$dept_name'";
 
-        $result = mysqli_query($this->conn, $existsql);
+        $result = $this->conn->query($existsql);
 
         return mysqli_num_rows($result);
     }
 
-    public function create($dept_name)
+    public function create(string $dept_name) : void
     {
         $query = "INSERT INTO  departments (name) VALUES (?)";
 
@@ -60,11 +60,11 @@ class Department
         $stmt->close();
     }
 
-    public static function noOfUserInDept($db, $id)
+    public function noOfUserInDept(int $id) : object
     {
         $sql = "SELECT d.name, u.emp_id, u.email, u.first_name, u.last_name, u.id as user_id FROM departments d JOIN users u ON d.id = u.department_id WHERE d.id = '$id'";
 
-        $result = $db->query($sql);
+        $result = $this->conn->query($sql);
 
         return $result;
     }
