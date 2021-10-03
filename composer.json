@@ -2,7 +2,7 @@
     "name": "azhar/elms",
     "autoload": {
         "psr-4": {
-            "Azhar\\Elms\\": "src/"
+            "Azhar\\Elms\\": "classes/"
         }
     },
     "authors": [
@@ -12,6 +12,11 @@
         }
     ],
     "require": {
-        "twig/twig": "^3.0"
+        "twig/twig": "^3.0",
+        "phpoffice/phpspreadsheet": "^1.18",
+        "phpmailer/phpmailer": "^6.5"
+    },
+    "require-dev": {
+        "phpstan/phpstan": "^0.12.96"
     }
 }

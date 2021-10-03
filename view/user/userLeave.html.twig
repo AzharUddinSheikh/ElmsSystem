@@ -1,0 +1,128 @@
+{% extends 'partials/header.html' %}
+
+{% block body %}Home Panel{% endblock %}
+{% block head %}
+  {{ include('partials/navigation.html.twig') }}
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <h2 class="text-center">{{details[3]}} {{details[4]}} PROFILE</h2>
+    <div class="row mt2">  
+      <div class="col-md-3">
+          <div style="height: 250px;background: #fff;border:1px solid #ccc;border-radius: 4px;overflow: hidden;box-shadow: 0px 0px 5px #ccc;">
+            <div class="text-center"><label class="custom-file-label" for="photo">Profile Photo</label></div>
+            <div class="py-5">
+              <div class="text-center">
+                <img style="width:100px;height:100px;border-radius: 50%;" src="../public/images/{{details[6]}}">
+              </div>
+            </div>
+          </div>
+      </div>
+      <div class="col-md-7">
+        <div class="mb-3">
+            <label for="email" class="form-label">Email Address</label>
+            <input class="form-control" value="{{details[1]}}" disabled>
+        </div>
+        <div class="mb-3">
+            <div class="mb-3">
+              <label class="form-label">Phone Number</label>
+              <input class="form-control" value="{{details[2]}}" disabled>
+        </div>
+        <div class="mb-3">
+            <div class="mb-3">
+              <label class="form-label">Department</label>
+              <input class="form-control" value="{{details[0]}}" disabled>
+        </div>
+      </div>
+    </div>
+</div>
+
+  <div class="container">
+    {% if session.message %} 
+      <div class="valid alert alert-warning" role="alert">{{session.message}}</div>
+    {% endif %}
+    {% if session.id == id and type == 0 %}
+    <h2 class="text-center my-5">LEAVE HISTORY</h2>
+    {% endif %}
+    <div class="container mt-5 mb-5">
+     {% set id = details[5] %}
+     {% set type = details[7] %}
+     {% if session.user == 1 and type == 0 %} 
+     <button id="{{id}}" class="export btn btn-secondary my-2" style="float: left;">EXPORT/MAIL LEAVE</button> <span id="exported" class="info"></span>
+     {% endif %}
+     {% if session.id == id and session.user == 0 %}
+     <button class="btn btn-primary my-2" style="float:right;" data-bs-toggle="modal" data-bs-target="#applyLeave">Apply Leave</button>
+     {% endif %}
+     {% if type == 0 %}
+        <table class="table table-dark table-striped my-3">
+            <thead>
+              <tr>
+                <th scope="col">TO-FROM (DAYS)</th>
+                <th scope="col" >REASON</th>
+                <th scope="col" >STATUS</th>
+            </thead>
+            <tbody>
+             {% if size > 0 %}
+                {% for leave in range(0, size-1) %}
+                  <tr >
+                      {% set days = getNoOfDays(userleave[leave].start, userleave[leave].end) %}
+                      <td>{{userleave[leave].end | date("d/m/Y") }}-{{userleave[leave].start | date("d/m/Y") }} ({{days}})</td>
+                      <td>{{userleave[leave].excuse}}</td>
+                      {% set day = getNoOfDays(userleave[leave].from, userleave[leave].to) %}
+                      {% set status = userleave[leave].status %}
+                      {% if status == 2 %}
+                        <td>REJECTED {{userleave[leave].reason}}</td>
+                      {% elseif status == 1 %}
+                        <td>GRANTED {{userleave[leave].to | date("d/m/Y") }}-{{userleave[leave].from | date("d/m/Y") }} ({{day}})</td>
+                      {% else %}
+                        <td>PENDING</td>
+                      {% endif %}
+                  </tr>
+                {% endfor %}
+              {% endif %}
+            </tbody>
+        </table>
+      {% endif %}
+    </div>
+  </div>
+<!-- Modal -->
+<div class="modal fade" id="applyLeave" tabindex="-1" role="dialog" aria-labelledby="applyLeaveModal" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="applyLeaveModal">APPLY LEAVE FORM</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="" method="POST" name="applyLeave">
+            <div class="mb-5">
+              <label for="dob" class="form-label">FROM</label>
+              <input type="text" class="date form-control" name="dob" id="dob" onkeypress="return false">
+            </div>
+            <div class="mb-5">
+              <label for="dob1" class="form-label">TO</label>
+              <input type="text" class="date form-control" name="dob1" id="dob1" onkeypress="return false">
+            </div>
+            <div class="form-group mb-5">
+                <label for="textarea">Reason</label>
+                <textarea class="form-control" id="textarea" name="textarea"></textarea>
+            </div>
+            <div class="col-md-12 text-center">
+              <span class="submit">
+                <button type="submit" class="btn btn-primary">Apply</button>
+              </span>
+              <button type="reset" class="btn btn-primary">Clear</button>
+            </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="../public/javascript/addmethod.js"></script>
+<script src="../public/javascript/welcome.js"></script>
+<script src="../public/javascript/common.js"></script>
+{% endblock %}

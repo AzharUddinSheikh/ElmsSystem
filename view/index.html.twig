@@ -1,0 +1,31 @@
+{% extends 'partials/header.html' %}
+
+{% block body %}Login Panel{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    {% if session.flash %} 
+    <div class="alert alert-danger" role="alert">{{session.flash}}</div>
+    {% endif %}
+</div>
+
+    <div class="container text-center">
+      <form class="form-signin" autocomplete="off" novalidate method="POST" id="login">
+        <img class="mb-4" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
+        <h1 class="h3 mb-5 font-weight-normal">ELMS LOGIN </h1>
+        <div class="mb-3 w-25" style="display: inline-block;">
+          <div class="input-group mb-4">
+            <input class="form-control" name="email" type="email" id="email" placeholder="Enter Your Email Address" autofocus>
+          </div>
+          <div class="input-group mb-2">
+            <input class="form-control" name="password" type="password" id="password" placeholder="Enter Your Password">
+          </div>
+        </div>
+        <div class="mb-3">
+          <a href="twig/forgot.php">Forgot Password ? Click Here</a>
+        </div>
+        <button class="btn btn-lg btn-primary btn-block" id='submit' type="submit">Log In</button>
+      </form>
+    </div>
+<script src="public/javascript/index.js"></script>
+{% endblock %}

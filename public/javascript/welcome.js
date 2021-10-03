@@ -24,34 +24,41 @@ $("#myForm").validate({
     }
 })
 
-document.querySelectorAll('.cancel').forEach((element)=>{
-    element.addEventListener("click",(e)=>{
-        id = e.target.id.substr(0,);
-        id1 = e.target.name;
-        if(confirm("Are You Sure To Delete This Request")){
-            window.location = `twigUserLeave.php?cancel=${id}&id=${id1}`
+$("form[name='applyLeave']").validate({
+    rules: {
+        textarea: {
+            required: true,
+            minlength: 6
+        },
+        dob: {
+            required: true,
+            date: true,
+            greaterThan: true
+        },
+        dob1: {
+            required: true,
+            date: true,
+            greaterThan: true,
+            greater: true,
         }
-    })
-})
+    },
 
-document.querySelectorAll('.view').forEach((element)=>{
-    element.addEventListener("click",(e)=>{
-        id = e.target.id.substr(0,);
+    submitHandler: function (form) {
+        form.submit();
+    }
+});
+
+document.querySelectorAll('.export').forEach((element)=>{
+    element.addEventListener("click", (e)=>{
+        id = e.target.id;
         $.ajax({
-            url: '../view/department.php',
-            method: 'POST',
-            data:{id : id},
-            success: function(data){
-                $('.modal-body').html(data);
-                $('#exampleModal').modal('toggle');
+            url:'../view/department.php',
+            method:"POST",
+            data:{export:id},
+            success:function(data)
+            {
+                $('#exported').html('<span class="alert alert-danger mx-5" role="alert">'+data+'</span>');
             }
         })
-    })
-})
-
-document.querySelectorAll('.userdetails').forEach((element)=>{
-    element.addEventListener("click",(e)=>{
-        id = e.target.id.substr(0,);
-        window.location = `/elms/twig/twigCheckStatus.php?userdetails=${id}`
     })
 })

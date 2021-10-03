@@ -1,0 +1,18 @@
+{% extends 'partials/header.html' %}
+{% block body %}Forgot Panel{% endblock %}
+{% block content %}
+    <div class="w-50 mx-auto text-center">
+        <h1 class="mt-5">Forgot Password</h1>
+        <form class="w-30 my-5" method="POST">
+            <div class="mb-3">
+                <input name="email" type="email" class="form-control" id="email" placeholder="Email Address">
+            </div>
+            <div class="mb-3" id="available"></div>
+            <div class="submit">
+                <button id="search" type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </form>
+    </div>
+    <script src="../public/javascript/admin.js"></script>
+    <script src="../public/javascript/common.js"></script>
+{% endblock %}

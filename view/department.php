@@ -2,37 +2,34 @@
 
 require_once '../vendor/autoload.php';
 
-use Azhar\Elms\Common\Database;
-use Azhar\Elms\Common\Login;
-use Azhar\Elms\Inserting\Department;
-use Azhar\Elms\Inserting\Employee;
-use Azhar\Elms\Updating\ChangePassword;
-use Azhar\Elms\Getting\GetLeave;
+use Azhar\Elms\Database;
+use Azhar\Elms\Department;
+use Azhar\Elms\Users;
+use Azhar\Elms\Export;
+use Azhar\Elms\LeaveRequests;
+use Azhar\Elms\LeaveDetails;
 
 $database = new Database();
 $db = $database->getConnection();
 
-$login = new Login($db);
+$department = new Department($db);
+$users = new Users($db);
+$leave_request = new LeaveRequests($db);
+$leave_detail = new LeaveDetails($db);
 
 if(isset($_POST["dep_name"])) {
 
-    $depart = new Department($_POST["dep_name"], $db);
-
-    echo $depart->checkDept();
+    echo $department->isExists($_POST["dep_name"]);
 }
 
 if(isset($_POST["user_email"])) {
 
-    $emp = new Employee($db, $_POST["user_email"]);
-
-    echo $emp->checkUser();
+    echo $users->checkUserExistence($_POST["user_email"]);
 }
 
 if(isset($_POST["dname"])) {
 
-    $dep = new Department($_POST["dname"], $db);
-
-    $dep->create();
+    $department->create($_POST["dname"]);
 
     echo "data successfully inserted";
 }
@@ -41,11 +38,11 @@ if(isset($_POST["newpass"]) && isset($_POST["oldpass"])) {
 
     session_start();
 
-    if ($login->checkPassword($_SESSION["id"], $_POST["oldpass"])){
+    if ($users->checkPassword($_SESSION["id"], $_POST["oldpass"])){
 
         $pass = password_hash($_POST["newpass"], PASSWORD_DEFAULT);
 
-        ChangePassword::changePass($_SESSION["id"], $pass, $db);
+        $users->updatePassword($_SESSION["id"], $pass);
 
     } else {
 
@@ -55,9 +52,7 @@ if(isset($_POST["newpass"]) && isset($_POST["oldpass"])) {
 
 if (isset($_POST["email"])){
 
-    $emp = new Employee($db, $_POST["email"]);
-
-    $result = $emp->userStatus();
+    $result = $users->getUserStatus($_POST["email"]);
 
     if ($result == "0") {
 
@@ -69,39 +64,15 @@ if (isset($_POST["email"])){
     }
 }
 
-if(isset($_POST["id"])){
-
-    $id = base64_decode($_POST["id"]);
-
-    $result = new GetLeave($db);
-
-    $response = $result->getEachLeave($id);
-
-    echo $response;
-}
-
-if(isset($_POST["user_leave_id"])){
-
-    $id = base64_decode($_POST["user_leave_id"]);
-
-    $result = new GetLeave($db);
-
-    $response = $result->userLeaveModal($id);
-
-    echo $response;
-}
-
 if(isset($_POST["approve"]) && isset($_POST["ids"])){
 
     $ids = base64_decode($_POST["ids"]);
-    
-    $total_leave = GetLeave::totalLeave($db, $ids);
+
+    $total_leave = $leave_request->totalLeaveRequested($ids);
 
     $id = base64_decode($_POST["approve"]);
 
-    $leave_num = new GetLeave($db);
-
-    $leaves_approved = $leave_num->isMaxLeave($id);
+    $leaves_approved = $leave_request->getApprovedLeave($id);
 
     $result = $leaves_approved + $total_leave;
 
@@ -112,9 +83,21 @@ if(isset($_POST["approveS"])){
 
     $id = base64_decode($_POST["approveS"]);
 
-    $leave_num = new GetLeave($db);
+    $result = $leave_detail->maxLeave($id);
 
-    $result = $leave_num->maxLeave($id);
+    echo $result;
+}
+
+if (isset($_POST["leave_id"])){
+
+    $result = $leave_request->gettingDate($_POST["leave_id"]);
+
+    echo json_encode($result);
+}
+
+if (isset($_POST["export"])){
+
+    $result = Export::mailAndExport($db, $_POST["export"]);
 
     echo $result;
 }

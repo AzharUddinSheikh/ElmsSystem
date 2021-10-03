@@ -1,12 +1,9 @@
 $(document).ready(function() {
-
     $('#submit').prop("disabled", true);
-
     $('#dname').blur(function() {
         var dname = $(this).val();
-
         if( dname.trim().length ==  0) {
-            $('#available').html('<span class="text-warning">Provide The Department Name</span>');
+            $('#available').html('<span></span>');
             $('#submit').prop("disabled", true);
         } else {
             $.ajax({
@@ -14,16 +11,15 @@ $(document).ready(function() {
                 method:"POST",
                 data:{dep_name:dname},
                 success:function(data)
-            
-                {   
+                {
                     if(data == 0)
                     {
-                        $('#available').html('<span class="text-info">Department Not Available</span>');
+                        $('#available').html('<span ></span>');
                         $('#submit').prop("disabled", false);
                     }
                     else 
                     {
-                        $('#available').html('<span class="text-danger">Department Available Cant Add</span>');
+                        $('#available').html('<span class="text-info">Department Available</span>');
                         $('#submit').prop("disabled", true);
                     }
                 }
@@ -48,11 +44,11 @@ $(document).ready(function() {
         element.addEventListener("click", (e)=>{
             id = e.target.id.substr(0,);
             if(confirm("Are You Sure To Delete")) {
-                window.location = `/elms/twig/twigDepartment.php?delete=${id}`
+                window.location = `/elms/twig/department.php?delete=${id}`
             }
         })
     })
-    
+
     document.querySelectorAll('.edit').forEach((element)=>{
         element.addEventListener("click", (e)=>{
             tr = e.target.parentNode.parentNode;
@@ -63,7 +59,3 @@ $(document).ready(function() {
         })
     })
 })
-
-if ( window.history.replaceState ) {
-    window.history.replaceState( null, null, window.location.href )
-}

@@ -1,7 +1,3 @@
-$.validator.addMethod("noSpace", function (value, element) {
-    return /^[a-zA-Z]+$/.test(value);
-}, "No Space And No Number");
-
 $("#addemp").validate({
     rules: {
         fname: {
@@ -18,6 +14,7 @@ $("#addemp").validate({
         dob: {
             required: true,
             date: true,
+            greaterD: true,
         },
         number: {
             required: true,
@@ -61,26 +58,3 @@ $('#uEmail').blur(function() {
       }
   })
 })
-
-$(document).ready(function() {
-    $('#dob').blur(function() {
-        var date = new Date($(this).val());
-        var duration = ((new Date()) - date)/(1000*60*60*24);
-        if (duration < 6580) {
-            document.getElementById("dobID").innerHTML = "You are not 18";
-            document.getElementById("dobID").style.color = "red";
-            $('#submit').prop("disabled", true);
-        } else if (duration >= 6580) {
-            document.getElementById("dobID").innerHTML = "";
-            $('#submit').prop("disabled", false);
-        }
-    })
-})
-
-$(function(){
-    $("#dob").datepicker({ dateFormat: 'yy-mm-dd' });
-});
-
-if ( window.history.replaceState ) {
-    window.history.replaceState( null, null, window.location.href )
-}
