@@ -72,7 +72,7 @@ class LeaveDetails
         $this->conn->query($sql1);
     }
 
-    public function maxLeave(int $id) : int|string
+    public function maxLeave(int $id) : int
     {
         $extract = "SELECT * FROM leave_requests lr JOIN leave_details ld ON lr.id = ld.leave_id WHERE lr.id = '$id'";
 

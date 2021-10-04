@@ -17,15 +17,15 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
     $users = new Users($db);
 
-    $users->resetStatus($email);
     
     if (Email::sendEmail($email, base64_encode($users->getUserId($email)))) {
+        
+        $users->resetStatus($email);
 
         $_SESSION["flash"] = "Reset Link Has Been Sent To Registered Email";
 
+        header("location: ../index.php");
     }
-
-    header("location: ../index.php");
 }
 
 $filter  = new \Twig\TwigFilter('base64_encode', function($string) {

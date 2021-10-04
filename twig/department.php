@@ -52,7 +52,8 @@ $function  = new \Twig\TwigFilter('getNoOfEmp', function($id) {
     $database = new Database();
     $db = $database->getConnection();
 
-    $result = Department::noOfUserInDept($db, $id);
+    $department = new Department($db);
+    $result = $department->noOfUserInDept($id);
 
     $count = 0;
     while($row = $result->fetch_assoc()){

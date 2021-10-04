@@ -4,7 +4,7 @@ namespace Azhar\ELMS;
 
 class Email
 {
-	public static function sendEmail(string $email, int $empid) : bool
+	public static function sendEmail(string $email, string $empid) : bool
 	{
         $to = $email;
         $subject = "ELMS Employee Email Verification";

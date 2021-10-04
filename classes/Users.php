@@ -47,7 +47,7 @@ class Users
         $stmt->close();
     }
 
-    public function checkUserExistence(string $email) : int|string
+    public function checkUserExistence(string $email)
     {
         $existsql = "SELECT * FROM users Where email = '$email'";
 
@@ -64,12 +64,7 @@ class Users
 
         $result = $this->conn->query($sql);
 
-        while ($row = $result->fetch_assoc()){
-
-            $result =  $row["status"];
-        }
-		
-		return $result;
+        return $result->fetch_assoc()["status"];
     }
 
     public function blockUser(int $id) : void
@@ -173,7 +168,7 @@ class Users
         return $detail;
     }
 
-    public function validPass(string $form_pass, string $password, int $user_type, object $row) : void
+    public function validPass(string $form_pass, string $password, int $user_type, array $row) : void
     {
         if (password_verify($form_pass, $password)) {
 
@@ -190,7 +185,7 @@ class Users
         }
     }
 
-    public function validUser(string $email) : object
+    public function validUser(string $email) : array
     {
         $sql = "SELECT * FROM users u JOIN user_details ud ON u.id = ud.user_id WHERE u.email='$email'";
 
@@ -198,11 +193,9 @@ class Users
         
         if ($result->num_rows > 0) {
 
-            while($row = $result->fetch_assoc()) {
+            $result =  $result->fetch_assoc();
 
-                $result =  $row;
-			}
-        }
+            }
 		return $result;
     }
 

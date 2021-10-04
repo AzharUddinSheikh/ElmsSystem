@@ -38,7 +38,7 @@ class Department
         return $result;
     }
 
-    public function isExists(string $dept_name) : int|string
+    public function isExists(string $dept_name) : int
     {
         $existsql = "SELECT * FROM departments WHERE name = '$dept_name'";
 
