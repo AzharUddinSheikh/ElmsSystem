@@ -14,11 +14,9 @@ Functionality in ELMS
 
 login logics
 logout logic
-user registration
 email verification 
-autoredirecting when user registered by admin
-forgot password 
-setting password
-validation without refreshing the page 
-leave management 
-blocking the employee 
+forgot password Logic
+Block / Unblock Logic
+User Leave Management By Admin
+Department Management By Admin
+User Management By Admin
