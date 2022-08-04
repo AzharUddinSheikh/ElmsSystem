@@ -38,7 +38,7 @@ class UserDetails
         return $detail;
     }
 
-    public function createUserDetails(int $number, string $dob, string $email) : void
+    public function createUserDetails(int $number, string $dob, string $email, string $udoj , int $pperiod, string $userprobationdate ) : void
     {
         $result = $this->conn->query("SELECT id FROM users WHERE `email`= '$email'");
         $last_id = (int)$result->fetch_assoc()["id"];
@@ -47,17 +47,17 @@ class UserDetails
 
         for ($x = 0; $x < 2; $x++) {
 
-            $query = "INSERT INTO user_details (user_id, user_key, user_value) VALUES(?, ?, ?)";
+            $query = "INSERT INTO user_details (user_id , user_key, user_value, user_doj , user_pperiod , user_probationdate ) VALUES(?, ?, ?, ?, ? , ? )";
 
             $stmt = $this->conn->prepare($query);
 
             if ($x == 0) {
 
-                $stmt->bind_param('iss', $last_id, $birth_key, $dob);
+                $stmt->bind_param('isssis', $last_id, $birth_key, $dob , $udoj ,$pperiod ,$userprobationdate );
 
             } else {
 
-                $stmt->bind_param('isi', $last_id, $phone_key, $number);
+                $stmt->bind_param('isisis', $last_id, $phone_key, $number , $udoj ,$pperiod ,$userprobationdate);
 
             }
 

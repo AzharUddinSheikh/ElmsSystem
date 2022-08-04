@@ -38,12 +38,15 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $empid = $_POST['empid']; 
     $dname = $_POST['dname'];
     $utype = $_POST['utype'];
+    $udoj = $_POST['udoj'];
+    $pperiod = $_POST['pperiod'];
+    $userprobationdate = date('Y-m-d', strtotime($udoj .  "+ $pperiod days"));
 
     Email::sendEmail($email, base64_encode($empid));
 
     $users->createUser($empid, $fname, $lname, $email, $dname, $utype);
 
-    $user_details->createUserDetails($number, $dob, $email);
+    $user_details->createUserDetails($number, $dob, $email, $udoj , $pperiod , $userprobationdate);
 
     $_SESSION["added"] = "EMPLOYEE ADDED AND NEED TO CHECK EMAIL FOR FURTHER PROCEDURE";
 }
