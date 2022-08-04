@@ -81,7 +81,7 @@ class LeaveRequests
         return $result;
     }
 
-    public function showUserLeave(string $id) : object
+    public function showUserLeave(string $id)
     {
         $sql = "SELECT lr.id, lr.start_date as 'start' , lr.end_date as 'end', lr.reason as excuse, ls.status, ls.reason, ls.from_date as 'from', ls.to_date as 'to' FROM leave_requests lr JOIN leave_status ls ON lr.id = ls.requests_id WHERE lr.user_id = '$id' ORDER BY lr.id DESC";
 
