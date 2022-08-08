@@ -34,13 +34,13 @@ class Users
 		return $result;
     }
 
-    public function createUser(int $empid, string $fname, string $lname, string $email, int $department, int $usertype) : void
+    public function createUser(int $empid, string $fname, string $lname, string $email, int $department, int $usertype ,int $cleave,int  $pleave,int $mleave) : void
     {
-        $query = "INSERT INTO  users (emp_id, first_name, last_name, email, department_id, user_type) VALUES (?, ?, ?, ?, ?, ?)";
+        $query = "INSERT INTO  users (emp_id, first_name, last_name, email, department_id, user_type, casual_leave, medical_leave, privilege_leave) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         $stmt = $this->conn->prepare($query);
 
-        $stmt->bind_param('issssi', $empid, $fname, $lname, $email, $department, $usertype);
+        $stmt->bind_param('issssiiii', $empid, $fname, $lname, $email, $department, $usertype ,  $cleave, $pleave, $mleave);
 
         $stmt->execute();
 
@@ -155,14 +155,14 @@ class Users
 	*/
     public function getUserWithDept(int $id) 
     {
-        $sql = "SELECT u.id, u.email, u.first_name, u.last_name, d.name, ud.user_value, u.image, u.user_type FROM users u JOIN user_details ud ON ud.user_id = u.id JOIN departments d ON u.department_id = d.id WHERE user_key = 'number' AND u.id = '$id'";
+        $sql = "SELECT u.id, u.email, u.first_name, u.last_name, d.name, ud.user_value, u.image, u.user_type, ud.user_probationdate ,u.emp_id FROM users u JOIN user_details ud ON ud.user_id = u.id JOIN departments d ON u.department_id = d.id WHERE user_key = 'number' AND u.id = '$id'";
 
         $result = $this->conn->query($sql);
 
         $detail = array();
 
         while ($row = $result->fetch_assoc()){
-            array_push($detail, $row["name"], $row["email"], $row["user_value"], $row["first_name"], $row["last_name"], $row["id"], $row["image"], $row["user_type"]);
+            array_push($detail, $row["name"], $row["email"], $row["user_value"], $row["first_name"], $row["last_name"], $row["id"], $row["image"], $row["user_type"], $row["user_probationdate"], $row["emp_id"]);
         }
 
         return $detail;

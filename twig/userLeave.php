@@ -39,8 +39,9 @@ if($_SERVER['REQUEST_METHOD'] == "POST") {
     $reason = $_POST["textarea"];
     $date1 = $_POST["dob"];
     $date2 = $_POST["dob1"];
+    $typeleave= $_POST['typeleave'];
 
-    $leave_request->applyLeave($reason, $date1, $date2, $_SESSION["id"]);
+    $leave_request->applyLeave($reason, $date1, $date2, $_SESSION["id"], $typeleave);
     $leave_detail->createLeaveStatus($date1, $date2, $_SESSION["id"]);
 
     $_SESSION["message"] = "Leave Has Been Applied";
@@ -55,6 +56,8 @@ $history = array();
 while($row = $result->fetch_assoc()) {
     array_push($history, $row);
 }
+
+$date = date('Y-m-d');
 
 $filter  = new \Twig\TwigFilter('base64_encode', function($string) {
     return base64_encode($string);
@@ -76,6 +79,6 @@ $twig->addGlobal('session', $_SESSION);
 
 $template = $twig->load('user/userLeave.html.twig');
 
-echo $template->render(['userleave' => $history, 'size' => sizeof($history), 'details'=>$list]);
+echo $template->render(['userleave' => $history, 'size' => sizeof($history), 'details'=>$list , 'cdate' =>$date ]);
 
 ?>

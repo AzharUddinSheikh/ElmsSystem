@@ -50,7 +50,7 @@ class LeaveRequests
     }
 
 
-    public function applyLeave(string $reason, string $date1, string $date2, int $id) : void
+    public function applyLeave(string $reason, string $date1, string $date2, int $id, int $typeleave ) : void
     {
 		$time1 = strtotime($date1);
 		if ($time1 === false) {
@@ -63,11 +63,11 @@ class LeaveRequests
         $new_date1 = date("Y-m-d", $time1);
         $new_date2 = date("Y-m-d", $time2);
 
-        $sql = "INSERT INTO leave_requests (user_id, reason, start_date, end_date) VALUES (?, ?, ?, ?)";
+        $sql = "INSERT INTO leave_requests (user_id, reason, start_date, end_date, user_typeleave) VALUES (?, ?, ?, ?, ?)";
 
         $stmt = $this->conn->prepare($sql);
 
-        $stmt->bind_param("isss", $id, $reason,  $new_date1, $new_date2);
+        $stmt->bind_param("isssi", $id, $reason,  $new_date1, $new_date2, $typeleave);
 
         $stmt->execute();
     }
@@ -81,7 +81,7 @@ class LeaveRequests
         return $result;
     }
 
-    public function showUserLeave(string $id)
+    public function showUserLeave(string $id) : object
     {
         $sql = "SELECT lr.id, lr.start_date as 'start' , lr.end_date as 'end', lr.reason as excuse, ls.status, ls.reason, ls.from_date as 'from', ls.to_date as 'to' FROM leave_requests lr JOIN leave_status ls ON lr.id = ls.requests_id WHERE lr.user_id = '$id' ORDER BY lr.id DESC";
 
