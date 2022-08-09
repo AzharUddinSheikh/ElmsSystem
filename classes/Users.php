@@ -155,14 +155,14 @@ class Users
 	*/
     public function getUserWithDept(int $id) 
     {
-        $sql = "SELECT u.id, u.email, u.first_name, u.last_name, d.name, ud.user_value, u.image, u.user_type, ud.user_probationdate ,u.emp_id FROM users u JOIN user_details ud ON ud.user_id = u.id JOIN departments d ON u.department_id = d.id WHERE user_key = 'number' AND u.id = '$id'";
+        $sql = "SELECT u.id, u.email, u.first_name, u.last_name, d.name, ud.user_value, u.image, u.user_type, ud.user_probationdate ,u.emp_id ,u.casual_leave ,u.medical_leave , u.privilege_leave FROM users u JOIN user_details ud ON ud.user_id = u.id JOIN departments d ON u.department_id = d.id WHERE user_key = 'number' AND u.id = '$id'";
 
         $result = $this->conn->query($sql);
 
         $detail = array();
 
         while ($row = $result->fetch_assoc()){
-            array_push($detail, $row["name"], $row["email"], $row["user_value"], $row["first_name"], $row["last_name"], $row["id"], $row["image"], $row["user_type"], $row["user_probationdate"], $row["emp_id"]);
+            array_push($detail, $row["name"], $row["email"], $row["user_value"], $row["first_name"], $row["last_name"], $row["id"], $row["image"], $row["user_type"], $row["user_probationdate"], $row["emp_id"], $row["casual_leave"], $row["medical_leave"], $row["privilege_leave"]);
         }
 
         return $detail;
