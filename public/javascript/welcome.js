@@ -33,13 +33,18 @@ $("form[name='applyLeave']").validate({
         dob: {
             required: true,
             date: true,
-            greaterThan: true
+            greaterThan: true,
+            isPrivalage:true
         },
         dob1: {
             required: true,
             date: true,
             greaterThan: true,
             greater: true,
+            isPrivalage:true
+        },
+        leavetype: {
+            required:true,
         }
     },
 

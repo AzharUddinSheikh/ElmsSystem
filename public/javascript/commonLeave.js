@@ -13,7 +13,7 @@ $(document).ready(function() {
                         alert("User Will Exceed Leave For This Year");
                     } 
                     if(confirm("Are You Sure To Approved")) {
-                        window.location = '/elms/twig/'+filename+`?approve=${id}`
+                        window.location = '/ElmsSystem-sahil/twig/'+filename+`?approve=${id}`
                     }
                 }
             })
