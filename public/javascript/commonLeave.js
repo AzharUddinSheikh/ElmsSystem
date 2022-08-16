@@ -8,12 +8,37 @@ $(document).ready(function() {
                 url:'../view/department.php',
                 method:"POST",
                 data:{approve:id1, ids:id},
+                
                 success:function(data){
-                    if (data > 23) {
+                    
+                    if (data > 150) {
                         alert("User Will Exceed Leave For This Year");
                     } 
                     if(confirm("Are You Sure To Approved")) {
                         window.location = '/ElmsSystem-sahil/twig/'+filename+`?approve=${id}`
+                    }
+                }
+            })
+        })
+    })
+
+    document.querySelectorAll('.nonpaidapprove').forEach((element)=>{
+        element.addEventListener("click", (e)=>{
+            id = e.target.id.substr(0,);
+            id1 = e.target.name.substr(0,);
+            filename = window.location.href.replace(/^.*[\\\/]/, '');
+            $.ajax({
+                url:'../view/department.php',
+                method:"POST",
+                data:{nonpaidapprove:id1, ids:id},
+                
+                success:function(data){
+                    
+                    if (data > 150) {
+                        alert("User Will Exceed Leave For This Year");
+                    } 
+                    if(confirm("Are You Sure To Approved on Non Paid Leave")) {
+                        window.location = '/ElmsSystem-sahil/twig/'+filename+`?nonpaidapprove=${id}`
                     }
                 }
             })
@@ -29,7 +54,7 @@ $(document).ready(function() {
                 method:"POST",
                 data:{approve:id1, ids:id},
                 success:function(data){
-                    if (data > 23) {
+                    if (data > 150) {
                         alert("User Will Exceed Leave For This Year");
                     } 
                     tr = e.target.parentNode.parentNode;

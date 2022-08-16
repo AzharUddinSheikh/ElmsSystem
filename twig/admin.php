@@ -31,9 +31,33 @@ if(isset($_GET['approve'])) {
 
     $id = base64_decode($_GET['approve']);
   
-    $leave_detail->approveUserRequest($id);
+   
 
+
+    [$luserid,$days,$ltype]=$leave_detail->getNumOfLeaves($id);
+    
+    
+    $updatePCMLeaveResult=$leave_detail->updatePCMLeave($luserid,$days,$ltype);
+    
+    $leave_detail->approveUserRequest($id);
     $_SESSION["message"] = "USER LEAVES APPROVED";
+    header("Location:http://localhost/ElmsSystem-sahil/twig/admin.php");
+    
+    
+}
+
+if(isset($_GET['nonpaidapprove'])) {
+
+    $id = base64_decode($_GET['nonpaidapprove']);
+  
+    [$luserid,$days,$ltype]=$leave_detail->getNumOfLeaves($id);
+    $updatePCMLeaveResult=$leave_detail->updatePCMLeave($luserid,$days,$ltype);
+    $setNonPaid= $leave_request->setNonPaid($id);
+    
+    $leave_detail->approveUserRequest($id);
+    $_SESSION["message"] = "USER NON PAID LEAVES APPROVED";
+    header("Location:http://localhost/ElmsSystem-sahil/twig/admin.php");
+    
     
 }
 
@@ -42,8 +66,15 @@ if(isset($_POST["submit"])) {
     $dob = $_POST["dob"];
     $dob1 = $_POST["dob1"];
 
-    $id = base64_decode($_POST["userleaveid"]);
+    $sdob = strtotime($dob);
+    $edob1 = strtotime($dob1);
+    $diff = $edob1 - $sdob;
 
+    $id = base64_decode($_POST["userleaveid"]);
+    $modifydays = abs(round($diff / 86400 )+1);
+    [$mLType, $mUserId]= $leave_detail->modifydetails($id);
+    $modifyUpdateLeave = $leave_detail->modifyUpdateLeave($modifydays,$mLType, $mUserId);
+    
     $leave_detail->updateLeave($dob, $dob1, $id);
 
     $_SESSION["message"] = "USER LEAVE UPDATED";
@@ -81,6 +112,9 @@ $function = new \Twig\TwigFunction('getNoOfDays', function($start, $end) {
 $function1 = new \Twig\TwigFunction('getUrl', function() {
     return basename($_SERVER['PHP_SELF']);
 });
+
+
+
 
 $twig = new \Twig\Environment($loader);
 

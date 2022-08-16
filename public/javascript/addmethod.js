@@ -57,10 +57,14 @@ $.validator.addMethod("greaterD", function (value, element) {
 
 $.validator.addMethod("isPrivalage", function (value, element) {
     var today = new Date(); 
-    today.setDate(today.getDate() + 15); // + 15 days  
-    var which_leave = $('#leavetype').val() //0, 1, 2
+    today.setDate(today.getDate() + 15);
+    var which_leave = $('#leavetype').val() 
     if (which_leave == 2 ) {
         return Date.parse(value) >= Date.parse(today);
     } 
     return true;
 }, "Privilage leave only applicable after 15 days from current date ");
+$.validator.addMethod("dcheck", function (value, element) {
+    
+    return Date.parse(value) = "";
+}, "End Date Should Be Greater than Start Date");

@@ -44,7 +44,11 @@ $("form[name='applyLeave']").validate({
             isPrivalage:true
         },
         leavetype: {
+            required:true
+        },
+        document: {
             required:true,
+            dcheck:true
         }
     },
 
