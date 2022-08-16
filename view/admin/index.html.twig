@@ -67,11 +67,24 @@
                     <tr>
                         <td><a href="userLeave.php?id={{leaves[leave].user_id|base64_encode}}">{{leaves[leave].first_name}} {{leaves[leave].last_name}}</a></td>
                         {% set days = getNoOfDays(leaves[leave].start_date, leaves[leave].end_date) %}
-                        <td>{{leaves[leave].start_date | date("d/m/Y") }}-{{leaves[leave].end_date | date("d/m/Y") }} ({{days}})</td>
+                        {% if leaves[leave].user_typeleave == 0  %}
+                        <td>{{leaves[leave].start_date | date("d/m/Y") }}-{{leaves[leave].end_date | date("d/m/Y") }} ({{days}}) CASUAL LEAVE</td>
+                        {% elseif leaves[leave].user_typeleave == 1 %}
+                        <td>{{leaves[leave].start_date | date("d/m/Y") }}-{{leaves[leave].end_date | date("d/m/Y") }} ({{days}}) MEDICAL LEAVE </td>
+                        {% else %}
+                        <td>{{leaves[leave].start_date | date("d/m/Y") }}-{{leaves[leave].end_date | date("d/m/Y") }} ({{days}}) PRIVILAGE LEAVE </td>
+                        {% endif %}
                         <td>{{leaves[leave].reason}}</td>
                         <td>{{leaves[leave].added_on | date("d/m/Y")}}</td>
                         <td>
-                            <button id='{{ leaves[leave].id | base64_encode }}' name='{{ leaves[leave].emp_id | base64_encode }}' class="approve btn btn-success">Approve</button>  <button id='{{ leaves[leave].id | base64_encode }}' class="reject btn btn-danger mx-1" data-toggle="modal" data-target="#rejectUserLeave">Reject</button> <button class="userdetails btn btn-info" id='{{ leaves[leave].id | base64_encode }}'  name='{{ leaves[leave].emp_id | base64_encode }}'  data-toggle="modal" data-target="#editUserLeave">Modify</button>
+                        {% if leaves[leave].user_typeleave == 1  %}
+                            <button id='{{ leaves[leave].id | base64_encode }}' name='{{ leaves[leave].emp_id | base64_encode }}' class="approve btn btn-success">Paid Approve</button>
+                            <button id='{{ leaves[leave].id | base64_encode }}' name='{{ leaves[leave].emp_id | base64_encode }}' class="nonpaidapprove btn btn-success">Non Paid Approve</button>
+                        {% else %} 
+                            <button id='{{ leaves[leave].id | base64_encode }}' name='{{ leaves[leave].emp_id | base64_encode }}' class="approve btn btn-success">Approve</button>   
+                        {% endif %}    
+                        
+                            <button id='{{ leaves[leave].id | base64_encode }}' class="reject btn btn-danger mx-1" data-toggle="modal" data-target="#rejectUserLeave">Reject</button> <button class="userdetails btn btn-info" id='{{ leaves[leave].id | base64_encode }}'  name='{{ leaves[leave].emp_id | base64_encode }}'  data-toggle="modal" data-target="#editUserLeave">Modify</button>
                         </td>
                     </tr>
                 {% endfor %}

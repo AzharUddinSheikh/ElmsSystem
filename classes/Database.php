@@ -5,7 +5,7 @@ use \mysqli;
 
 class Database
 {
-    private $servername = "127.0.0.1:3307";
+    private $servername = "localhost";
     private $username = "root";
     private $password = "";
     private $dbname = 'elms';

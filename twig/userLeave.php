@@ -39,11 +39,33 @@ if($_SERVER['REQUEST_METHOD'] == "POST") {
     $reason = $_POST["textarea"];
     $date1 = $_POST["dob"];
     $date2 = $_POST["dob1"];
-
-    $leave_request->applyLeave($reason, $date1, $date2, $_SESSION["id"]);
+    $typeleave= $_POST['leavetype'];
+    $id = $_SESSION["id"];
+    $paidLeave = 1;
+    $startdate = strtotime($date1);
+    $enddate = strtotime($date2);
+    $diff = $enddate - $startdate;
+    $days=  abs(round($diff / 86400 )+1);
+   
+    $list = $users->getUserWithDept($id);
+    $cLeave = $list[10];
+    $mLeave = $list[11];
+    $pLeave = $list[12];
+    if ($typeleave == 0 && $days >= $cLeave) {
+         $_SESSION["message"] = "Casual Leave Not Apply As You Have Exceed Number Of Leave Left $cLeave";
+    }
+    else if($typeleave == 1 && $days >= $mLeave) {
+        $_SESSION["message"] = "Medical Leave Not Apply As You Have Exceed Number Of Leave Left $mLeave";
+   }
+   else if($typeleave == 2 && $days >= $pLeave) {
+    $_SESSION["message"] = "Privilage Leave Not Apply As You Have Exceed Number Of Leave Left $pLeave";
+}
+    else {
+    $leave_request->applyLeave($reason, $date1, $date2, $_SESSION["id"], $typeleave,$paidLeave);
     $leave_detail->createLeaveStatus($date1, $date2, $_SESSION["id"]);
 
     $_SESSION["message"] = "Leave Has Been Applied";
+    }
 }
 
 $id = base64_decode($_GET["id"]);
@@ -51,10 +73,14 @@ $id = base64_decode($_GET["id"]);
 $result = $leave_request->showUserLeave($id);
 $list = $users->getUserWithDept($id);
 
+
+
 $history = array();
 while($row = $result->fetch_assoc()) {
     array_push($history, $row);
 }
+
+$date = date('Y-m-d');
 
 $filter  = new \Twig\TwigFilter('base64_encode', function($string) {
     return base64_encode($string);
@@ -76,6 +102,6 @@ $twig->addGlobal('session', $_SESSION);
 
 $template = $twig->load('user/userLeave.html.twig');
 
-echo $template->render(['userleave' => $history, 'size' => sizeof($history), 'details'=>$list]);
+echo $template->render(['userleave' => $history, 'size' => sizeof($history), 'details'=>$list , 'cdate' =>$date ]);
 
 ?>
