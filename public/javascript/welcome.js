@@ -77,11 +77,23 @@ $("form[name='myFormyear']").validate({
         enyear: {
             required: true,
             minlength: 4,
-            maxlength: 4
+            maxlength: 4,
+            
         }
     },
+
+    
 
     submitHandler: function (form) {
         form.submit();
     }
 });
+
+$(document).ready(function () {
+    $("#enyear").keypress(function (e) {
+       if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+          $("#errmsg").html("Only digits allowed").show();
+                 return false;
+      }
+     });
+  });
