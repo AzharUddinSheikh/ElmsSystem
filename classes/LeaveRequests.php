@@ -50,7 +50,7 @@ class LeaveRequests
     }
 
 
-    public function applyLeave(string $reason, string $date1, string $date2, int $id) : void
+    public function applyLeave(string $reason, string $date1, string $date2, int $id, int $typeleave , int $paidLeave ,int $resetyear) : void
     {
 		$time1 = strtotime($date1);
 		if ($time1 === false) {
@@ -63,18 +63,18 @@ class LeaveRequests
         $new_date1 = date("Y-m-d", $time1);
         $new_date2 = date("Y-m-d", $time2);
 
-        $sql = "INSERT INTO leave_requests (user_id, reason, start_date, end_date) VALUES (?, ?, ?, ?)";
+        $sql = "INSERT INTO leave_requests (user_id, reason, start_date, end_date, user_typeleave, paid_leave, resetyear) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         $stmt = $this->conn->prepare($sql);
 
-        $stmt->bind_param("isss", $id, $reason,  $new_date1, $new_date2);
+        $stmt->bind_param("isssiii", $id, $reason,  $new_date1, $new_date2, $typeleave, $paidLeave, $resetyear);
 
         $stmt->execute();
     }
 
     public function pendingLeaveRequest() : object
     {
-        $sql = "SELECT u.id as user_id, lr.id, u.emp_id, lr.reason, lr.start_date, lr.end_date, u.first_name, u.last_name FROM users u JOIN leave_requests lr ON u.id = lr.user_id WHERE lr.start_date > CURDATE() AND lr.status = 0 ORDER BY lr.id DESC";
+        $sql = "SELECT u.id as user_id, lr.id, u.emp_id, lr.reason, lr.start_date, lr.end_date, u.first_name, u.last_name , lr.user_typeleave FROM users u JOIN leave_requests lr ON u.id = lr.user_id WHERE lr.start_date > CURDATE() AND lr.status = 0 ORDER BY lr.id DESC";
 
         $result = $this->conn->query($sql);
 
@@ -83,7 +83,7 @@ class LeaveRequests
 
     public function showUserLeave(string $id) : object
     {
-        $sql = "SELECT lr.id, lr.start_date as 'start' , lr.end_date as 'end', lr.reason as excuse, ls.status, ls.reason, ls.from_date as 'from', ls.to_date as 'to' FROM leave_requests lr JOIN leave_status ls ON lr.id = ls.requests_id WHERE lr.user_id = '$id' ORDER BY lr.id DESC";
+        $sql = "SELECT lr.id, lr.start_date as 'start' , lr.end_date as 'end', lr.reason as excuse, ls.status, ls.reason, ls.from_date as 'from', ls.to_date as 'to' ,lr.user_typeleave , lr.paid_leave  FROM leave_requests lr JOIN leave_status ls ON lr.id = ls.requests_id WHERE lr.user_id = '$id' ORDER BY lr.id DESC";
 
         $result = $this->conn->query($sql);
 
@@ -105,9 +105,47 @@ class LeaveRequests
         while ($row = $result->fetch_assoc()){
             array_push($dataarray, $row["start_date"], $row["end_date"]);
         }
-
         return $dataarray;
     }
+
+    public function setNonPaid($id) 
+    {
+        $sql = " UPDATE leave_requests  set paid_leave = 0 where id   = $id ";
+        $result = $this->conn->query($sql);
+        return true;
+    }
+
+    public function setPaid($id) 
+    {
+        $sql = " UPDATE leave_requests  set paid_leave = 1 where id   = $id ";
+        $result = $this->conn->query($sql);
+        return true;
+    }
+
+
+    public function resetYear($id, $ryear, $cyear)
+    {
+        if( $ryear != $cyear ) {
+            $reyear = $ryear + 1 ;
+        $sql1 = "UPDATE leave_requests SET resetyear = $reyear WHERE user_id = $id ";
+        $sql2 = "UPDATE users SET casual_leave = 50 , medical_leave = 50 , 	privilege_leave = 50 WHERE id = $id" ;
+        $result1 = $this->conn->query($sql1);
+        $result2 = $this->conn->query($sql2);
+        return true;
+        }
+        else {
+            return true;
+        }
+    }
+
+    public function resetLeave($id)
+    {
+        $sql = "UPDATE users SET casual_leave = 50 , medical_leave = 50 , 	privilege_leave = 50 WHERE id = $id" ;
+        $result = $this->conn->query($sql);
+        
+    }
+
+    
 }
 
 ?>

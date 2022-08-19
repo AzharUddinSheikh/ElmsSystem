@@ -52,3 +52,15 @@ $.validator.addMethod("greaterD", function (value, element) {
     var dob = new Date(value);
     return (today.getFullYear() - dob.getFullYear()) >= 18;
 }, "Age Should be Above 18");
+
+
+
+$.validator.addMethod("isPrivalage", function (value, element) {
+    var today = new Date(); 
+    today.setDate(today.getDate() + 15);
+    var which_leave = $('#leavetype').val() ;
+    if (which_leave == 2 ) {
+        return Date.parse(value) >= Date.parse(today);
+    } 
+    return true;
+}, "Privilage leave only applicable after 15 days from current date ");
