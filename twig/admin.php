@@ -30,15 +30,13 @@ if(isset($_SESSION["message"])){
 if(isset($_GET['approve'])) {
 
     $id = base64_decode($_GET['approve']);
-  
-   
-
-
     [$luserid,$days,$ltype]=$leave_detail->getNumOfLeaves($id);
-    
-    
     $updatePCMLeaveResult=$leave_detail->updatePCMLeave($luserid,$days,$ltype);
-    
+    $setPaid= $leave_request->setPaid($id);
+    echo $id."<br>";
+    echo $setPaid;
+    echo $ltype;
+    die();
     $leave_detail->approveUserRequest($id);
     $_SESSION["message"] = "USER LEAVES APPROVED";
     header("Location:http://localhost/ElmsSystem-sahil/twig/admin.php");
@@ -46,9 +44,9 @@ if(isset($_GET['approve'])) {
     
 }
 
-if(isset($_GET['nonpaidapprove'])) {
+if(isset($_GET['nonPaidApprove'])) {
 
-    $id = base64_decode($_GET['nonpaidapprove']);
+    $id = base64_decode($_GET['nonPaidApprove']);
   
     [$luserid,$days,$ltype]=$leave_detail->getNumOfLeaves($id);
     $updatePCMLeaveResult=$leave_detail->updatePCMLeave($luserid,$days,$ltype);
@@ -114,7 +112,7 @@ $function1 = new \Twig\TwigFunction('getUrl', function() {
 });
 
 
-
+$cyear = date("Y");
 
 $twig = new \Twig\Environment($loader);
 
@@ -126,5 +124,5 @@ $twig->addGlobal('session', $_SESSION);
 
 $template = $twig->load('admin/index.html.twig');
 
-echo $template->render(['leaves' => $leaves, 'count' => sizeof($leaves)]);
+echo $template->render(['leaves' => $leaves, 'count' => sizeof($leaves), 'cyear' => $cyear]);
 ?>

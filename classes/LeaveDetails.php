@@ -103,29 +103,22 @@ class LeaveDetails
     public function rejectUserRequest(int $id, string $reason) : void
     {
         $sql =  "UPDATE leave_status SET status = 2, reason = '$reason' WHERE requests_id = $id";
-
         $sql1 = "UPDATE leave_requests SET status = 1 WHERE id = $id";
-    
         mysqli_query($this->conn, $sql);
-
         mysqli_query($this->conn, $sql1);
     }
 
     public function approvedLeave() : object
     {
         $sql = "SELECT ls.from_date as 'from', ls.to_date as 'to', lr.reason AS excuse, ls.reason, lr.start_date, lr.end_date, lr.added_on, lr.user_id, lr.id, u.first_name, u.last_name FROM leave_requests lr JOIN leave_status ls ON lr.id = ls.requests_id JOIN users u ON u.id = lr.user_id WHERE ls.status = 1 ORDER BY lr.id DESC";
-
         $result = $this->conn->query($sql);
-
         return $result;
     }
 
     public function rejectedLeave() : object
     {
         $sql = "SELECT lr.reason AS excuse, ls.reason, lr.start_date, lr.end_date, lr.added_on, lr.user_id, lr.id, u.first_name, u.last_name FROM leave_requests lr JOIN leave_status ls ON lr.id = ls.requests_id JOIN users u ON u.id = lr.user_id WHERE ls.status = 2 ORDER BY lr.id DESC";
-
         $result = $this->conn->query($sql);
-
         return $result;
     }
 
@@ -133,23 +126,15 @@ class LeaveDetails
     {
     
         $qry = "SELECT * FROM leave_requests where id = $id ";
-
         $result = $this->conn->query($qry);
-        
         $show = $result->fetch_assoc();
-        
         $luserid = $show['user_id'];
         $startdate = strtotime($show['start_date']);
         $enddate = strtotime($show['end_date']);
         $diff = $enddate - $startdate;
         $days=  abs(round($diff / 86400 )+1);
         $ltype = $show['user_typeleave'];	
-        
         return [$luserid,$days,$ltype];
-
-        
-        
-
     }   
 
     public function updatePCMLeave($luserid,$days,$ltype) 
@@ -160,7 +145,6 @@ class LeaveDetails
         $originalPLeave = $show['privilege_leave'];
         $originalMLeave = $show['medical_leave'];
         $originalCLeave = $show['casual_leave'];
-        
         $avaliablePLeave = $originalPLeave - $days;
         $avaliableMLeave = $originalMLeave - $days;
         $avaliableCLeave = $originalCLeave - $days;
@@ -201,29 +185,20 @@ class LeaveDetails
         $originalPLeave = $show['privilege_leave'];
         $originalMLeave = $show['medical_leave'];
         $originalCLeave = $show['casual_leave'];
-
-        
-
-
         $avaliablePLeave = $originalPLeave - $modifydays;
         $avaliableMLeave = $originalMLeave - $modifydays;
         $avaliableCLeave = $originalCLeave - $modifydays;
-
-        
-
         if ($mLType == 2 ) {
             $qry2 = "UPDATE users SET privilege_leave= $avaliablePLeave WHERE id = $mUserId  ";
             $result2 = $this->conn->query($qry2);
             return true;
         }
         else if ($mLType == 1) {
- 
             $qry3 = "UPDATE users SET medical_leave= $avaliableMLeave WHERE id = $mUserId  ";
             $result3 = $this->conn->query($qry3);
             return true;
         }
         else {
-
             $qry4 = "UPDATE users SET casual_leave= $avaliableCLeave WHERE id = $mUserId  ";
             $result4 = $this->conn->query($qry4);
             return true;

@@ -45,9 +45,10 @@
           <div class="mb-4 mt-4 text-center">
             <select class="col px-md-4 py-md-1" name="pperiod" id="pperiod">
               <option value="" disabled selected>Probition Period</option>
-              {% for i in 1..90 %}
-               <option value={{ i }} >{{ i }}</option> 
-              {% endfor %}
+              <option value="30" > 1 Month </option>
+              <option value="60" > 2 Month </option>
+               <option value="90" > 3 Month </option>
+              
             </select>
           </div>
           <div class="mb-4 mt-4 text-center">

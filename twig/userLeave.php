@@ -41,12 +41,12 @@ if($_SERVER['REQUEST_METHOD'] == "POST") {
     $date2 = $_POST["dob1"];
     $typeleave= $_POST['leavetype'];
     $id = $_SESSION["id"];
-    $paidLeave = 1;
+    $paidLeave = 2;
     $startdate = strtotime($date1);
     $enddate = strtotime($date2);
     $diff = $enddate - $startdate;
     $days=  abs(round($diff / 86400 )+1);
-   
+    $resetyear = 2022 ;
     $list = $users->getUserWithDept($id);
     $cLeave = $list[10];
     $mLeave = $list[11];
@@ -61,7 +61,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST") {
     $_SESSION["message"] = "Privilage Leave Not Apply As You Have Exceed Number Of Leave Left $pLeave";
 }
     else {
-    $leave_request->applyLeave($reason, $date1, $date2, $_SESSION["id"], $typeleave,$paidLeave);
+    $leave_request->applyLeave($reason, $date1, $date2, $_SESSION["id"], $typeleave,$paidLeave, $resetyear);
     $leave_detail->createLeaveStatus($date1, $date2, $_SESSION["id"]);
 
     $_SESSION["message"] = "Leave Has Been Applied";
@@ -70,7 +70,9 @@ if($_SERVER['REQUEST_METHOD'] == "POST") {
 
 $id = base64_decode($_GET["id"]);
 
+
 $result = $leave_request->showUserLeave($id);
+
 $list = $users->getUserWithDept($id);
 
 
@@ -79,6 +81,12 @@ $history = array();
 while($row = $result->fetch_assoc()) {
     array_push($history, $row);
 }
+
+
+
+$cyear = date("Y");
+
+
 
 $date = date('Y-m-d');
 

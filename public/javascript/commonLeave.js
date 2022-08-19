@@ -22,7 +22,7 @@ $(document).ready(function() {
         })
     })
 
-    document.querySelectorAll('.nonpaidapprove').forEach((element)=>{
+    document.querySelectorAll('.nonPaidApprove').forEach((element)=>{
         element.addEventListener("click", (e)=>{
             id = e.target.id.substr(0,);
             id1 = e.target.name.substr(0,);
@@ -30,7 +30,7 @@ $(document).ready(function() {
             $.ajax({
                 url:'../view/department.php',
                 method:"POST",
-                data:{nonpaidapprove:id1, ids:id},
+                data:{nonPaidApprove:id1, ids:id},
                 
                 success:function(data){
                     
@@ -38,7 +38,7 @@ $(document).ready(function() {
                         alert("User Will Exceed Leave For This Year");
                     } 
                     if(confirm("Are You Sure To Approved on Non Paid Leave")) {
-                        window.location = '/ElmsSystem-sahil/twig/'+filename+`?nonpaidapprove=${id}`
+                        window.location = '/ElmsSystem-sahil/twig/'+filename+`?nonPaidApprove=${id}`
                     }
                 }
             })

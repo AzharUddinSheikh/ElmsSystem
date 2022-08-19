@@ -37,6 +37,15 @@
                     </div>
                 </div>
             </li>
+            <li class="nav-item ">
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">GENERAL SETTING</h5>
+                        <p class="card-text">Help To Do Change In Program In Future Also And Add Some Useful Feature </p>
+                        <a href="generalSetting.php" class="btn btn-primary">VIEW</a>
+                    </div>
+                </div>
+            </li>
         </ul>
     </div>
 </nav>
@@ -79,7 +88,9 @@
                         <td>
                         {% if leaves[leave].user_typeleave == 1  %}
                             <button id='{{ leaves[leave].id | base64_encode }}' name='{{ leaves[leave].emp_id | base64_encode }}' class="approve btn btn-success">Paid Approve</button>
-                            <button id='{{ leaves[leave].id | base64_encode }}' name='{{ leaves[leave].emp_id | base64_encode }}' class="nonpaidapprove btn btn-success">Non Paid Approve</button>
+                            
+                            <button id='{{ leaves[leave].id | base64_encode }}' name='{{ leaves[leave].emp_id | base64_encode }}' class="nonPaidApprove btn btn-success">Non Paid Approve</button>
+                            
                         {% else %} 
                             <button id='{{ leaves[leave].id | base64_encode }}' name='{{ leaves[leave].emp_id | base64_encode }}' class="approve btn btn-success">Approve</button>   
                         {% endif %}    

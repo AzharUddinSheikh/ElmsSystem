@@ -44,11 +44,10 @@ $("form[name='applyLeave']").validate({
             isPrivalage:true
         },
         leavetype: {
-            required:true
-        },
-        document: {
             required:true,
-            dcheck:true
+        },
+        docx: {
+            required: $("#leavetype").val() === "1",  
         }
     },
 
@@ -70,4 +69,19 @@ document.querySelectorAll('.export').forEach((element)=>{
             }
         })
     })
-})
+});
+
+
+$("form[name='myFormyear']").validate({
+    rules: {
+        enyear: {
+            required: true,
+            minlength: 4,
+            maxlength: 4
+        }
+    },
+
+    submitHandler: function (form) {
+        form.submit();
+    }
+});

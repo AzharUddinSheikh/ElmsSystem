@@ -15,6 +15,9 @@ $filter  = new \Twig\TwigFilter('base64_encode', function($string) {
     return base64_encode($string);
 });
 
+$id = $_SESSION['id'];
+
+
 $loader = new \Twig\Loader\FilesystemLoader('../view');
 
 $twig = new \Twig\Environment($loader);
