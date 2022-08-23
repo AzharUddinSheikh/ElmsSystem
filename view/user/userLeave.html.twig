@@ -110,13 +110,16 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <h6 id ="cleaveleft">Causaul leaves left    :{{details[10]}}</h6>
+      <h6>Causaul leaves left    :{{details[10]}}</h6>
+      <input type = "hidden" value="{{details[10]}}" id= "casualLeaveLeft">
       <h6>Medical leaves left    :{{details[11]}}</h6>
+      <input type = "hidden" value="{{details[11]}}" id= "medicalLeaveLeft">
       {% set ppdate = details[8] %}
       {% if ppdate > cdate  %}
       <h6>Privilage leaves left  : No Privilage Leave  Yet </h6>
       {% else %}
-      <h6 id = "pleavedetail">privilage leaves left  :{{details[12]}}</h6>
+      <h6>privilage leaves left  :{{details[12]}}</h6>
+      <input type = "hidden" value="{{details[12]}}" id= "privilageLeaveLeft">
       {% endif %}
       <div class="modal-body">
         <form action="" method="POST" name="applyLeave" enctype="multipart/form-data">

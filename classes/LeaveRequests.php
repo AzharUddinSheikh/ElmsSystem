@@ -50,7 +50,7 @@ class LeaveRequests
     }
 
 
-    public function applyLeave(string $reason, string $date1, string $date2, int $id, int $typeleave , int $paidLeave ,int $resetyear) : void
+    public function applyLeave(string $reason, string $date1, string $date2, int $id, int $typeleave , int $paidLeave ) : void
     {
 		$time1 = strtotime($date1);
 		if ($time1 === false) {
@@ -63,11 +63,11 @@ class LeaveRequests
         $new_date1 = date("Y-m-d", $time1);
         $new_date2 = date("Y-m-d", $time2);
 
-        $sql = "INSERT INTO leave_requests (user_id, reason, start_date, end_date, user_typeleave, paid_leave, resetyear) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO leave_requests (user_id, reason, start_date, end_date, user_typeleave, paid_leave) VALUES (?, ?, ?, ?, ?, ?)";
 
         $stmt = $this->conn->prepare($sql);
 
-        $stmt->bind_param("isssiii", $id, $reason,  $new_date1, $new_date2, $typeleave, $paidLeave, $resetyear);
+        $stmt->bind_param("isssii", $id, $reason,  $new_date1, $new_date2, $typeleave, $paidLeave);
 
         $stmt->execute();
     }

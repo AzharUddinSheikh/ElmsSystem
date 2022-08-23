@@ -64,3 +64,33 @@ $.validator.addMethod("isPrivalage", function (value, element) {
     } 
     return true;
 }, "Privilage leave only applicable after 15 days from current date ");
+
+
+$(document).ready(function(){    
+$.validator.addMethod("dayCheck", function (value, element) {
+var startdate = $('#dob').val();
+var enddate =$('#dob1').val();
+var startDay = new Date(startdate);
+var endDay = new Date(enddate);
+var diff = Math.floor((Date.UTC(endDay.getFullYear(), endDay.getMonth(), endDay.getDate()) - Date.UTC(startDay.getFullYear(), startDay.getMonth(), startDay.getDate()) ) /(1000 * 60 * 60 * 24));
+var leaveType = $('#leavetype').val();
+var casualLeaveLeft = $('#casualLeaveLeft ').val();
+var medicalLeaveLeft = $('#medicalLeaveLeft ').val();
+var privilageLeaveLeft = $('#privilageLeaveLeft ').val();
+if ( leaveType == 0  ) {
+   return casualLeaveLeft >= diff;
+}
+
+if ( leaveType == 1  ) {
+    return medicalLeaveLeft >= diff;
+ }
+
+ if ( leaveType == 2  ) {
+    return privilageLeaveLeft >= diff;
+ } 
+
+return true;
+
+}, "Leave Not Apply As You Have Exceed Number Of Leave Left");
+
+});

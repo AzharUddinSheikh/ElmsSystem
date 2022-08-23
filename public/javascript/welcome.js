@@ -45,6 +45,7 @@ $("form[name='applyLeave']").validate({
         },
         leavetype: {
             required:true,
+            dayCheck:true
         },
         docx: {
             required: $("#leavetype").val() === "1",  
