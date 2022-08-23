@@ -4,7 +4,7 @@ $(document).ready(function() {
         element.addEventListener("click",(e)=>{
             id = e.target.id.substr(0,);
             if(confirm("Are You Sure To Block This User")){
-                window.location = `/elms/twig/empManage.php?block=${id}`
+                window.location = `/ElmsSystem-sahil/twig/empManage.php?block=${id}`
             }
         })
     })
@@ -13,7 +13,7 @@ $(document).ready(function() {
         element.addEventListener("click",(e)=>{
             id = e.target.id.substr(0,);
             if(confirm("Are You Sure To UnBlock This User")){
-                window.location = `/elms/twig/empManage.php?unblock=${id}`
+                window.location = `/ElmsSystem-sahil/twig/empManage.php?unblock=${id}`
             }
         })
     })

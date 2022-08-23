@@ -1,0 +1,35 @@
+{% extends 'partials/header.html' %}
+
+{% block body %}General Setting Panel{% endblock %}
+
+{% block head %}
+    {{ include('partials/navigation.html.twig') }}
+{% endblock %}
+{% block content %}
+<h2 class="text-center mt-3">General Setting Panel</h2>
+<div class="container">
+        {% if session.message %}
+            <div class="alert alert-primary" role="alert">
+                {{session.message}}
+            </div>
+        {% endif %}
+    </div>
+
+<div class="container">
+    <h1 class="text-center my-5">Enter Year</h1>
+    <form class=" px-5" name= "myFormyear" id="myFormyear" action="" autocomplete="off" method="POST">
+        <div class="mb-4">
+        {% if size > 0 %}
+        {% for year in range(0, size-1)%}
+            <h5>{{ readAll[year].arrayKey }}:  <input name="enyear" id="enyear" type="text" class="form-control" placeholder="{{ readAll[year].value }}" style="width:20%;text-align:center;"> </h5><span class = "text-danger"id="errmsg"></span>
+        </div>
+        {% endfor %}
+        {% endif %}
+        
+    <div class="hide"><button id="submit" class="btn btn-primary">Submit</button></div>
+</form>
+</div>
+
+<script src="../public/javascript/welcome.js"></script>
+
+{% endblock %}
