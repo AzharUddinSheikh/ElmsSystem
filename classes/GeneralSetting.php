@@ -15,7 +15,7 @@ class GeneralSetting
     {
         $sql = "INSERT INTO general_setting ( value) VALUES(?)";
         $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param('i', $enyear );
+        $stmt->bind_param('i', $enyear);
         $stmt->execute();
         $stmt->close();
 
@@ -29,8 +29,7 @@ class GeneralSetting
         $sql = "SELECT * FROM general_setting ";
         $result = $this->conn->query($sql);
         $showall =[];
-        while($row = $result->fetch_assoc())
-        {
+        while ($row = $result->fetch_assoc()) {
             $showall[]= $row;
         }
         return $showall;
@@ -43,33 +42,28 @@ class GeneralSetting
         $checkyear = "CurrentYear";
         $sql = "UPDATE general_setting SET value = '$enterYear' WHERE arrayKey = '$checkyear' ";
         $result = $this->conn->query($sql);
-        
-
     }
     public function readAll()
     {
-       $sql = "SELECT * FROM general_setting ";
-       $result = $this->conn->query($sql);
+        $sql = "SELECT * FROM general_setting ";
+        $result = $this->conn->query($sql);
 
-       $new = [];
-       while($row = $result->fetch_assoc()){
-        $new[]= $row;
-       }
-       return $new;
+        $new = [];
+        while ($row = $result->fetch_assoc()) {
+            $new[]= $row;
+        }
+        return $new;
 
     }
 
     public function yearlyLeave($cYear,$enterYear)
-
     {
         
-        if($enterYear != $cYear)
-        {
+        if ($enterYear != $cYear) {
             $sql = "UPDATE users SET 	casual_leave = 50, medical_leave = 50, privilege_leave=50";
             $result = $this->conn->query($sql);
             return true;
-        }
-        else {
+        } else {
             return true;
         }
     }

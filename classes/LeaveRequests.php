@@ -7,7 +7,6 @@ use \DateTime;
 class LeaveRequests
 {
     private $conn;
-	
     public function __construct($db)
     {
         $this->conn = $db;
@@ -16,16 +15,12 @@ class LeaveRequests
     public function totalLeaveRequested(int $id) : int
     {
         $sql = "SELECT * FROM leave_requests WHERE id = '$id'";
-
         $result = $this->conn->query($sql);
-		
-		$row = $result->fetch_assoc();
-		
-		$begin = new DateTime($row["start_date"]);
-		$end = new DateTime($row["end_date"]);
-	
+        $row = $result->fetch_assoc();
+        $begin = new DateTime($row["start_date"]);
+        $end = new DateTime($row["end_date"]);
         $count = 0;
-        for($i = $begin; $i <= $end; $i->modify('+1 day')){
+        for ($i = $begin; $i <= $end; $i->modify('+1 day')) {
             $count++;
         }
         return $count;
@@ -38,11 +33,11 @@ class LeaveRequests
         $result = $this->conn->query($sql);
 
         $count = 0;
-        while ($row = $result->fetch_assoc()){
+        while ($row = $result->fetch_assoc()) {
             $begin = new DateTime($row["from_date"]);
             $end = new DateTime($row["to_date"]);
 
-            for($i = $begin; $i <= $end; $i->modify('+1 day')){
+            for ($i = $begin; $i <= $end; $i->modify('+1 day')) {
                 $count++;
             }
         }
@@ -52,14 +47,14 @@ class LeaveRequests
 
     public function applyLeave(string $reason, string $date1, string $date2, int $id, int $typeleave , int $paidLeave ) : void
     {
-		$time1 = strtotime($date1);
-		if ($time1 === false) {
-			throw new \Exception('Invalid date: ' . $date1);
-		}
-		$time2 = strtotime($date2);
-		if ($time2 === false) {
-			throw new \Exception('Invalid date: ' . $date2);
-		}
+        $time1 = strtotime($date1);
+        if ($time1 === false) {
+            throw new \Exception('Invalid date: ' . $date1);
+        }
+        $time2 = strtotime($date2);
+        if ($time2 === false) {
+            throw new \Exception('Invalid date: ' . $date2);
+        }
         $new_date1 = date("Y-m-d", $time1);
         $new_date2 = date("Y-m-d", $time2);
 
@@ -74,7 +69,7 @@ class LeaveRequests
 
     public function pendingLeaveRequest() : object
     {
-        $sql = "SELECT u.id as user_id, lr.id, u.emp_id, lr.reason, lr.start_date, lr.end_date, u.first_name, u.last_name , lr.user_typeleave FROM users u JOIN leave_requests lr ON u.id = lr.user_id WHERE lr.start_date > CURDATE() AND lr.status = 0 ORDER BY lr.id DESC";
+        $sql = "SELECT u.id as user_id, lr.id, u.emp_id, lr.reason, lr.start_date, lr.end_date, u.first_name, u.last_name , lr.user_typeleave ,lr.document_ask , lr.view_image FROM users u JOIN leave_requests lr ON u.id = lr.user_id  WHERE lr.start_date > CURDATE() AND lr.status = 0 ORDER BY lr.id DESC";
 
         $result = $this->conn->query($sql);
 
@@ -89,10 +84,9 @@ class LeaveRequests
 
         return $result;
     }
-
-	/**
-	* @return array<int, mixed>
-	*/
+    /**
+* @return array<int, mixed>
+ */
     public function gettingDate(string $encoded)
     {
         $id = base64_decode($encoded);
@@ -102,7 +96,7 @@ class LeaveRequests
         $result = $this->conn->query($sql);
 
         $dataarray = array();
-        while ($row = $result->fetch_assoc()){
+        while ($row = $result->fetch_assoc()) {
             array_push($dataarray, $row["start_date"], $row["end_date"]);
         }
         return $dataarray;
@@ -122,27 +116,31 @@ class LeaveRequests
         return true;
     }
 
-
-    public function resetYear($id, $ryear, $cyear)
+    public function userid($id)
     {
-        if( $ryear != $cyear ) {
-            $reyear = $ryear + 1 ;
-        $sql1 = "UPDATE leave_requests SET resetyear = $reyear WHERE user_id = $id ";
-        $sql2 = "UPDATE users SET casual_leave = 50 , medical_leave = 50 , 	privilege_leave = 50 WHERE id = $id" ;
-        $result1 = $this->conn->query($sql1);
-        $result2 = $this->conn->query($sql2);
-        return true;
-        }
-        else {
-            return true;
-        }
+        $qry = "SELECT * FROM leave_requests WHERE id= $id";
+        $result = $this->conn->query($qry);
+        $show = $result->fetch_assoc();
+        return $show['user_id'];
     }
 
-    public function resetLeave($id)
+    public function viewName($requestid)
     {
-        $sql = "UPDATE users SET casual_leave = 50 , medical_leave = 50 , 	privilege_leave = 50 WHERE id = $id" ;
-        $result = $this->conn->query($sql);
-        
+        $qry = "SELECT  u.first_name, u.last_name  FROM users u JOIN leave_requests lr ON u.id = lr.user_id WHERE lr.id= $requestid";
+        $result = $this->conn->query($qry);
+        $show = $result->fetch_assoc();
+        $showFirstName = $show['first_name'] ;
+        $showLastName = $show['last_name'];
+        return [$showFirstName, $showLastName ];
+
+    }
+    public function dateDetail($requestid)
+    {
+        $qry = "SELECT * FROM leave_requests WHERE id = $requestid";
+        $result= $this->conn->query($qry);
+        $show = $result->fetch_assoc();
+        return $show;
+
     }
 
     

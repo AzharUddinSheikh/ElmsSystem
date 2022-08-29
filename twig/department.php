@@ -2,7 +2,7 @@
 
 session_start();
 
-if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true || $_SESSION['status'] != '1' || $_SESSION['user'] != '1') {
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true || $_SESSION['status'] != '1' || $_SESSION['user'] != '1') {
 
     header("location: ../index.php");
 
@@ -14,7 +14,7 @@ require_once '../vendor/autoload.php';
 use Azhar\Elms\Database;
 use Azhar\Elms\Department;
 
-if(isset($_SESSION["message"])){
+if (isset($_SESSION["message"])) {
     unset($_SESSION["message"]);
 }
 
@@ -23,14 +23,14 @@ $db = $database->getConnection();
 
 $department = new Department($db);
 
-if($_SERVER['REQUEST_METHOD'] == 'POST'){
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $department->update($_POST["departEdit"], $_POST["departid"]);
 
     $_SESSION["message"] = "DEPARTMENT HAS BEEN UPDATED";
 }
 
-if(isset($_GET["delete"])){
+if (isset($_GET["delete"])) {
 
     $department->delete($_GET["delete"]);
 
@@ -40,15 +40,15 @@ if(isset($_GET["delete"])){
 $result = $department->showList();
 
 $department = array();
-while ($row = $result->fetch_assoc()){
+while ($row = $result->fetch_assoc()) {
     array_push($department, $row);
 }
 
-$filter  = new \Twig\TwigFilter('base64_encode', function($string) {
+$filter  = new \Twig\TwigFilter('base64_encode', function ($string) {
     return base64_encode($string);
 });
 
-$function  = new \Twig\TwigFilter('getNoOfEmp', function($id) {
+$function  = new \Twig\TwigFilter('getNoOfEmp', function ($id) {
     $database = new Database();
     $db = $database->getConnection();
 
@@ -56,7 +56,7 @@ $function  = new \Twig\TwigFilter('getNoOfEmp', function($id) {
     $result = $department->noOfUserInDept($id);
 
     $count = 0;
-    while($row = $result->fetch_assoc()){
+    while ($row = $result->fetch_assoc()) {
         $count++;
     }
 

@@ -1,0 +1,32 @@
+{% extends 'partials/header.html' %}
+
+{% block body %}Home Panel{% endblock %}
+{% block head %}
+  {{ include('partials/navigation.html.twig') }}
+{% endblock %}
+
+{% block content %}
+<div class="container">
+<div class= "row"  >
+<!DOCTYPE html>
+<html>
+<body>
+
+<form action="" method="post" enctype="multipart/form-data">
+  <h3>Upload Medical Document Here For Leave Applied By You From <span style="background:yellow;">{{ dateDetail.start_date }}</span> To <span style="background:yellow;">{{ dateDetail.end_date}}</span> Reason Provided <span style="background:yellow;">{{ dateDetail.reason }}</span> :<h3>
+  <input type="file" name="uploadedFile" required>
+  <input type="submit" name="btnupload" value="Upload" >
+</form>
+
+</body>
+</html> 
+</div>
+</div>
+<div class="container">
+        {% if session.message %}
+            <div class="alert alert-primary" role="alert">
+                {{session.message}}
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

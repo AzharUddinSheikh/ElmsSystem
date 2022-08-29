@@ -90,12 +90,23 @@
                             <button id='{{ leaves[leave].id | base64_encode }}' name='{{ leaves[leave].emp_id | base64_encode }}' class="approve btn btn-success">Paid Approve</button>
                             
                             <button id='{{ leaves[leave].id | base64_encode }}' name='{{ leaves[leave].emp_id | base64_encode }}' class="nonPaidApprove btn btn-success">Non Paid Approve</button>
-                            
+                            {% if leaves[leave].document_ask == 1 %}
+                               <button id='{{ leaves[leave].id | base64_encode }}' class="document btn btn-primary" disabled>Ask document</button> 
+                               {% else %} 
+                               <button id='{{ leaves[leave].id | base64_encode }}' class="document btn btn-primary" >Ask document</button>
+                            {% endif %}
+                            {% if leaves[leave].view_image == 0 %}
+                               <button class=" btn btn-primary" disabled>View document1 </button> 
+                               {% else %} 
+                               <a class=" btn btn-primary" href="viewDocument.php?id={{ leaves[leave].id | base64_encode }}">View document 2</a>
+                            {% endif %}
+                               
                         {% else %} 
                             <button id='{{ leaves[leave].id | base64_encode }}' name='{{ leaves[leave].emp_id | base64_encode }}' class="approve btn btn-success">Approve</button>   
                         {% endif %}    
                         
-                            <button id='{{ leaves[leave].id | base64_encode }}' class="reject btn btn-danger mx-1" data-toggle="modal" data-target="#rejectUserLeave">Reject</button> <button class="userdetails btn btn-info" id='{{ leaves[leave].id | base64_encode }}'  name='{{ leaves[leave].emp_id | base64_encode }}'  data-toggle="modal" data-target="#editUserLeave">Modify</button>
+                            <button id='{{ leaves[leave].id | base64_encode }}' class="reject btn btn-danger mx-1" data-toggle="modal" data-target="#rejectUserLeave">Reject</button> 
+                            <button class="userdetails btn btn-info" id='{{ leaves[leave].id | base64_encode }}'  name='{{ leaves[leave].emp_id | base64_encode }}'  data-toggle="modal" data-target="#editUserLeave">Modify</button>
                         </td>
                     </tr>
                 {% endfor %}
@@ -104,4 +115,5 @@
         </table>
     </div>
 {{ include('partials/modal.html.twig') }}
+
 {% endblock %}

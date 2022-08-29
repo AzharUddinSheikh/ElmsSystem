@@ -25,16 +25,14 @@ class LeaveDetails
         $result = $this->conn->query("SELECT id FROM leave_requests WHERE user_id = '$id' ORDER BY id DESC LIMIT 1");
 
         $last_id = (int)$result->fetch_assoc()["id"];
-		
-		$time1 = strtotime($date1);
-		if ($time1 === false) {
-			throw new \Exception('Invalid date: ' . $date1);
-		}
-		$time2 = strtotime($date2);
-		if ($time2 === false) {
-			throw new \Exception('Invalid date: ' . $date2);
-		}
-		
+        $time1 = strtotime($date1);
+        if ($time1 === false) {
+            throw new \Exception('Invalid date: ' . $date1);
+        }
+        $time2 = strtotime($date2);
+        if ($time2 === false) {
+            throw new \Exception('Invalid date: ' . $date2);
+        }
         $start = date("Y-m-d", $time1);
         $end = date("Y-m-d", $time2);
 
@@ -49,20 +47,16 @@ class LeaveDetails
 
     public function updateLeave(string $start, string $end, int $id) : void
     {
-		$time1 = strtotime($start);
-		if ($time1 === false) {
-			throw new \Exception('Invalid date: ' . $start);
-		}
-		
-		$time2 = strtotime($end);
-		if ($time2 === false) {
-			throw new \Exception('Invalid date: ' . $end);
-		}
-		
+        $time1 = strtotime($start);
+        if ($time1 === false) {
+            throw new \Exception('Invalid date: ' . $start);
+        }
+        $time2 = strtotime($end);
+        if ($time2 === false) {
+            throw new \Exception('Invalid date: ' . $end);
+        }
         $date1 = date("Y-m-d", $time1);
-
         $date2 = date("Y-m-d", $time2);
-
         $sql = "UPDATE leave_status SET from_date = '$date1', to_date = '$date2', status = 1 WHERE requests_id = '$id'";
 
         $sql1 = "UPDATE leave_requests SET status = 1 WHERE id = $id";
@@ -132,8 +126,8 @@ class LeaveDetails
         $startdate = strtotime($show['start_date']);
         $enddate = strtotime($show['end_date']);
         $diff = $enddate - $startdate;
-        $days=  abs(round($diff / 86400 )+1);
-        $ltype = $show['user_typeleave'];	
+        $days=  abs(round($diff / 86400)+1);
+        $ltype = $show['user_typeleave'];
         return [$luserid,$days,$ltype];
     }   
 
@@ -152,14 +146,12 @@ class LeaveDetails
             $qry2 = "UPDATE users SET privilege_leave= $avaliablePLeave WHERE id = $luserid  ";
             $result2 = $this->conn->query($qry2);
             return true;
-        }
-        else if ($ltype == 1) {
+        } else if ($ltype == 1) {
  
             $qry3 = "UPDATE users SET medical_leave= $avaliableMLeave WHERE id = $luserid  ";
             $result3 = $this->conn->query($qry3);
             return true;
-        }
-        else {
+        } else {
 
             $qry4 = "UPDATE users SET casual_leave= $avaliableCLeave WHERE id = $luserid  ";
             $result4 = $this->conn->query($qry4);
@@ -177,7 +169,7 @@ class LeaveDetails
         return [$mLType, $mUserId];
     } 
 
-    public function modifyUpdateLeave($modifydays,$mLType, $mUserId)
+    public function modifyUpdateLeave($modifydays,$mLType,$mUserId)
     {
         $qry = "SELECT * FROM users WHERE id = $mUserId";
         $result = $this->conn->query($qry);
@@ -192,13 +184,11 @@ class LeaveDetails
             $qry2 = "UPDATE users SET privilege_leave= $avaliablePLeave WHERE id = $mUserId  ";
             $result2 = $this->conn->query($qry2);
             return true;
-        }
-        else if ($mLType == 1) {
+        } else if ($mLType == 1) {
             $qry3 = "UPDATE users SET medical_leave= $avaliableMLeave WHERE id = $mUserId  ";
             $result3 = $this->conn->query($qry3);
             return true;
-        }
-        else {
+        } else {
             $qry4 = "UPDATE users SET casual_leave= $avaliableCLeave WHERE id = $mUserId  ";
             $result4 = $this->conn->query($qry4);
             return true;

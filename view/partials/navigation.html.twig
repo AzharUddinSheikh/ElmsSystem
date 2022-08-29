@@ -2,7 +2,9 @@
             <div class="border-end bg-white" id="sidebar-wrapper">
                 <div class="list-group list-group-flush">
                     {% if session.user == "0" %}  
+         
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="welcome.php">DASHBOARD</a>
+                    
                     {% elseif session.user == "1" %}
                     <a class="list-group-item list-group-item-action list-group-item-light p-3 dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">ADMIN</a>
                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
@@ -14,7 +16,9 @@
                     {% endif %}
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="edit.php?id={{ session.emp_id | base64_encode }}">EDIT PROFILE</a>
                     {% if session.user != "1" %}
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="userLeave.php?id={{ session.id | base64_encode }}">VIEW PROFILE</a>
+                    
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="userLeave.php?id={{ session.id | base64_encode }}">VIEW PROFILE </a>
+                    
                     {% endif %}
                     {% if session.user == "1" %}
                     <a class="list-group-item list-group-item-action list-group-item-light p-3" href="generalSetting.php">GENERAL SETTING</a>

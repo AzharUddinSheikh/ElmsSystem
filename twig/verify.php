@@ -7,16 +7,16 @@ use Azhar\Elms\Users;
 
 session_start();
 
-if(isset($_SESSION["loggedin"])  && ($_SESSION["status"] == "1")){
+if (isset($_SESSION["loggedin"])  && ($_SESSION["status"] == "1")) {
 
-    if($_SESSION["user"] == "0"){
+    if ($_SESSION["user"] == "0") {
 
         header('location:welcome.php');
 
-      } elseif ($_SESSION["user"] == "1") { 
+    } elseif ($_SESSION["user"] == "1") { 
 
         header('location:admin.php');
-      }
+    }
 } 
 
 $database = new Database();
@@ -24,13 +24,13 @@ $db = $database->getConnection();
 
 $users = new Users($db);
 
-if(isset($_GET['empid'])) {
+if (isset($_GET['empid'])) {
 
     $id = base64_decode($_GET['empid']);
 
     $authorized = $users->verified($id);
 
-    if ($authorized){
+    if ($authorized) {
 
         $_SESSION["flash"] = "You Are not Authorized";
 
@@ -53,7 +53,7 @@ if(isset($_GET['empid'])) {
     header('location: ../index.php');
 }
 
-$filter  = new \Twig\TwigFilter('base64_encode', function($string) {
+$filter  = new \Twig\TwigFilter('base64_encode', function ($string) {
     return base64_encode($string);
 });
 

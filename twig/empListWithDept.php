@@ -7,14 +7,14 @@ use Azhar\Elms\Department;
 
 session_start();
 
-if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true || $_SESSION['user'] != '1' || $_SESSION['status'] != '1') {
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true || $_SESSION['user'] != '1' || $_SESSION['status'] != '1') {
     
     header("location: index.php");
 
     exit;
 }
 
-if(!isset($_GET["id"])){
+if (!isset($_GET["id"])) {
     $_SESSION["message"] = "REQUEST REJECTED WRONG URL";
     header("location : index.php");
 }
@@ -27,11 +27,11 @@ $id = base64_decode($_GET["id"]);
 $result = Department::noOfUserInDept($db, $id);
 
 $list = array();
-while ($row = $result->fetch_assoc()){
+while ($row = $result->fetch_assoc()) {
     array_push($list, $row);
 }
 
-$filter  = new \Twig\TwigFilter('base64_encode', function($string) {
+$filter  = new \Twig\TwigFilter('base64_encode', function ($string) {
     return base64_encode($string);
 });
 

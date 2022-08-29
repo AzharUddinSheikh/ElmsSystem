@@ -10,19 +10,18 @@ class UserDetails
     {
         $this->conn = $db;
     }
-	
-	/**
-	* @return array<int, mixed>
-	*/
+    /**
+     * @return array<int, mixed>
+     */
     public function gettingUserDetail(int $id)
     {
         $sql = "SELECT * FROM users JOIN user_details WHERE users.id = user_details.user_id AND users.emp_id = '$id'";
         $result = $this->conn->query($sql);
         $count = 0;
         $detail = array();
-        while ($row = $result->fetch_assoc()){
+        while ($row = $result->fetch_assoc()) {
             $count++;
-            if ($count % 2 != 0){
+            if ($count % 2 != 0) {
                 $first_name = $row["first_name"];
                 $last_name = $row["last_name"];
                 $email = $row["email"];
@@ -53,11 +52,11 @@ class UserDetails
 
             if ($x == 0) {
 
-                $stmt->bind_param('isssis', $last_id, $birth_key, $dob , $udoj ,$pperiod ,$userprobationdate );
+                $stmt->bind_param('isssis', $last_id, $birth_key, $dob, $udoj, $pperiod, $userprobationdate);
 
             } else {
 
-                $stmt->bind_param('isisis', $last_id, $phone_key, $number , $udoj ,$pperiod ,$userprobationdate);
+                $stmt->bind_param('isisis', $last_id, $phone_key, $number, $udoj, $pperiod, $userprobationdate);
 
             }
 
