@@ -33,28 +33,24 @@ $("#addemp").validate({
             required: true,
             email: true
         },
-    },
+},
 });
 
 $('#uEmail').blur(function() {
-  var uemail = $(this).val();
+    var uemail = $(this).val();
 
-  $.ajax({
-      url:'../view/department.php',
-      method:"POST",
-      data:{user_email:uemail},
-      success:function(data)
-      {   
-          if(data == 0)
-          {
-              $('#available').html('<span class="text-success"></span>');
-              $('#submit').prop("disabled", false);
-          }
-          else 
-          {
-              $('#available').html('<span class="text-warning">Email Available Unable to Submit</span>');
-              $('#submit').prop("disabled", true);
-          }
-      }
-  })
+    $.ajax({
+        url:'../view/department.php',
+        method:"POST",
+        data:{user_email:uemail},
+        success:function(data){   
+            if(data == 0) {
+                $('#available').html('<span class="text-success"></span>');
+                $('#submit').prop("disabled", false);
+            } else {
+                $('#available').html('<span class="text-warning">Email Available Unable to Submit</span>');
+                $('#submit').prop("disabled", true);
+            }
+        }
+    })
 })

@@ -2,7 +2,7 @@
 
 session_start();
 
-if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true || $_SESSION['status'] != '1' || $_SESSION['user'] != '1') {
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true || $_SESSION['status'] != '1' || $_SESSION['user'] != '1') {
     
     header("location: ../index.php");
     
@@ -19,11 +19,11 @@ $db = $database->getConnection();
 
 $users = new Users($db);
 
-if(isset($_SESSION["message"])){
+if (isset($_SESSION["message"])) {
     unset($_SESSION["message"]);
 }
 
-if(isset($_GET['block'])) {
+if (isset($_GET['block'])) {
     
     $id = base64_decode($_GET['block']);
     
@@ -32,7 +32,7 @@ if(isset($_GET['block'])) {
     $_SESSION["message"] = "USER IS BLOCKED";
 }
 
-if(isset($_GET['unblock'])) {
+if (isset($_GET['unblock'])) {
     
     $id = base64_decode($_GET['unblock']);
     
@@ -44,11 +44,11 @@ if(isset($_GET['unblock'])) {
 $result = $users->showUserList();
 
 $details = array();
-while($row = $result->fetch_assoc()) {
+while ($row = $result->fetch_assoc()) {
     array_push($details, $row);
 }
 
-$filter  = new \Twig\TwigFilter('base64_encode', function($string) {
+$filter  = new \Twig\TwigFilter('base64_encode', function ($string) {
     return base64_encode($string);
 });
 

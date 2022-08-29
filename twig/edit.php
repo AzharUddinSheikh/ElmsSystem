@@ -8,16 +8,16 @@ use Azhar\Elms\Users;
 
 session_start();
 
-if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true || $_SESSION['status'] != '1') {
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true || $_SESSION['status'] != '1') {
     
     header("location: ../index.php");
 
     exit;
-  }
+}
 
 $id = base64_decode($_GET["id"]);
 
-if(!isset($_GET["id"]) || (($id != $_SESSION["emp_id"])) && $_SESSION["user"] != "1" ){
+if (!isset($_GET["id"]) || (($id != $_SESSION["emp_id"])) && $_SESSION["user"] != "1" ) {
     
     echo "User Request Rejected";
     
@@ -32,22 +32,22 @@ $user_details = new UserDetails($db);
 
 $detail_emp = $user_details->gettingUserDetail($id);
 
-if(isset($_SESSION["update"])){
+if (isset($_SESSION["update"])) {
     unset($_SESSION["update"]);
 }
 
-if(isset($_POST['submit'])){
+if (isset($_POST['submit'])) {
     $fname = $_POST["fname"];
     $lname = $_POST["lname"];
     $email = $_POST["email"];
     $dob = $_POST["dob"];
     $number = $_POST["number"];
     
-    if((!empty($_FILES['image']))){
+    if ((!empty($_FILES['image']))) {
         $img = $_FILES["image"]['name'];
     } 
 
-    if ($_FILES["image"]['name'] == ""){
+    if ($_FILES["image"]['name'] == "") {
         $img = $detail_emp[6];
     } 
 
@@ -57,10 +57,10 @@ if(isset($_POST['submit'])){
     
     $_SESSION["update"] = "PROFILE HAS BEEN UPDATED";
 }
-
 $emp_detail = $user_details->gettingUserDetail($id);
+include "displayNotification.php";
 
-$filter  = new \Twig\TwigFilter('base64_encode', function($string) {
+$filter  = new \Twig\TwigFilter('base64_encode', function ($string) {
     return base64_encode($string);
 });
 
@@ -73,6 +73,6 @@ $twig->addGlobal('session', $_SESSION);
 
 $template = $twig->load('editprofile.html.twig');
 
-echo $template->render(['userdetail' => $emp_detail]);
+echo $template->render(['userdetail' => $emp_detail , 'notificationNumber' => $notificationNumber , 'displayData' => $displayData , 'sizeOfdisplay' => sizeof($displayData)]);
 
 ?>

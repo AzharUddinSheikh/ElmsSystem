@@ -2,7 +2,7 @@
 
 session_start();
 
-if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true || $_SESSION["status"] != "1" || $_SESSION["user"] != "0") {
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true || $_SESSION["status"] != "1" || $_SESSION["user"] != "0") {
 
     header("location: ../index.php");
     
@@ -11,9 +11,12 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true || $_SESSION["
 
 require_once '../vendor/autoload.php';
 
-$filter  = new \Twig\TwigFilter('base64_encode', function($string) {
+$filter  = new \Twig\TwigFilter('base64_encode', function ($string) {
     return base64_encode($string);
 });
+include "displayNotification.php";
+$id = $_SESSION['id'];
+
 
 $loader = new \Twig\Loader\FilesystemLoader('../view');
 
@@ -24,5 +27,5 @@ $twig->addGlobal('session', $_SESSION);
 
 $template = $twig->load('user/index.html.twig');
 
-echo $template->render();
+echo $template->render(['notificationNumber' => $notificationNumber , 'displayData' => $displayData , 'sizeOfdisplay' => sizeof($displayData)]);
 ?>

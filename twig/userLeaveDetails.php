@@ -2,7 +2,7 @@
 
 session_start();
 
-if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true || $_SESSION['status'] != '1' || $_SESSION['user'] != '1') {
+if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] != true || $_SESSION['status'] != '1' || $_SESSION['user'] != '1') {
     
     header("location: ../index.php");
     
@@ -21,13 +21,13 @@ $db = $database->getConnection();
 $leave_detail = new LeaveDetails($db);
 $leave_request = new LeaveRequests($db);
 
-if(isset($_SESSION["message"])){
+if (isset($_SESSION["message"])) {
     unset($_SESSION["message"]);
 }
 
 $leaves = $reject = $approve =  array();
 
-if(isset($_POST["submit2"])) {
+if (isset($_POST["submit2"])) {
 
     $action = $_POST["pleave"];
 
@@ -35,7 +35,7 @@ if(isset($_POST["submit2"])) {
 
         $result = $leave_request->pendingLeaveRequest();
 
-        while($row = $result->fetch_assoc()) {
+        while ($row = $result->fetch_assoc()) {
             array_push($leaves, $row);
         }
 
@@ -43,20 +43,20 @@ if(isset($_POST["submit2"])) {
 
         $result = $leave_detail->rejectedLeave();
 
-        while($row = $result->fetch_assoc()) {
+        while ($row = $result->fetch_assoc()) {
             array_push($reject, $row);
         }
     } elseif ($action == "1") {
 
         $result = $leave_detail->approvedLeave();
 
-        while($row = $result->fetch_assoc()) {
+        while ($row = $result->fetch_assoc()) {
             array_push($approve, $row);
         }
     }
 }
 
-if(isset($_GET['approve'])) {
+if (isset($_GET['approve'])) {
 
     $id = base64_decode($_GET['approve']);
 
@@ -66,7 +66,7 @@ if(isset($_GET['approve'])) {
     
 }
 
-if(isset($_POST["submit"])) {
+if (isset($_POST["submit"])) {
 
     $dob = $_POST["dob"];
     $dob1 = $_POST["dob1"];
@@ -78,7 +78,7 @@ if(isset($_POST["submit"])) {
     $_SESSION["message"] = "USER LEAVE UPDATED";
 }
 
-if(isset($_POST["submit1"])){
+if (isset($_POST["submit1"])) {
 
     $reason = $_POST["reason"];
 
@@ -90,16 +90,16 @@ if(isset($_POST["submit1"])){
 }
 
 
-$filter  = new \Twig\TwigFilter('base64_encode', function($string) {
+$filter  = new \Twig\TwigFilter('base64_encode', function ($string) {
     return base64_encode($string);
 });
 
-$function = new \Twig\TwigFunction('getNoOfDays', function($start, $end) {
+$function = new \Twig\TwigFunction('getNoOfDays', function ($start, $end) {
     $days = abs(strtotime($start)-strtotime($end))/86400 +1;
     return ($days);
 });
 
-$function1 = new \Twig\TwigFunction('getUrl', function() {
+$function1 = new \Twig\TwigFunction('getUrl', function () {
     return basename($_SERVER['PHP_SELF']);
 });
 

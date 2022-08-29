@@ -21,26 +21,25 @@ class Users
     }
 
     public function getUserId(string $email) : string
-	{
+    {
         $sql = "SELECT emp_id FROM users WHERE email = '$email'";
 
         $result = $this->conn->query($sql);
 
-        while($row = $result->fetch_assoc()) {
+        while ($row = $result->fetch_assoc()) {
 
             $result = $row["emp_id"];
-          }
-		
-		return $result;
+        }
+        return $result;
     }
 
-    public function createUser(int $empid, string $fname, string $lname, string $email, int $department, int $usertype) : void
+    public function createUser(int $empid, string $fname, string $lname, string $email, int $department, int $usertype ,int $cleave,int  $pleave,int $mleave) : void
     {
-        $query = "INSERT INTO  users (emp_id, first_name, last_name, email, department_id, user_type) VALUES (?, ?, ?, ?, ?, ?)";
+        $query = "INSERT INTO  users (emp_id, first_name, last_name, email, department_id, user_type, casual_leave, medical_leave, privilege_leave) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         $stmt = $this->conn->prepare($query);
 
-        $stmt->bind_param('issssi', $empid, $fname, $lname, $email, $department, $usertype);
+        $stmt->bind_param('issssiiii', $empid, $fname, $lname, $email, $department, $usertype, $cleave, $pleave, $mleave);
 
         $stmt->execute();
 
@@ -54,8 +53,7 @@ class Users
         $result = $this->conn->query($existsql);
 
         $result =  mysqli_num_rows($result);
-		
-		return $result;
+        return $result;
     }
 
     public function getUserStatus(string $email) : string
@@ -124,16 +122,13 @@ class Users
 
         $result = $this->conn->query($sql);
 
-        if ($result->num_rows != 1){
+        if ($result->num_rows != 1) {
 
             $result =  true;
-			
         } else {
-			
-			$result =  false;
-		}
-		
-		return $result;
+            $result =  false;
+        }
+        return $result;
     }
 
     public function setPassword(string $pass, int $id) : void
@@ -149,20 +144,19 @@ class Users
             $this->conn->query("UPDATE users SET password = '$setPass',status = 1 WHERE emp_id = '$id' LIMIT 1");
         }
     }
-	
-	/**
-	* @return array<int, mixed>
-	*/
+    /*
+  * @return array<int, mixed>
+  */
     public function getUserWithDept(int $id) 
     {
-        $sql = "SELECT u.id, u.email, u.first_name, u.last_name, d.name, ud.user_value, u.image, u.user_type FROM users u JOIN user_details ud ON ud.user_id = u.id JOIN departments d ON u.department_id = d.id WHERE user_key = 'number' AND u.id = '$id'";
+        $sql = "SELECT u.id, u.email, u.first_name, u.last_name, d.name, ud.user_value, u.image, u.user_type, ud.user_probationdate ,u.emp_id ,u.casual_leave ,u.medical_leave , u.privilege_leave FROM users u JOIN user_details ud ON ud.user_id = u.id JOIN departments d ON u.department_id = d.id WHERE user_key = 'number' AND u.id = '$id'";
 
         $result = $this->conn->query($sql);
 
         $detail = array();
 
-        while ($row = $result->fetch_assoc()){
-            array_push($detail, $row["name"], $row["email"], $row["user_value"], $row["first_name"], $row["last_name"], $row["id"], $row["image"], $row["user_type"]);
+        while ($row = $result->fetch_assoc()) {
+            array_push($detail, $row["name"], $row["email"], $row["user_value"], $row["first_name"], $row["last_name"], $row["id"], $row["image"], $row["user_type"], $row["user_probationdate"], $row["emp_id"], $row["casual_leave"], $row["medical_leave"], $row["privilege_leave"]);
         }
 
         return $detail;
@@ -195,8 +189,8 @@ class Users
 
             $result =  $result->fetch_assoc();
 
-            }
-		return $result;
+        }
+        return $result;
     }
 
     public function checkPassword(int $id, string $oldpass) : bool

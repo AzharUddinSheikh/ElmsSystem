@@ -33,13 +33,22 @@ $("form[name='applyLeave']").validate({
         dob: {
             required: true,
             date: true,
-            greaterThan: true
+            greaterThan: true,
+            isPrivalage:true
         },
         dob1: {
             required: true,
             date: true,
             greaterThan: true,
             greater: true,
+            isPrivalage:true
+        },
+        leavetype: {
+            required:true,
+            dayCheck:true
+        },
+        docx: {
+            required: $("#leavetype").val() === "1",  
         }
     },
 
@@ -61,4 +70,31 @@ document.querySelectorAll('.export').forEach((element)=>{
             }
         })
     })
-})
+});
+
+
+$("form[name='myFormyear']").validate({
+    rules: {
+        enyear: {
+            required: true,
+            minlength: 4,
+            maxlength: 4,
+            
+        }
+    },
+
+    
+
+    submitHandler: function (form) {
+        form.submit();
+    }
+});
+
+$(document).ready(function () {
+    $("#enyear").keypress(function (e) {
+       if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+          $("#errmsg").html("Only digits allowed").show();
+                 return false;
+      }
+     });
+  });

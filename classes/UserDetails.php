@@ -10,19 +10,18 @@ class UserDetails
     {
         $this->conn = $db;
     }
-	
-	/**
-	* @return array<int, mixed>
-	*/
+    /**
+     * @return array<int, mixed>
+     */
     public function gettingUserDetail(int $id)
     {
         $sql = "SELECT * FROM users JOIN user_details WHERE users.id = user_details.user_id AND users.emp_id = '$id'";
         $result = $this->conn->query($sql);
         $count = 0;
         $detail = array();
-        while ($row = $result->fetch_assoc()){
+        while ($row = $result->fetch_assoc()) {
             $count++;
-            if ($count % 2 != 0){
+            if ($count % 2 != 0) {
                 $first_name = $row["first_name"];
                 $last_name = $row["last_name"];
                 $email = $row["email"];
@@ -38,7 +37,7 @@ class UserDetails
         return $detail;
     }
 
-    public function createUserDetails(int $number, string $dob, string $email) : void
+    public function createUserDetails(int $number, string $dob, string $email, string $udoj , int $pperiod, string $userprobationdate ) : void
     {
         $result = $this->conn->query("SELECT id FROM users WHERE `email`= '$email'");
         $last_id = (int)$result->fetch_assoc()["id"];
@@ -47,17 +46,17 @@ class UserDetails
 
         for ($x = 0; $x < 2; $x++) {
 
-            $query = "INSERT INTO user_details (user_id, user_key, user_value) VALUES(?, ?, ?)";
+            $query = "INSERT INTO user_details (user_id , user_key, user_value, user_doj , user_pperiod , user_probationdate ) VALUES(?, ?, ?, ?, ? , ? )";
 
             $stmt = $this->conn->prepare($query);
 
             if ($x == 0) {
 
-                $stmt->bind_param('iss', $last_id, $birth_key, $dob);
+                $stmt->bind_param('isssis', $last_id, $birth_key, $dob, $udoj, $pperiod, $userprobationdate);
 
             } else {
 
-                $stmt->bind_param('isi', $last_id, $phone_key, $number);
+                $stmt->bind_param('isisis', $last_id, $phone_key, $number, $udoj, $pperiod, $userprobationdate);
 
             }
 

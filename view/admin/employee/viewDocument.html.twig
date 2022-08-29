@@ -1,0 +1,16 @@
+{% extends 'partials/header.html' %}
+
+{% block body %}Admin Panel{% endblock %}
+
+{% block head %}
+    {{ include('partials/navigation.html.twig') }}
+{% endblock %}
+
+
+{% block content %}
+<div class= "text-center">
+<h2>Medical Document Uploaded By {{ showFirstName }} {{ showLastName }}</h2>
+<img src="../public/images/uploadMedicalDocument/{{ viewImage }}" style="width:500px;height:500px;">
+</div>
+
+{% endblock %}

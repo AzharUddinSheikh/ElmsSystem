@@ -10,7 +10,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="http://localhost/elms/twig/{{filename}}" autocomplete="off" method="POST" name="editleave">
+                <form action="http://localhost/ElmsSystem-sahil/twig/{{filename}}" autocomplete="off" method="POST" name="editleave">
                     <input type="hidden" name="userleaveid" id='userleaveid'>
                     <div class="mb-5">
                         <label for="dob" class="form-label">FROM</label>
@@ -40,7 +40,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="http://localhost/elms/twig/{{filename}}" autocomplete="off" method="POST" id="myForm">
+                <form action="http://localhost/ElmsSystem-sahil/twig/{{filename}}" autocomplete="off" method="POST" id="myForm">
                     <input type="hidden" name="rejectid" id='rejectid'>
                     <div class="input-group">
                         <textarea class="form-control" aria-label="With textarea" id="reason" name="reason" placeholder="Reason For Rejecting Leave"></textarea>
@@ -51,6 +51,30 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="askDocument" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">User Leave Rejecting</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="http://localhost/ElmsSystem-sahil/twig/{{filename}}" autocomplete="off" method="POST" id="myForm">
+                    <input type="hidden" name="documentid" id='documentid'>
+                    <div class="input-group">
+                        <textarea class="form-control" aria-label="With textarea" id="reason" name="reason" placeholder="Reason For Rejecting Leave"></textarea>
+                    </div>
+                    <div class="col-md-12 text-center  mt-5"><button type="submit" name="doc" class="btn btn-danger">Reject On Submit</button></div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script src="../public/javascript/addmethod.js"></script>
 <script src="../public/javascript/commonLeave.js"></script>
 <script src="../public/javascript/common.js"></script>
+<link rel ="stylesheet" type ="text/css" href="../public/css/styles.css" >
